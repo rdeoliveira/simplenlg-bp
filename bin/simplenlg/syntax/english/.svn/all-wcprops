@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/rali/simplenlg/!svn/ver/92/SimpleNLG-EnFr/trunk/src/simplenlg/syntax/english
+END
+SyntaxProcessor.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/syntax/english/SyntaxProcessor.java
+END
+ClauseHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/syntax/english/ClauseHelper.java
+END
+package.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/syntax/english/package.html
+END
+PhraseHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/syntax/english/PhraseHelper.java
+END
+VerbPhraseHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/syntax/english/VerbPhraseHelper.java
+END
+CoordinatedPhraseHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/syntax/english/CoordinatedPhraseHelper.java
+END
+NounPhraseHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/syntax/english/NounPhraseHelper.java
+END

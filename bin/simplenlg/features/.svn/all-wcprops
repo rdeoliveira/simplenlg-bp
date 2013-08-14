@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/rali/simplenlg/!svn/ver/99/SimpleNLG-EnFr/trunk/src/simplenlg/features
+END
+Pattern.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/features/Pattern.java
+END
+Tense.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/rali/simplenlg/!svn/ver/11/SimpleNLG-EnFr/trunk/src/simplenlg/features/Tense.java
+END
+package.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/features/package.html
+END
+InternalFeature.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/features/InternalFeature.java
+END
+Feature.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/features/Feature.java
+END
+Person.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/features/Person.java
+END
+Form.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/rali/simplenlg/!svn/ver/21/SimpleNLG-EnFr/trunk/src/simplenlg/features/Form.java
+END
+LexicalFeature.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/features/LexicalFeature.java
+END
+ClauseStatus.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/features/ClauseStatus.java
+END
+DiscourseFunction.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/features/DiscourseFunction.java
+END
+Gender.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/features/Gender.java
+END
+InterrogativeType.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/features/InterrogativeType.java
+END
+NumberAgreement.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/features/NumberAgreement.java
+END

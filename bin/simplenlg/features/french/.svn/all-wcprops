@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/rali/simplenlg/!svn/ver/99/SimpleNLG-EnFr/trunk/src/simplenlg/features/french
+END
+FrenchInternalFeature.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/rali/simplenlg/!svn/ver/75/SimpleNLG-EnFr/trunk/src/simplenlg/features/french/FrenchInternalFeature.java
+END
+FrenchFeature.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/rali/simplenlg/!svn/ver/99/SimpleNLG-EnFr/trunk/src/simplenlg/features/french/FrenchFeature.java
+END
+FrenchLexicalFeature.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/rali/simplenlg/!svn/ver/21/SimpleNLG-EnFr/trunk/src/simplenlg/features/french/FrenchLexicalFeature.java
+END
+PronounType.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/rali/simplenlg/!svn/ver/2/SimpleNLG-EnFr/trunk/src/simplenlg/features/french/PronounType.java
+END
