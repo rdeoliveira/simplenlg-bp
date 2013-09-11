@@ -60,7 +60,7 @@ public abstract class SimpleNLG4Test extends TestCase {
 	@Override
 	@Before
 	protected void setUp() {
-		lexicon = new XMLLexicon();  // TODO not sure what this is doing
+		lexicon = new XMLLexicon("src/simplenlg/lexicon/portuguese/default-portuguese-lexicon.xml");  // TODO not sure what this is doing
 		this.phraseFactory = new NLGFactory(this.lexicon);
 		this.realiser = new Realiser();
 	}

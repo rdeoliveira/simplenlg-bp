@@ -24578,6 +24578,21 @@
 		<base>évanouir</base>
 		<category>verb</category>
 	</word>
+	<word>
+		<base>precisar</base>
+		<category>verb</category>
+		<present3p>enfuient</present3p>
+	</word>
+	<word>
+		<base>trazer</base>
+		<category>verb</category>
+		<past3p>enfuient</past3p>
+	</word>
+	<word>
+		<base>precisar</base>
+		<category>verb</category>
+		<present3p>enfuient</present3p>
+	</word>
 	<!-- Pronominal verbs : end of section. -->
 	<word>
 		<base>sable</base>
