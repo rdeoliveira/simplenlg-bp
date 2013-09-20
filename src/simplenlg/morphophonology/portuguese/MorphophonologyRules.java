@@ -19,48 +19,39 @@
 
 package simplenlg.morphophonology.portuguese;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import simplenlg.features.*;
-import simplenlg.features.french.FrenchLexicalFeature;
-import simplenlg.features.french.PronounType;
+import simplenlg.features.portuguese.PortugueseLexicalFeature;
+import simplenlg.features.portuguese.PronounType;
 import simplenlg.framework.ElementCategory;
-import simplenlg.framework.InflectedWordElement;
-import simplenlg.framework.Language;
 import simplenlg.framework.LexicalCategory;
-import simplenlg.framework.NLGElement;
 import simplenlg.framework.StringElement;
-import simplenlg.framework.WordElement;
 import simplenlg.morphophonology.MorphophonologyRulesInterface;
-import simplenlg.phrasespec.NPPhraseSpec;
 
 /**
- * This contains the French morphophonology rules.
+ * This contains the Portuguese morphophonology rules.
  * 
- * References :
+ * Reference:
  * 
- * Grevisse, Maurice (1993). Le bon usage, grammaire française,
- * 12e édition refondue par André Goosse, 8e tirage, Éditions Duculot,
- * Louvain-la-Neuve, Belgique.
-
- * @author vaudrypl
+ * Cunha, Celso & Cintra, Lindley (1984). Nova Gramática do Português 
+ * Contemporâneo. Edições João de Sá da Costa, Lisboa.
+ * 
+ * @author de Oliveira
  */
 public class MorphophonologyRules implements MorphophonologyRulesInterface {
-
-public static final String vowels_regex =
-	"a|A|ä|Ä|à|À|â|Â|e|E|ë|Ë|é|É|è|È|ê|Ê|i|I|ï|Ï|î|Î|o|O|ô|Ô|u|U|û|Û|ü|Ü|ù|Ù|y|Y|ý|Ý|ÿ|Ÿ";
-
+	
+	//TODO: demonstrative pronouns, which are not prepositions, are not yet
+	//entirely implemented; generation should succeed nonetheless if one defines
+	//things like "este" or "aquele" as the specifier of the NP inside the PP.
 	/**
-	 * This method performs the morphophonology on two
-	 * StringElements.
-	 * 
+	 * This method performs the morphophonology on two StringElements. General
+	 * PPs with preposition that undergo elision. These are "a", "de"
+	 * 	 and "por" or prepositional complexes formed with those such as "próximo
+	 * 	 a" or "longe de". Note that "desde", a preposition, ends with -de but
+	 * 	 should not undergo elision. The same applies for "contra" and "para";
+	 * 	 both end in -a but should not undergo elision.
 	 */
-	public void doMorphophonology(StringElement leftWord, StringElement rightWord) {
-		
+	 public void doMorphophonology(StringElement leftWord, StringElement rightWord) {		
 		ElementCategory leftCategory = leftWord.getCategory();
 		ElementCategory rightCategory = rightWord.getCategory();
-		NLGElement leftParent = leftWord.getParent();
 		String leftRealisation = leftWord.getRealisation();
 		String rightRealisation = rightWord.getRealisation();
 		
@@ -68,153 +59,50 @@ public static final String vowels_regex =
 		
 			if (LexicalCategory.PREPOSITION.equalTo(leftCategory)
 					&& (LexicalCategory.DETERMINER.equalTo(rightCategory)
-							|| rightWord.getFeature(FrenchLexicalFeature.PRONOUN_TYPE)
+							|| rightWord.getFeature(PortugueseLexicalFeature.PRONOUN_TYPE)
 								== PronounType.RELATIVE)) {
 				// edited by de Oliveira
 				// if the preposition is "de" or ends with " de"
 				if (leftRealisation.matches("(.+ |)de\\z")) {
-					String withoutE = leftRealisation.substring(0,leftRealisation.length()-1);
-					leftWord.setRealisation(withoutE + rightRealisation);
+					String temp = leftRealisation.substring(0,
+							leftRealisation.length()-1);
+					leftWord.setRealisation(temp + rightRealisation);
 					rightWord.setRealisation(null);
 				}
-				// if the preposition is "à" or endswith " à"
-				if (leftRealisation.matches("(.+ |)à\\z")) {
-					// "à" + "le" = "au"
-					if (rightRealisation.matches("le(quel)?")) {
-						String withoutA = leftRealisation.substring(0,leftRealisation.length()-1);
-						leftWord.setRealisation(withoutA + "au"
-								+ rightRealisation.substring(2));
-						rightWord.setRealisation(null);
-						// "à" + "les" = "aux"
-					} else if (rightRealisation.matches("les(quel(le)?s)?")) {
-						String withoutA = leftRealisation.substring(0,leftRealisation.length()-1);
-						leftWord.setRealisation(withoutA + "aux"
-								+ rightRealisation.substring(3));
-						rightWord.setRealisation(null);
-					}
-				}
-				// if the preposition is "em"
+				// if the preposition is "em", transform to "n
 				if (leftRealisation.matches("em")) {
-					// "em" + "a" = "na"
-					if (rightRealisation.matches("a")) {
-						leftWord.setRealisation("na");
-						rightWord.setRealisation(null);
-						// "à" + "les" = "aux"
-					} else if (rightRealisation.matches("les(quel(le)?s)?")) {
-						String withoutA = leftRealisation.substring(0,leftRealisation.length()-1);
-						leftWord.setRealisation(withoutA + "aux"
-								+ rightRealisation.substring(3));
-						rightWord.setRealisation(null);
-					}
+					leftWord.setRealisation("n" + rightRealisation);
+					rightWord.setRealisation(null);
 				}
-			}
-	
-			// special rule with "en" and "y" : the personal pronoun immediately preceding it
-			// takes non detached form even if it is attached to an imperative verb
-			Object person = leftWord.getFeature(Feature.PERSON);
-			Boolean person1or2 = (person == Person.FIRST || person == Person.SECOND);
-			if (LexicalCategory.PRONOUN.equalTo(leftCategory) && person1or2 &&
-					leftWord.getFeature(FrenchLexicalFeature.PRONOUN_TYPE) == PronounType.PERSONAL
-					&& leftWord.getFeature(Feature.NUMBER) == NumberAgreement.SINGULAR
-					&& leftWord.getFeatureAsBoolean(FrenchLexicalFeature.DETACHED)
-					&& LexicalCategory.PRONOUN.equalTo(rightCategory) &&
-					rightWord.getFeature(FrenchLexicalFeature.PRONOUN_TYPE) == PronounType.SPECIAL_PERSONAL)
-			{	
-				NLGElement baseWord = leftWord.getFeatureAsElement(InternalFeature.BASE_WORD);
-				if (baseWord instanceof WordElement) {
-					Map<String,Object> features = new HashMap<String,Object>( baseWord.getAllFeatures() );
-					features.put(FrenchLexicalFeature.DETACHED, false);
-					features.remove(LexicalFeature.DEFAULT_INFL);
-					features.remove(LexicalFeature.INFLECTIONS);
-					features.put(InternalFeature.DISCOURSE_FUNCTION, null);
-					WordElement newBaseWord = baseWord.getLexicon().getWord(LexicalCategory.PRONOUN, features);
-					if (newBaseWord != null) {
-						InflectedWordElement inflectedNewBaseWord = new InflectedWordElement(newBaseWord);
-						leftRealisation = newBaseWord.getBaseForm();
-						
-						// change leftWord : creating a new StringElement wouldn't change the word, so we must
-						// modify the existing one mimicking the StringElement constructor
-						leftWord.clearAllFeatures();
-						for(String feature : inflectedNewBaseWord.getAllFeatureNames()) {
-							leftWord.setFeature(feature, inflectedNewBaseWord.getFeature(feature));
-						}
-						leftWord.setCategory(inflectedNewBaseWord.getCategory());
-						leftWord.setFeature(Feature.ELIDED, false);
-						leftWord.setRealisation(leftRealisation);
+				// if the preposition is "a" or ends with " a"
+				if (leftRealisation.matches("(.+ |)a\\z")) {
+					// "a" + beginning with "a" = "à"
+					if (rightRealisation.startsWith("a")) {
+						String temp = leftRealisation.substring(0,
+								leftRealisation.length()-1);
+						leftWord.setRealisation(temp + "à");
 					}
-					
+					// "a" + beginning with "o" = "ao"
+					if (rightRealisation.startsWith("o")) {
+						String temp = leftRealisation.substring(0,
+								leftRealisation.length()-1);
+						leftWord.setRealisation(temp + "ao");
+					}
+					rightWord.setRealisation(null);
 				}
-			}
-			
-			// words who have their last vowel elided
-			// and take an apostrophe when in front of a vowel
-			// (and singular for determiners)
-			if (( ((leftWord.getFeatureAsBoolean(FrenchLexicalFeature.VOWEL_ELISION)
-							&& leftRealisation != null && !leftRealisation.isEmpty()
-							&& !leftWord.isPlural())
-						|| leftRealisation.endsWith(" de") || leftRealisation.endsWith(" que"))
-					&& beginsWithVowel(rightWord))
-				|| ("si".equals(leftRealisation) || leftRealisation.endsWith(" si"))
-					&& rightRealisation.matches("il(s)?") ) {
-				
-				// remove last letter (vowel) of left word and append an apostrophe
-				// the orthography processing will later assure that no space is put
-				// after the apostrophe
-				String newLeft =
-					leftRealisation.substring(0, leftRealisation.length()-1) + "'";
-				leftWord.setRealisation(newLeft);
-			}
-				
-			if (leftParent != null) {
-				if ( LexicalCategory.DETERMINER.equalTo(leftCategory)
-					|| LexicalCategory.ADJECTIVE.equalTo(leftCategory) ) {
-					// Get gender from parent or "grand-parent" for adjectives
-					boolean feminine = false;
-					if (!leftParent.hasFeature(LexicalFeature.GENDER) && leftParent.getParent() != null) {
-						leftParent = leftParent.getParent();
+				// if the preposition is "por"
+				if (leftRealisation.matches("por")) {
+					// "por" + "a" = "pela"
+					if (rightRealisation.equals("a")) {
+						leftWord.setRealisation("pela");
 					}
-					feminine = Gender.FEMININE.equals( leftParent.getFeature(LexicalFeature.GENDER) );
-					// adjectives who have a different form in front of a vowel when masculine singular,
-					// possessive determiners when feminine singular
-					// and non possessive determiners when masculine singular
-					String liaisonForm = leftWord.getFeatureAsString(FrenchLexicalFeature.LIAISON);
-					boolean possessive = leftWord.getFeatureAsBoolean(Feature.POSSESSIVE);
-					if ( liaisonForm != null && beginsWithVowel(rightWord)
-						&& !leftParent.isPlural()
-						&& ((leftCategory == LexicalCategory.DETERMINER && possessive == feminine ) 
-							|| (leftCategory == LexicalCategory.ADJECTIVE && !feminine
-									&& rightCategory == LexicalCategory.NOUN))) {
-						leftWord.setRealisation(liaisonForm);
+					// "por" + "o" = "pelo"
+					if (rightRealisation.equals("o")) {
+						leftWord.setRealisation("pelo");
 					}
+					rightWord.setRealisation(null);
 				}
-			}
-			
-			// remove duplicate "de" or "que"
-			if ("de".equals(leftRealisation) &&
-						("de".equals(rightRealisation) || "du".equals(rightRealisation)
-							|| "d'".equals(rightRealisation))
-					|| "que".equals(leftRealisation) &&
-						("que".equals(rightRealisation)	|| "qu'".equals(rightRealisation)) ) {
-				leftWord.setRealisation(null);
 			}
 		}
-	}
-	
-	/**
-	 * Tells if a word begins with a vowel or an "aspired h"
-	 * 
-	 * @param word
-	 * @return true if the words begins with a vowel or an "aspired h"
-	 */
-	public boolean beginsWithVowel(StringElement word)
-	{
-		// A word can be marked as having a so-called "aspired h"
-		// even if it isn't written with an "h" at the beginning.
-		// Numerals are also considered to have this trait.
-		// ("le onzième jour", "le huit du mois")
-		String realisation = word.getRealisation();
-		return ( realisation.matches("\\A(" + vowels_regex + "|h|H).*") &&
-					!word.getFeatureAsBoolean(FrenchLexicalFeature.ASPIRED_H)
-					&& !realisation.endsWith("ième"));
 	}
 }

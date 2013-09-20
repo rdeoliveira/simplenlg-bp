@@ -32,6 +32,7 @@ import simplenlg.framework.StringElement;
 import simplenlg.framework.WordElement;
 import simplenlg.features.*;
 import simplenlg.features.french.*;
+import simplenlg.features.Tense;
 import simplenlg.lexicon.Lexicon;
 import simplenlg.morphology.MorphologyRulesInterface;
 
@@ -40,7 +41,8 @@ import simplenlg.morphology.MorphologyRulesInterface;
  *  
  * Reference:
  * 
- * Cunha & Cintra (1984)
+ * Cunha, Celso & Cintra, Lindley (1984). Nova Gramática do Português 
+ * Contemporâneo. Edições João de Sá da Costa, Lisboa.
  * 
  * @author de Oliveira
  *
@@ -418,7 +420,8 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 
 	/**
 	 * This method performs the morphology for verbs.
-	 * Based in part on the same method in the english rules
+	 * Imperative forms are the same as subjunctive present forms and personal
+	 * infinitive forms are the same as subjunctive future forms. 
 	 * 
 	 * @param element
 	 *            the <code>InflectedWordElement</code>.
@@ -463,22 +466,77 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 			tense = (Tense) tenseValue;
 		}
 		
+		Object formValue = element.getFeature(Feature.FORM);
+		
 		// base form from baseWord if it exists, otherwise from element
 		String baseForm = getBaseForm(element, baseWord);
-//		System.out.println(baseForm);
 		
-		if(baseForm.equals("estar")){
+		if (Form.BARE_INFINITIVE.equals(formValue)) {
+			realised = baseForm;
+		} else if(baseForm.equals("estar")){
 			realised = VerbRules.conjugateEstar(number, person, tense);
 		} else {
-			if(tense == Tense.PRESENT) {
-//				System.out.println(baseForm+" tense is present");
-				realised = VerbRules.buildPresentRegularVerb(baseForm, number, 
-						person);
-			} else if (tense == Tense.PAST) {
-//				System.out.println(baseForm+" "+number+" "+person);
-				realised = VerbRules.buildPerfectivePreteriteRegularVerb(
+			switch (tense) {
+			case CONDITIONAL:
+				realised = VerbRules.buildConditionalRegularVerb(
 						baseForm, number, person);
+				break;
+			case FUTURE:
+				realised = VerbRules.buildFutureRegularVerb(
+						baseForm, number, person);
+				break;
+			// same method as subjunctive present 
+			case IMPERATIVE:
+				realised = VerbRules.buildSubjunctivePresentRegularVerb(
+						baseForm, number, person);
+				break;
+			case IMPERFECT:
+				realised = VerbRules.buildImperfectRegularVerb(
+						baseForm, number, person);
+				break;
+			case PAST:
+				realised = VerbRules.buildPastRegularVerb(
+						baseForm, number, person);
+				break;
+			// same method as subjunctive future
+			// TODO At present impersonal infinitive is triggered by a "tense" 
+			// choice, but does it make sense? Will it be confusing in real use?
+			case PERSONAL_INFINITIVE:
+				realised = VerbRules.buildSubjunctiveFutureRegularVerb(
+						baseForm, number, person);
+				break;
+			case PRESENT:
+				realised = VerbRules.buildPresentRegularVerb(
+						baseForm, number, person);
+				break;
+			case SUBJUNCTIVE_FUTURE:
+				realised = VerbRules.buildSubjunctiveFutureRegularVerb(
+						baseForm, number, person);
+				break;
+			case SUBJUNCTIVE_IMPERFECT:
+				realised = VerbRules.buildSubjunctiveImperfectRegularVerb(
+						baseForm, number, person);
+				break;
+			case SUBJUNCTIVE_PRESENT:
+				realised = VerbRules.buildSubjunctivePresentRegularVerb(
+						baseForm, number, person);
+				break;			
 			}
+//			if(tense == Tense.PRESENT) {
+////				System.out.println(baseForm+" tense is present");
+//				realised = VerbRules.buildPresentRegularVerb(baseForm, number, 
+//						person);
+//			} else if (tense == Tense.PAST) {
+////				System.out.println(baseForm+" "+number+" "+person);
+//				realised = VerbRules.buildPastRegularVerb(
+//						baseForm, number, person);
+//			} else if (tense == Tense.IMPERATIVE) {
+//				realised = VerbRules.buildImperativeRegularVerb(
+//					baseForm, number, person);
+//			} else if (tense == Tense.PERSONAL_INFINITIVE) {
+//				realised = VerbRules.buildPersonalInfinitiveVerb(
+//					baseForm, number, person);
+//			}
 		}
 		
 		// may never need this...
@@ -716,7 +774,7 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 			
 			if (parent != null) {
 				function = parent.getFeature(InternalFeature.DISCOURSE_FUNCTION);
-				// If the pronoun isn't a suject or an object, it is detached.
+				// If the pronoun isn't a subject or an object, it is detached.
 				
 				if (!(function == DiscourseFunction.SUBJECT
 						|| function == DiscourseFunction.OBJECT

@@ -174,41 +174,46 @@ public class XMLLexicon extends simplenlg.lexicon.XMLLexicon {
 				// optional variant : "liaison" form
 				addVarriant(variants, word, PortugueseLexicalFeature.LIAISON);
 				break;
-
+			
+			// TODO: temporarily commented out by de Oliveira as
+				// 1 - not sure what this was doing
+				// 2 - jeopardized debugging of verbs, since it overloaded
+				// MorphologyRules.doVerbMorphology() with unnecessary inflected
+				// forms.
 			case VERB:
-				// indicative, varrying tense, person and number
-				for (Tense tense : Tense.values()) {
-					for (Person person : Person.values()) {
-						for (NumberAgreement number : Arrays.asList(NumberAgreement.SINGULAR, NumberAgreement.PLURAL)) {
-							inflected.setFeature(Feature.TENSE, tense);
-							inflected.setFeature(Feature.PERSON, person);
-							inflected.setFeature(Feature.NUMBER, number);
-							addVarriant(variants, inflected);
-						}
-					}
-				}
-				// imperative present, varrying person and number
-				inflected.setFeature(Feature.FORM, Form.IMPERATIVE);
-				inflected.setFeature(Feature.TENSE, Tense.PRESENT);
-				for (Person person : Person.values()) {
-					for (NumberAgreement number : Arrays.asList(NumberAgreement.SINGULAR, NumberAgreement.PLURAL)) {
-						inflected.setFeature(Feature.PERSON, person);
-						inflected.setFeature(Feature.NUMBER, number);
-						addVarriant(variants, inflected);
-					}
-				}
-				// participles, varying gender and number
-				inflected = new InflectedWordElement(word);
-				for (Form form : Arrays.asList(Form.PRESENT_PARTICIPLE, Form.PAST_PARTICIPLE)) {
-					for (Gender gender : Arrays.asList(Gender.MASCULINE,Gender.FEMININE)) {
-						for (NumberAgreement number : Arrays.asList(NumberAgreement.SINGULAR, NumberAgreement.PLURAL)) {
-							inflected.setFeature(Feature.FORM, form);
-							inflected.setFeature(LexicalFeature.GENDER, gender);
-							inflected.setFeature(Feature.NUMBER, number);
-							addVarriant(variants, inflected);
-						}
-					}
-				}
+//				// indicative, varying tense, person and number
+//				for (Tense tense : Tense.values()) {
+//					for (Person person : Person.values()) {
+//						for (NumberAgreement number : Arrays.asList(NumberAgreement.SINGULAR, NumberAgreement.PLURAL)) {
+//							inflected.setFeature(Feature.TENSE, tense);
+//							inflected.setFeature(Feature.PERSON, person);
+//							inflected.setFeature(Feature.NUMBER, number);
+//							addVarriant(variants, inflected);
+//						}
+//					}
+//				}
+//				// imperative present, varying person and number
+//				inflected.setFeature(Feature.FORM, Form.IMPERATIVE);
+//				inflected.setFeature(Feature.TENSE, Tense.PRESENT);
+//				for (Person person : Person.values()) {
+//					for (NumberAgreement number : Arrays.asList(NumberAgreement.SINGULAR, NumberAgreement.PLURAL)) {
+//						inflected.setFeature(Feature.PERSON, person);
+//						inflected.setFeature(Feature.NUMBER, number);
+//						addVarriant(variants, inflected);
+//					}
+//				}
+//				// participles, varying gender and number
+//				inflected = new InflectedWordElement(word);
+//				for (Form form : Arrays.asList(Form.PRESENT_PARTICIPLE, Form.PAST_PARTICIPLE)) {
+//					for (Gender gender : Arrays.asList(Gender.MASCULINE,Gender.FEMININE)) {
+//						for (NumberAgreement number : Arrays.asList(NumberAgreement.SINGULAR, NumberAgreement.PLURAL)) {
+//							inflected.setFeature(Feature.FORM, form);
+//							inflected.setFeature(LexicalFeature.GENDER, gender);
+//							inflected.setFeature(Feature.NUMBER, number);
+//							addVarriant(variants, inflected);
+//						}
+//					}
+//				}
 				break;
 			
 			default:

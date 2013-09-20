@@ -127,14 +127,15 @@ public abstract class Lexicon {
 	public Language getLanguage() {
 		return this.language;
 	}
-
+	
+	// TODO: temporarily changed by de Oliveira to debug XMLLexicon constructor:
 	/**
 	 * returns the default built-in lexicon
 	 * 
 	 * @return default lexicon
 	 */
 	public static Lexicon getDefaultLexicon() {
-		return new simplenlg.lexicon.english.XMLLexicon();
+		return new simplenlg.lexicon.portuguese.XMLLexicon();
 	}
 
 	/**

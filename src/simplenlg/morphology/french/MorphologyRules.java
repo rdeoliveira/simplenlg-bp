@@ -492,6 +492,7 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 			
 		// base form from baseWord if it exists, otherwise from element
 		String baseForm = getBaseForm(element, baseWord);
+		System.out.println(baseForm + "; " + tenseValue);
 
 		if (Form.BARE_INFINITIVE.equals(formValue) || Form.INFINITIVE.equals(formValue) ) {
 			realised = baseForm;
