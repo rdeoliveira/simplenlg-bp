@@ -30,7 +30,7 @@ import simplenlg.format.english.TextFormatter;
  * It uses the NLGElement.realiseSyntax(), realiseMorphology()
  * realiseMorphophonology() and realiseOrthography()
  * methods instead of syntax, morphology and orthography processors,
- * thus being language independant and needing no lexicon.
+ * thus being language independent and needing no lexicon.
  * It uses the same text formatter.
  * 
  * @author vaudrypl

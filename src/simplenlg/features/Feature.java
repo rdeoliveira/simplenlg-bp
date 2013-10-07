@@ -532,6 +532,48 @@ abstract public class Feature {
 	 * </table>
 	 */
 	public static final String MODAL = "modal";
+	
+	/**
+	 * added for Portuguese by de Oliveira.
+	 * 
+	 * TODO adapt this comment. 
+	 * 
+	 * <p>
+	 * The modal represents the modal auxiliary verb that is used in a verb
+	 * phrase to express mood or tense. The English modals are: <em>can</em>,
+	 * <em>may</em>, <em>must</em>, <em>ought</em>, <em>shall</em>,
+	 * <em>should</em>, <em>will</em> and <em>would</em>.
+	 * </p>
+	 * <table border="1">
+	 * <tr>
+	 * <td><b>Feature name</b></td>
+	 * <td><em>modal</em></td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Expected type</b></td>
+	 * <td><code>String</code></td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Created by</b></td>
+	 * <td>The user.</td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Used by</b></td>
+	 * <td>The syntax processor adds modals into the structure.</td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Applies to</b></td>
+	 * <td>Clauses, coordinated phrases and verb phrases. In the case of clauses
+	 * and coordinated phrases, the modal is passed on to the underlying verb
+	 * phrase.</td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Default</b></td>
+	 * <td><code>null</code>.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final String AUXILIAR = "auxiliar";
 
 	/**
 	 * <p>

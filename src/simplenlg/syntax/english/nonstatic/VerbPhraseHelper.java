@@ -130,13 +130,13 @@ public class VerbPhraseHelper extends AbstractVerbPhraseHelper {
 
 				actualModal = "will"; //$NON-NLS-1$
 		
-			} else if (Tense.CONDITIONAL.equals(tenseValue)
-					&& modal == null
-					&& ((!(phrase.getHead() instanceof CoordinatedPhraseElement)) || (phrase
-							.getHead() instanceof CoordinatedPhraseElement && interrogative))) {
-
-				actualModal = "could"; //$NON-NLS-1$
-		
+//			} else if (Tense.CONDITIONAL.equals(tenseValue)
+//					&& modal == null
+//					&& ((!(phrase.getHead() instanceof CoordinatedPhraseElement)) || (phrase
+//							.getHead() instanceof CoordinatedPhraseElement && interrogative))) {
+//
+//				actualModal = "could"; //$NON-NLS-1$
+//		
 			} else if (modal != null) {
 				actualModal = modal;
 
@@ -404,6 +404,8 @@ public class VerbPhraseHelper extends AbstractVerbPhraseHelper {
 	protected NLGElement grabHeadVerb(PhraseElement phrase,
 			Tense tenseValue, boolean hasModal) {
 		NLGElement frontVG = phrase.getHead();
+		
+//		System.out.println("nonStatic-verbPhraseHelper: "+tenseValue);
 		
 		if (frontVG instanceof WordElement)
 			frontVG = new InflectedWordElement((WordElement) frontVG);

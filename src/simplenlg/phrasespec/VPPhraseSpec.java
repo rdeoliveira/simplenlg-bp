@@ -75,7 +75,7 @@ import simplenlg.framework.WordElement;
  * <LI>Tense    (eg, "John ate" vs "John eats" vs "John will eat")
  * </UL>
  * Note that most VP features can be set on an SPhraseSpec, they will automatically
- * be propogated to the VP
+ * be propagated to the VP
  * 
  * <code>VPPhraseSpec</code> are produced by the <code>createVerbPhrase</code>
  * method of a <code>PhraseFactory</code>

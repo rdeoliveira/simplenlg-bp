@@ -42,6 +42,8 @@ public abstract class Setup extends TestCase {
 	Lexicon lexicon;
 	
 	VPPhraseSpec cantar, vender, partir;
+	
+	VPPhraseSpec estar;
 
 	/**
 	 * Instantiates a new SimpleNLG test.
@@ -67,5 +69,7 @@ public abstract class Setup extends TestCase {
 		this.cantar = this.phraseFactory.createVerbPhrase("cantar");
 		this.vender = this.phraseFactory.createVerbPhrase("vender");
 		this.partir = this.phraseFactory.createVerbPhrase("partir");
+		
+		this.estar = this.phraseFactory.createVerbPhrase("estar");
 	}
 }

@@ -664,6 +664,86 @@ public class VerbRules {
 		
 		// TODO finish up conjugation; done: present 
 		switch (tense){
+		case CONDITIONAL:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "estaria";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "estaríamos";
+					break;
+				case SECOND: case THIRD:
+					realised = "estariam";
+					break;
+				}
+				break;
+			}
+			break;
+		case FUTURE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST:
+					realised = "estarei";
+					break;
+				case SECOND: case THIRD:
+					realised = "estará";
+					break;
+				}
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "estaremos";
+					break;
+				case SECOND: case THIRD:
+					realised = "estarão";
+					break;
+				}
+				break;
+			}
+			break;
+		case IMPERFECT:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "estava";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "estávamos";
+					break;
+				case SECOND: case THIRD:
+					realised = "estavam";
+					break;
+				}
+				break;
+			}
+			break;
+		case PAST:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST:
+					realised = "estive";
+					break;
+				case SECOND: case THIRD:
+					realised = "esteve";
+					break;
+				}
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "estivemos";
+					break;
+				case SECOND: case THIRD:
+					realised = "estiveram";
+					break;
+				}
+				break;
+			}
+			break;
 		case PRESENT:
 			switch (person){
 			case FIRST:
@@ -687,25 +767,56 @@ public class VerbRules {
 				break;
 			}
 			break;
-		case CONDITIONAL:
-			break;
-		case FUTURE:
-			break;
-		case IMPERATIVE:
-			break;
-		case IMPERFECT:
-			break;
-		case PAST:
-			break;
-		case PERSONAL_INFINITIVE:
+		case SUBJUNCTIVE_IMPERFECT: case PERSONAL_INFINITIVE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "estivesse";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "estivéssemos";
+					break;
+				case SECOND: case THIRD:
+					realised = "estivessem";
+					break;
+				}
+				break;
+			}
 			break;
 		case SUBJUNCTIVE_FUTURE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "estiver";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "estivermos";
+					break;
+				case SECOND: case THIRD:
+					realised = "estiverem";
+					break;
+				}
+				break;
+			}
 			break;
-		case SUBJUNCTIVE_IMPERFECT:
-			break;
-		case SUBJUNCTIVE_PRESENT:
-			break;
-		default:
+		case SUBJUNCTIVE_PRESENT: case IMPERATIVE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "estejam";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "estejamos";
+					break;
+				case SECOND: case THIRD:
+					realised = "estejam";
+					break;
+				}
+				break;
+			}
 			break;
 		}
 		
