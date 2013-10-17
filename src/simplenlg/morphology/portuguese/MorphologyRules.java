@@ -473,8 +473,43 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 		
 		if (Form.BARE_INFINITIVE.equals(formValue)) {
 			realised = baseForm;
+		// TODO make this method neater and move it to verb rules
+		} else if (Form.PRESENT_PARTICIPLE.equals(formValue)){
+			String radical = VerbRules.getVerbRadical(baseForm, tense);
+			String thematicVowel = "";
+			int conjugationType = VerbRules.getConjugationType(baseForm);
+			switch (conjugationType){
+			case 1:
+				thematicVowel = "a";
+				break;
+			case 2:
+				thematicVowel = "e";
+				break;
+			case 3:
+				thematicVowel = "i";
+				break;
+			}
+			realised = radical+thematicVowel+"ndo";
+		// TODO make this method neater and move it to verb rules
+		} else if (Form.PAST_PARTICIPLE.equals(formValue)){
+			String radical = VerbRules.getVerbRadical(baseForm, tense);
+			String thematicVowel = "";
+			int conjugationType = VerbRules.getConjugationType(baseForm);
+			switch (conjugationType){
+			case 1:
+				thematicVowel = "a";
+				break;
+			case 2: case 3:
+				thematicVowel = "i";
+				break;
+			}
+			realised = radical+thematicVowel+"do";
 		} else if(baseForm.equals("estar")){
 			realised = VerbRules.conjugateEstar(number, person, tense);
+		} else if(baseForm.equals("ter")){
+			realised = VerbRules.conjugateTer(number, person, tense);
+		} else if(baseForm.equals("ir")){
+			realised = VerbRules.conjugateIr(number, person, tense);
 		} else {
 			switch (tense) {
 			case CONDITIONAL:

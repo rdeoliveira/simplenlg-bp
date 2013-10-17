@@ -662,7 +662,6 @@ public class VerbRules {
 		
 		String realised = "estar";
 		
-		// TODO finish up conjugation; done: present 
 		switch (tense){
 		case CONDITIONAL:
 			switch (number){
@@ -804,7 +803,7 @@ public class VerbRules {
 		case SUBJUNCTIVE_PRESENT: case IMPERATIVE:
 			switch (number){
 			case SINGULAR: case BOTH:
-				realised = "estejam";
+				realised = "esteja";
 				break;
 			case PLURAL:
 				switch (person){
@@ -813,6 +812,353 @@ public class VerbRules {
 					break;
 				case SECOND: case THIRD:
 					realised = "estejam";
+					break;
+				}
+				break;
+			}
+			break;
+		}
+		
+		return realised;		
+	}
+	
+	/**
+	 * Builds the appropriate form for the "ter" verb, in any tense. 
+	 *
+	 * @param baseForm
+	 *            the base form of the word.
+	 * @param number
+	 * @param person
+	 * @param tense
+	 * @return the inflected word.
+	 */
+	protected static String conjugateTer(NumberAgreement number,
+			Person person, Tense tense){
+		
+		String realised = "ter";
+		
+		switch (tense){
+		case CONDITIONAL:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "teria";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "teríamos";
+					break;
+				case SECOND: case THIRD:
+					realised = "teriam";
+					break;
+				}
+				break;
+			}
+			break;
+		case FUTURE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST:
+					realised = "terei";
+					break;
+				case SECOND: case THIRD:
+					realised = "terá";
+					break;
+				}
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "teremos";
+					break;
+				case SECOND: case THIRD:
+					realised = "terão";
+					break;
+				}
+				break;
+			}
+			break;
+		case IMPERFECT:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "tinha";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "tínhamos";
+					break;
+				case SECOND: case THIRD:
+					realised = "tinham";
+					break;
+				}
+				break;
+			}
+			break;
+		case PAST:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST:
+					realised = "tive";
+					break;
+				case SECOND: case THIRD:
+					realised = "teve";
+					break;
+				}
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "tivemos";
+					break;
+				case SECOND: case THIRD:
+					realised = "tiveram";
+					break;
+				}
+				break;
+			}
+			break;
+		case PRESENT:
+			switch (person){
+			case FIRST:
+				switch (number){
+				case SINGULAR: case BOTH:
+					realised = "tenho";
+					break;
+				case PLURAL:
+					realised = "temos";
+					break;
+				}
+			case SECOND: case THIRD:
+				switch (number){
+				case SINGULAR: case BOTH: case PLURAL:
+					realised = "tem";
+					break;
+				}
+				break;
+			}
+			break;
+		case SUBJUNCTIVE_IMPERFECT: case PERSONAL_INFINITIVE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "tivesse";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "tivéssemos";
+					break;
+				case SECOND: case THIRD:
+					realised = "tivessem";
+					break;
+				}
+				break;
+			}
+			break;
+		case SUBJUNCTIVE_FUTURE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "tiver";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "tivermos";
+					break;
+				case SECOND: case THIRD:
+					realised = "tiverem";
+					break;
+				}
+				break;
+			}
+			break;
+		case SUBJUNCTIVE_PRESENT: case IMPERATIVE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "tenha";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "tenhamos";
+					break;
+				case SECOND: case THIRD:
+					realised = "tenham";
+					break;
+				}
+				break;
+			}
+			break;
+		}
+		
+		return realised;		
+	}
+	
+	/**
+	 * Builds the appropriate form for the "ir" verb, in any tense. 
+	 *
+	 * @param baseForm
+	 *            the base form of the word.
+	 * @param number
+	 * @param person
+	 * @param tense
+	 * @return the inflected word.
+	 */
+	protected static String conjugateIr(NumberAgreement number,
+			Person person, Tense tense){
+		
+		String realised = "ir";
+		
+		switch (tense){
+		case CONDITIONAL:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "iria";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "iríamos";
+					break;
+				case SECOND: case THIRD:
+					realised = "iriam";
+					break;
+				}
+				break;
+			}
+			break;
+		case FUTURE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST:
+					realised = "irei";
+					break;
+				case SECOND: case THIRD:
+					realised = "irá";
+					break;
+				}
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "iremos";
+					break;
+				case SECOND: case THIRD:
+					realised = "irão";
+					break;
+				}
+				break;
+			}
+			break;
+		case IMPERFECT:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "ia";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "íamos";
+					break;
+				case SECOND: case THIRD:
+					realised = "iam";
+					break;
+				}
+				break;
+			}
+			break;
+		case PAST:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST:
+					realised = "fui";
+					break;
+				case SECOND: case THIRD:
+					realised = "foi";
+					break;
+				}
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "fomos";
+					break;
+				case SECOND: case THIRD:
+					realised = "foram";
+					break;
+				}
+				break;
+			}
+			break;
+		case PRESENT:
+			switch (person){
+			case FIRST:
+				switch (number){
+				case SINGULAR: case BOTH:
+					realised = "vou";
+					break;
+				case PLURAL:
+					realised = "vamos";
+					break;
+				}
+			case SECOND: case THIRD:
+				switch (number){
+				case SINGULAR: case BOTH:
+					realised = "vai";
+					break;
+				case PLURAL:
+					realised = "vão";
+					break;
+				}
+				break;
+			}
+			break;
+		case SUBJUNCTIVE_IMPERFECT: case PERSONAL_INFINITIVE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "fosse";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "fôssemos";
+					break;
+				case SECOND: case THIRD:
+					realised = "fossem";
+					break;
+				}
+				break;
+			}
+			break;
+		case SUBJUNCTIVE_FUTURE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "for";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "formos";
+					break;
+				case SECOND: case THIRD:
+					realised = "forem";
+					break;
+				}
+				break;
+			}
+			break;
+		case SUBJUNCTIVE_PRESENT: case IMPERATIVE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				realised = "vá";
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "vamos";
+					break;
+				case SECOND: case THIRD:
+					realised = "vão";
 					break;
 				}
 				break;

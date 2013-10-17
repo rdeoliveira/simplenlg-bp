@@ -239,7 +239,7 @@ public class ListElement extends NLGElement {
 
 	/**
 	 * Realisation method for the morphology stage.
-	 * based on english MorphologyProcessor
+	 * based on English MorphologyProcessor
 	 * 
 	 * @return morphologically realised form
 	 * @author vaudrypl

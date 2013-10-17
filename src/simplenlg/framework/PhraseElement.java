@@ -762,6 +762,9 @@ public class PhraseElement extends NLGElement {
 			case VERB_PHRASE:
 				realisedElement = getVerbPhraseHelper().realise(this);
 				break;
+				// TODO roman suggested swapping the above code with one below
+//				AbstractVerbPhraseHelper tmp = getVerbPhraseHelper();
+//				realisedElement = tmp.realise(this);
 
 			case PREPOSITIONAL_PHRASE:
 			case ADJECTIVE_PHRASE:

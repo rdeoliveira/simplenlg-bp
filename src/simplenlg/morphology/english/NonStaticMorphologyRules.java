@@ -239,7 +239,7 @@ public class NonStaticMorphologyRules implements MorphologyRulesInterface {
 		String realised = null;
 		Object numberValue = element.getFeature(Feature.NUMBER);
 		Object personValue = element.getFeature(Feature.PERSON);
-		Tense tenseValue = element.getTense();
+		Object tenseValue = element.getFeature(Feature.TENSE);
 		Object formValue = element.getFeature(Feature.FORM);
 		Object patternValue = element.getFeature(Feature.PATTERN);
 

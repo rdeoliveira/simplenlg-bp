@@ -52,8 +52,8 @@ public class WordElement extends NLGElement {
 
 	String id; // id in lexicon (may be null);
 	
-	// Lexicon from witch this WordElement comes from
-	private final Lexicon lexicon;
+	// Lexicon from which this WordElement comes from
+	private Lexicon lexicon;
 
 	// LexicalCategory category; // type of word
 
@@ -107,6 +107,23 @@ public class WordElement extends NLGElement {
 		setCategory(category);
 		this.id = null;
 		this.lexicon = lexicon;
+	}
+	
+	/**
+	 * create a WordElement with the specified baseForm and category
+	 * lexicon argument added by vaudrypl
+	 * 
+	 * @param baseForm
+	 *            - base form of WordElement
+	 * @param category
+	 *            - category of WordElement
+	 * @param lexicon	lexicon from witch this WordElement comes from
+	 */
+	public WordElement(String baseForm, LexicalCategory category) {
+		super();
+		this.baseForm = baseForm;
+		setCategory(category);
+		this.id = null;
 	}
 
 	/**
@@ -357,7 +374,7 @@ public class WordElement extends NLGElement {
 	
 	/**
 	 * Realisation method for the syntax stage.
-	 * based on english SyntaxProcessor
+	 * based on English SyntaxProcessor
 	 * 
 	 * @return syntactically realised form
 	 * @author vaudrypl

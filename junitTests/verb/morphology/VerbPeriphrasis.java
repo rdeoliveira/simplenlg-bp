@@ -39,15 +39,60 @@ public class VerbPeriphrasis extends Setup {
 	}
 	
 	@Test
-	public void testConjugatedProgressive(){
+	public void testProgressive(){
 		
-		// Tense = Conditional
-		cantar.setFeature(Feature.TENSE, Tense.IMPERFECT);
+		cantar.setFeature(Feature.TENSE, Tense.FUTURE);
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		cantar.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
-		cantar.setFeature(Feature.MODAL, "estar");
+		cantar.setFeature(Feature.PROGRESSIVE, true);
 		Assert.assertEquals(
-				"estavam cantando", realiser.realise(cantar).getRealisation());
+				"estarão cantando", realiser.realise(cantar).getRealisation());
+	}
+	
+	@Test
+	public void testPerfective(){
+		
+		cantar.setFeature(Feature.TENSE, Tense.IMPERFECT);
+		cantar.setFeature(Feature.PERSON, Person.FIRST);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+		cantar.setFeature(Feature.PERFECT, true);
+		Assert.assertEquals(
+				"tinha cantado", realiser.realise(cantar).getRealisation());
+	}
+	
+	@Test
+	public void testProspective(){
+		
+		cantar.setFeature(Feature.TENSE, Tense.PRESENT);
+		cantar.setFeature(Feature.PERSON, Person.THIRD);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+		cantar.setFeature(Feature.PROSPECTIVE, true);
+		Assert.assertEquals(
+				"vai cantar", realiser.realise(cantar).getRealisation());
+	}
+	
+	@Test
+	public void testProgressiveProspective(){
+		
+		cantar.setFeature(Feature.TENSE, Tense.PRESENT);
+		cantar.setFeature(Feature.PERSON, Person.THIRD);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+		cantar.setFeature(Feature.PROGRESSIVE, true);
+		cantar.setFeature(Feature.PROSPECTIVE, true);
+		Assert.assertEquals(
+				"vai estar cantando", realiser.realise(cantar).getRealisation());
+	}
+	
+	@Test
+	public void testPerfectProspective(){
+		
+		cantar.setFeature(Feature.TENSE, Tense.CONDITIONAL);
+		cantar.setFeature(Feature.PERSON, Person.FIRST);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
+		cantar.setFeature(Feature.PERFECT, true);
+		cantar.setFeature(Feature.PROSPECTIVE, true);
+		Assert.assertEquals(
+				"iríamos ter cantado", realiser.realise(cantar).getRealisation());
 	}
 	
 }

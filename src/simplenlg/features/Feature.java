@@ -805,6 +805,45 @@ abstract public class Feature {
 	 * </table>
 	 */
 	public static final String PERFECT = "perfect";
+	
+	/**
+	 * <p>
+	 * This flag shows if the phrase or clause should be written in the prospective
+	 * form. The prospective aspect is normally formed from the auxiliary verb
+	 * <em>ir</em> (go) followed by the bare infinitive of the main verb. For
+	 * example, the phrase <em>o gato come o rato</em> (the cat eats the mouse) 
+	 * would have the prospective imperfect form of <em>o gato ia comer o rato</em>
+	 * (the cat was going to eat the mouse).
+	 * </p>
+	 * <table border="1">
+	 * <tr>
+	 * <td><b>Feature name</b></td>
+	 * <td><em>isProspective</em></td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Expected type</b></td>
+	 * <td><code>Boolean</code></td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Created by</b></td>
+	 * <td>User defined.</td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Used by</b></td>
+	 * <td>The verb phrase helper adds in additional auxiliary verbs to verb
+	 * phrases, and alters the form of the main verb.</td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Applies to</b></td>
+	 * <td>Verbs and verb phrases.</td>
+	 * </tr>
+	 * <tr>
+	 * <td><b>Default</b></td>
+	 * <td><code>Boolean.FALSE</code>.</td>
+	 * </tr>
+	 * </table>
+	 */
+	public static final String PROSPECTIVE = "prospective";
 
 	/**
 	 * <p>

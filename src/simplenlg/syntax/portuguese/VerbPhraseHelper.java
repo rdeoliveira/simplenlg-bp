@@ -18,7 +18,9 @@
  */
 package simplenlg.syntax.portuguese;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import simplenlg.features.ClauseStatus;
@@ -47,6 +49,7 @@ import simplenlg.framework.PhraseElement;
 import simplenlg.framework.StringElement;
 import simplenlg.framework.WordElement;
 import simplenlg.lexicon.Lexicon;
+import simplenlg.lexicon.portuguese.XMLLexicon;
 import simplenlg.phrasespec.NPPhraseSpec;
 import simplenlg.phrasespec.PPPhraseSpec;
 import simplenlg.phrasespec.VPPhraseSpec;
@@ -86,7 +89,8 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 
 			// vaudrypl added phrase argument to ListElement constructor
 			// to copy all features from the PhraseElement
-			realisedElement = new ListElement(phrase);
+//			realisedElement = new ListElement(phrase);
+			realisedElement = new ListElement();
 
 			if ((!phrase.hasFeature(InternalFeature.REALISE_AUXILIARY)
 					|| phrase.getFeatureAsBoolean(InternalFeature.REALISE_AUXILIARY))
@@ -183,181 +187,119 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 
 	/**
 	 * Creates a stack of verbs for the verb phrase. Additional auxiliary verbs
-	 * are added as required based on the features of the verb phrase.
+	 * are added as required based on the features of the verb phrase. The final
+	 * verb order should be: ("ir" +)(modal +)("ter" +)("estar" +)main. 
 	 * 
 	 * Based on English method of the same name.
 	 * 
 	 * @author de Oliveira (edited)
 	 * 
 	 * @param phrase
-	 *            the <code>PhraseElement</code> representing this noun phrase.
+	 *            the <code>PhraseElement</code> representing this verb phrase.
 	 * @return the verb group as a <code>Stack</code> of <code>NLGElement</code>
 	 *         s.
 	 */
 	@Override
-	@SuppressWarnings("deprecation")
 	protected Stack<NLGElement> createVerbGroup(PhraseElement phrase) {
-
-		String actualModal = null;
-		Object formValue = phrase.getFeature(Feature.FORM);
-		Tense tenseValue = phrase.getTense();
-		String modal = phrase.getFeatureAsString(Feature.MODAL);
-		boolean modalPast = false;
+		
+		// constructs the verb group as a stack
 		Stack<NLGElement> vgComponents = new Stack<NLGElement>();
-		boolean interrogative = phrase.hasFeature(Feature.INTERROGATIVE_TYPE);
+		ArrayList<NLGElement> vgComponentsArray = new ArrayList<NLGElement>();
+		
+		// constructs lexicon, so morphological rules are set for Portuguese
+		Lexicon ptLexicon = new XMLLexicon();
+		
+		// get all verb phrase features
+		Object tenseValue = phrase.getFeature(Feature.TENSE);
+		Object personValue = phrase.getFeature(Feature.PERSON);
+		Object numberValue = phrase.getFeature(Feature.NUMBER);
 		boolean progressive = phrase.getFeatureAsBoolean(Feature.PROGRESSIVE);
 		boolean perfect = phrase.getFeatureAsBoolean(Feature.PERFECT);
-		boolean passive = phrase.getFeatureAsBoolean(Feature.PASSIVE);
-		boolean negative = phrase.getFeatureAsBoolean(Feature.NEGATED);
-		NLGFactory factory = phrase.getFactory();
-		boolean insertClitics = true;
+		boolean prospective = phrase.getFeatureAsBoolean(Feature.PROSPECTIVE);
+		// TODO features yet to be used, once everything is implemented...
+		// boolean interrogative = phrase.hasFeature(Feature.INTERROGATIVE_TYPE);
+		// boolean passive = phrase.getFeatureAsBoolean(Feature.PASSIVE);
+		// boolean negative = phrase.getFeatureAsBoolean(Feature.NEGATED);
 		
-		// With "si" as complemetiser, change future to present,
-		// conditional present to "imparfait"
-		// and conditional past to "plus-que-parfait".
-		NLGElement parent = phrase.getParent();
-		if ( parent != null
-				&& parent.getFeature(InternalFeature.CLAUSE_STATUS)
-					== ClauseStatus.SUBORDINATE
-				&& !parent.getFeatureAsBoolean(Feature.SUPRESSED_COMPLEMENTISER) ) {
-
-			NLGElement complementiser = factory.createWord(
-					parent.getFeature(Feature.COMPLEMENTISER), LexicalCategory.COMPLEMENTISER);
-			NLGElement si = factory.createWord("si", LexicalCategory.COMPLEMENTISER);
-			if (complementiser == si) {
-				if (tenseValue == Tense.FUTURE) tenseValue = Tense.PRESENT;
-				else if (tenseValue == Tense.CONDITIONAL) {
-					tenseValue = Tense.PAST;
-					if (!perfect) progressive = true;
-				}
-			}
+		// gets head verb and adds it as first element in the array
+		NLGElement headVerb = phrase.getHead();
+		if (headVerb != null) {
+			vgComponentsArray.add(headVerb);
+		} else {
+			return vgComponents;
 		}
 		
-		WordElement modalWord =	null;
-		boolean cliticRising = false;
-		if (modal != null) {
-			modalWord = phrase.getLexicon().lookupWord(modal, LexicalCategory.VERB);
-			cliticRising = modalWord.getFeatureAsBoolean(PortugueseLexicalFeature.CLITIC_RISING);
-		}
-
-		if (Form.INFINITIVE.equals(formValue)) {
-			actualModal = null;
-		
-		} else if (formValue == null || formValue == Form.NORMAL
-				|| (formValue == Form.IMPERATIVE && cliticRising)) {
-			if (modal != null) {
-				actualModal = modal;
-
-				if (Tense.PAST.equals(tenseValue)) {
-					modalPast = true;
-				}
-			}
+		// if progressive...
+		if (progressive) {
+			// creates auxiliary "estar"...
+			WordElement auxWord = new WordElement("estar", LexicalCategory.VERB, 
+					ptLexicon);
+			InflectedWordElement aux = new InflectedWordElement(auxWord);
+			// adds it to the end of the array...
+			vgComponentsArray.add(aux);
+			// and sets previous verb as present participle (-ndo).
+			vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
+				setFeature(Feature.FORM, Form.PRESENT_PARTICIPLE);
 		}
 		
-		if (actualModal == null) modalWord = null;
-		
-		NLGElement frontVG = grabHeadVerb(phrase, tenseValue, modal != null);
-		if (frontVG == null) return vgComponents;
-		frontVG.setFeature(Feature.TENSE, tenseValue);
-		
-		if (passive) {
-			frontVG = addPassiveAuxiliary(frontVG, vgComponents, phrase);
-			frontVG.setFeature(Feature.TENSE, tenseValue);
+		if (perfect) {
+			// creates auxiliary "ter"...
+			WordElement auxWord = new WordElement("ter", LexicalCategory.VERB, 
+					ptLexicon);
+			InflectedWordElement aux = new InflectedWordElement(auxWord);
+			// adds it to the end of the array...
+			vgComponentsArray.add(aux);
+			// and sets previous verb as past participle (-do).
+			vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
+				setFeature(Feature.FORM, Form.PAST_PARTICIPLE);
+		}
+	
+		if (prospective) {
+			// creates auxiliary "ir"...
+			WordElement auxWord = new WordElement("ir", LexicalCategory.VERB, 
+					ptLexicon);
+			InflectedWordElement aux = new InflectedWordElement(auxWord);
+			// adds it to the end of the array...
+			vgComponentsArray.add(aux);
+			// and sets previous verb as infinitive.
+			vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
+				setFeature(Feature.FORM, Form.BARE_INFINITIVE);
 		}
 		
-		// progressive not perfect past = "imparfait"
-		// the rest is with "être en train de" auxiliary
-		if (progressive	&& (tenseValue != Tense.PAST
-					|| perfect || actualModal != null
-					|| formValue == Form.SUBJUNCTIVE)) {
-			NLGElement newFront =
-					addProgressiveAuxiliary(frontVG, vgComponents, factory, phrase);
-			if (frontVG != newFront) {
-				frontVG = newFront;
-				frontVG.setFeature(Feature.TENSE, tenseValue);
-				insertClitics = false;
-			}
+		// passing features to agreement verb (last in array, top of stack)
+		NLGElement lastVerb = vgComponentsArray.get(vgComponentsArray.size()-1);
+		lastVerb.setFeature(Feature.TENSE, tenseValue);
+		lastVerb.setFeature(Feature.PERSON, personValue);
+		lastVerb.setFeature(Feature.NUMBER, numberValue);
+		lastVerb.setFeature(Feature.FORM, Form.NORMAL);
+		
+//		// printing verb phrase...
+//		System.out.println("Verb Phrase: "+
+//				"head: "+phrase.getHead()+
+//				"; progressive: "+phrase.getFeatureAsString(Feature.PROGRESSIVE)+
+//				"; perfect: "+phrase.getFeatureAsString(Feature.PERFECT));		
+		
+		// stack population = last in array becomes top of stack
+		for (NLGElement verb : vgComponentsArray){
+			
+//			// printing out each verb in array; remember: first is last!
+//			int position = vgComponentsArray.indexOf(verb);
+//			String baseWord = verb.getFeatureAsString(InternalFeature.BASE_WORD);
+//			String person = verb.getFeatureAsString(Feature.PERSON);
+//			String number = verb.getFeatureAsString(Feature.NUMBER);
+//			String tense = verb.getFeatureAsString(Feature.TENSE);
+//			String form = verb.getFeatureAsString(Feature.FORM);
+//			System.out.println(
+//				"verb "+(position+1)+": "+baseWord+"; "+
+//				person+"; "+number+"; "+tense+"; "+form);
+			
+			// placing array item (from left to right) on top of the stack 
+			vgComponents.push(verb);
 		}
 		
-//		// "avoir" or "être" auxiliary for "temps composés"
-//		// past not perfect not progressive and present perfect = "passé composé"
-//		// past perfect = "plus-que-parfait"
-//		AddAuxiliaryReturn auxReturn = null;
-//		if 
-//		
-//		(
-//			(tenseValue == Tense.PAST &&
-//			(!progressive || perfect || formValue == Form.SUBJUNCTIVE))
-//			|| (tenseValue == Tense.PRESENT && perfect)
-//			|| modalPast) 
-//		
-//		{
-//			Tense tense = perfect ? tenseValue : Tense.PRESENT;
-//			auxReturn = addAuxiliary(frontVG, vgComponents, modal, tense, phrase);
-//			frontVG = auxReturn.newFront;
-//			// subjunctive past "surcomposé"
-//			if (formValue == Form.SUBJUNCTIVE && tenseValue == Tense.PAST && perfect) {
-//				// Auxiliary "être" goes before auxiliary "avoir" with pronominal verbs.
-//				if (hasReflexiveObject(phrase)) {
-//					NLGElement avoirPastParticiple = factory.createWord("avoir", LexicalCategory.VERB);
-//					avoirPastParticiple.setFeature(Feature.FORM, Form.PAST_PARTICIPLE);
-//					vgComponents.push(avoirPastParticiple);
-//				} else {
-//					auxReturn = addAuxiliary(frontVG, vgComponents, modal, tense, phrase);
-//					frontVG = auxReturn.newFront;
-//				}
-//			}
-//		// future perfect = "futur antérieur" and conditional past ("conditionnel passé")
-//		} else if ((tenseValue == Tense.FUTURE || tenseValue == Tense.CONDITIONAL) && perfect) {
-//			auxReturn = addAuxiliary(frontVG, vgComponents, modal, tenseValue, phrase);
-//			frontVG = auxReturn.newFront;
-//		}
+//		System.out.println("  * * * * *  ");
 		
-		frontVG = pushIfModal(actualModal != null, phrase, frontVG,	vgComponents);
-		// insert clitics here if imperative and not negative
-		// or if there is a modal verb without clitic rising 
-		NLGElement cliticDirectObject = null;
-		if (insertClitics) {
-			if (!negative && formValue == Form.IMPERATIVE) {
-				cliticDirectObject = insertCliticComplementPronouns(phrase, vgComponents);
-				insertClitics = false;
-			} else if (frontVG == null) {
-				if (!cliticRising) {
-					cliticDirectObject = insertCliticComplementPronouns(phrase, vgComponents);
-					insertClitics = false;
-				}
-			}
-		}
-		
-		createPas(phrase, vgComponents, frontVG, modal != null);
-		
-		pushModal(modalWord, phrase, vgComponents);
-		
-		if (frontVG != null) {
-			pushFrontVerb(phrase, vgComponents, frontVG, formValue,
-					interrogative);
-			frontVG.setFeature(Feature.FORM, formValue);
-		}
-		// default place for inserting clitic complement pronouns
-		if (insertClitics) {
-			cliticDirectObject = insertCliticComplementPronouns(phrase, vgComponents);
-			insertClitics = false;
-		}
-		createNe(phrase, vgComponents);
-		
-//		if (auxReturn != null) {
-//			// Check if verb phrase is part of a relative clause with
-//			// the relative phrase being a direct object. In that case,
-//			// Make object agreement with the parent NP of the clause.
-//			if (!passive && parent != null && parent.hasRelativePhrase(DiscourseFunction.OBJECT)) {
-//				NLGElement grandParent = parent.getParent();
-//				if (grandParent instanceof NPPhraseSpec) {
-//					cliticDirectObject = grandParent;
-//				}
-//			}
-//			makePastParticipleWithAvoirAgreement(auxReturn.pastParticipleAvoir, cliticDirectObject);
-//		}
-
+		// return stack
 		return vgComponents;
 	}
 
@@ -388,7 +330,7 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	}
 
 	/**
-	 * Determine wich pronominal complements are clitics and inserts
+	 * Determine which pronominal complements are clitics and inserts
 	 * them in the verb group components.
 	 * Reference : section 657 of Grevisse (1993)
 	 * 
@@ -575,6 +517,9 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 			train.addPostModifier(deVerb);
 			PPPhraseSpec enTrain = factory.createPrepositionPhrase("en", train);
 			vgComponents.push(enTrain);
+			
+			PPPhraseSpec estarVerb = factory.createPrepositionPhrase("estar");
+			vgComponents.push(estarVerb);
 			
 			// adds auxiliary "être"
 			WordElement passiveAuxiliary = (WordElement)
@@ -1111,6 +1056,17 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 						DiscourseFunction.AUXILIARY);
 				}
 			}
+		
+//		NLGElement aux = null;
+//		NLGElement currentElement = null;
+//		while (!auxiliaryRealisation.isEmpty()) {
+//			aux = auxiliaryRealisation.pop();
+//			currentElement = aux.realiseSyntax();
+//			if (currentElement != null) {
+//				realisedElement.addComponent(currentElement);
+//				currentElement.setFeature(InternalFeature.DISCOURSE_FUNCTION,
+//						DiscourseFunction.AUXILIARY);
+//			}
 		}
 	}
 

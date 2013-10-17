@@ -302,15 +302,15 @@ public class VerbPhraseHelper extends AbstractVerbPhraseHelper {
 			Stack<NLGElement> vgComponents) {
 
 		NLGElement newFront = frontVG;
-		if (hasModal
-				&& !phrase.getFeatureAsBoolean(InternalFeature.IGNORE_MODAL)
-						.booleanValue()) {
-			if (frontVG != null) {
-				frontVG.setFeature(InternalFeature.NON_MORPH, true);
-				vgComponents.push(frontVG);
-			}
-			newFront = null;
-		}
+//		if (hasModal
+//				&& !phrase.getFeatureAsBoolean(InternalFeature.IGNORE_MODAL)
+//						.booleanValue()) {
+//			if (frontVG != null) {
+//				frontVG.setFeature(InternalFeature.NON_MORPH, true);
+//				vgComponents.push(frontVG);
+//			}
+//			newFront = null;
+//		}
 		return newFront;
 	}
 

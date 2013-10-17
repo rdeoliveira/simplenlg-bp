@@ -11,6 +11,7 @@ import simplenlg.realiser.Realiser;
 import simplenlg.phrasespec.SPhraseSpec;
 import simplenlg.phrasespec.NPPhraseSpec;
 import simplenlg.phrasespec.PPPhraseSpec;
+import simplenlg.phrasespec.VPPhraseSpec;
 
 public class MATestbed {
 
@@ -103,6 +104,25 @@ public class MATestbed {
         testBed.add(ex4);
         targets.add(target4);
         glosses.add(gloss4);
+        
+        // EX35
+        String target35 = "Você vai passar pelo bairro.";
+        String gloss35 = "You are going to drive through the neighborhood.";        
+        SPhraseSpec ex35 = nlgFactory.createClause();
+        ex35.setSubject("você");
+        VPPhraseSpec verb35 = nlgFactory.createVerbPhrase("passar");
+        verb35.setFeature(Feature.PROSPECTIVE, true);
+        ex35.setVerb(verb35);
+//        ex35.setFeature(Feature.PROSPECTIVE, true);
+        PPPhraseSpec generalizedRoute = nlgFactory.createPrepositionPhrase();
+        NPPhraseSpec relatum35 = nlgFactory.createNounPhrase("bairro");
+        relatum35.setSpecifier("o");
+        generalizedRoute.addComplement(relatum35);
+        generalizedRoute.setPreposition("por");
+        ex35.addComplement(generalizedRoute);
+        testBed.add(ex35);
+        targets.add(target35);
+        glosses.add(gloss35);
         
         // EX41
         String target41 = "O edifício fica na praça.";

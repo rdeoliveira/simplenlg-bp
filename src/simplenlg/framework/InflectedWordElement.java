@@ -31,7 +31,7 @@ import simplenlg.morphology.MorphologyRulesInterface;
 
 /**
  * <p>
- * This class defines the <code>NLGElement</code> that is used to represent an
+ * This class defines the <code>NLGElement</code> that is used to represent a
  * word that requires inflection by the morphology. It has convenience methods
  * for retrieving the base form of the word (for example, <em>kiss</em>,
  * <em>eat</em>) and for setting and retrieving the base word. The base word is
@@ -215,7 +215,7 @@ public class InflectedWordElement extends NLGElement {
 
 	/**
 	 * Realisation method for the syntax stage.
-	 * based on english SyntaxProcessor
+	 * based on English SyntaxProcessor
 	 * 
 	 * @return syntactically realised form
 	 * @author vaudrypl
