@@ -44,7 +44,7 @@ import simplenlg.morphology.MorphologyRulesInterface;
  * Cunha, Celso & Cintra, Lindley (1984). Nova Gramática do Português 
  * Contemporâneo. Edições João de Sá da Costa, Lisboa.
  * 
- * @author de Oliveira
+ * @author R. de Oliveira, University of Aberdeen.
  *
  */
 public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorphologyRules
@@ -274,7 +274,7 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 	 * Builds the plural form of a noun or adjective following regular rules.
 	 * Reference : 180-187 of Cunha & Cintra (1984)
 	 * 
-	 * @author rdeoliveira
+	 * @author R. de Oliveira, University of Aberdeen.
 	 * @param form form being realised on which to apply the plural morphology
 	 * @return the plural form
 	 */

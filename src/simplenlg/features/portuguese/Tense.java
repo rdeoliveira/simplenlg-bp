@@ -16,7 +16,7 @@
 // * Nomenclature has been adapted to better correlate to the nomenclature of
 // * English grammars. 
 // * 
-// * @author de Oliveira
+// * @author R. de Oliveira, University of Aberdeen.
 // *
 // */
 //public enum Tense {

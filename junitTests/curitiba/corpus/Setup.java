@@ -31,8 +31,8 @@ import simplenlg.realiser.Realiser;
 
 /**
  * This class is the base class for all JUnit simplenlg.test cases for
- * simplenlg.
- * @author rdeoliveira
+ * SimpleNLG.
+ * @author R. de Oliveira, University of Aberdeen.
  */
 public abstract class Setup extends TestCase {
 

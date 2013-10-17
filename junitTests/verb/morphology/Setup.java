@@ -30,7 +30,7 @@ import simplenlg.realiser.Realiser;
 
 /**
  * This class is the base class for all JUnit test cases in this package.
- * @author de Oliveira
+ * @author R. de Oliveira, University of Aberdeen.
  */
 public abstract class Setup extends TestCase {
 

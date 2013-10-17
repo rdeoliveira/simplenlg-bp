@@ -24,13 +24,15 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import simplenlg.features.Feature;
-import simplenlg.features.Form;
 import simplenlg.features.NumberAgreement;
 import simplenlg.features.Person;
 import simplenlg.features.Tense;
 
 /**
- * TODO
+ * This jUnit class tests the many possible forms of periphrastic verb groups,
+ * i.e. when main and auxiliary verbs compose the verb group.
+ * 
+ *  @author R. de Oliveira, University of Aberdeen.
  */
 public class VerbPeriphrasis extends Setup {
 	
@@ -45,8 +47,9 @@ public class VerbPeriphrasis extends Setup {
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		cantar.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
 		cantar.setFeature(Feature.PROGRESSIVE, true);
-		Assert.assertEquals(
-				"estarão cantando", realiser.realise(cantar).getRealisation());
+		String realisation = realiser.realise(cantar).getRealisation();
+//		System.out.println(realisation);
+		Assert.assertEquals("estarão cantando", realisation);
 	}
 	
 	@Test
@@ -56,8 +59,9 @@ public class VerbPeriphrasis extends Setup {
 		cantar.setFeature(Feature.PERSON, Person.FIRST);
 		cantar.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
 		cantar.setFeature(Feature.PERFECT, true);
-		Assert.assertEquals(
-				"tinha cantado", realiser.realise(cantar).getRealisation());
+		String realisation = realiser.realise(cantar).getRealisation();
+//		System.out.println(realisation);
+		Assert.assertEquals("tinha cantado", realisation);
 	}
 	
 	@Test
@@ -67,8 +71,9 @@ public class VerbPeriphrasis extends Setup {
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		cantar.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
 		cantar.setFeature(Feature.PROSPECTIVE, true);
-		Assert.assertEquals(
-				"vai cantar", realiser.realise(cantar).getRealisation());
+		String realisation = realiser.realise(cantar).getRealisation();
+//		System.out.println(realisation);
+		Assert.assertEquals("vai cantar", realisation);
 	}
 	
 	@Test
@@ -79,8 +84,9 @@ public class VerbPeriphrasis extends Setup {
 		cantar.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
 		cantar.setFeature(Feature.PROGRESSIVE, true);
 		cantar.setFeature(Feature.PROSPECTIVE, true);
-		Assert.assertEquals(
-				"vai estar cantando", realiser.realise(cantar).getRealisation());
+		String realisation = realiser.realise(cantar).getRealisation();
+//		System.out.println(realisation);
+		Assert.assertEquals("vai estar cantando", realisation);
 	}
 	
 	@Test
@@ -91,8 +97,47 @@ public class VerbPeriphrasis extends Setup {
 		cantar.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
 		cantar.setFeature(Feature.PERFECT, true);
 		cantar.setFeature(Feature.PROSPECTIVE, true);
-		Assert.assertEquals(
-				"iríamos ter cantado", realiser.realise(cantar).getRealisation());
+		String realisation = realiser.realise(cantar).getRealisation();
+//		System.out.println(realisation);
+		Assert.assertEquals("iríamos ter cantado", realisation);
+	}
+	
+	@Test
+	public void testModal(){
+		
+		cantar.setFeature(Feature.TENSE, Tense.SUBJUNCTIVE_PRESENT);
+		cantar.setFeature(Feature.PERSON, Person.SECOND);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+		cantar.setFeature(Feature.MODAL, "dever");
+		String realisation = realiser.realise(cantar).getRealisation();
+//		System.out.println(realisation);
+		Assert.assertEquals("deva cantar", realisation);
+	}
+	
+	@Test
+	public void testModalProgressive(){
+		
+		cantar.setFeature(Feature.TENSE, Tense.CONDITIONAL);
+		cantar.setFeature(Feature.PERSON, Person.FIRST);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+		cantar.setFeature(Feature.MODAL, "dever");
+		cantar.setFeature(Feature.PROGRESSIVE, true);
+		String realisation = realiser.realise(cantar).getRealisation();
+//		System.out.println(realisation);
+		Assert.assertEquals("deveria estar cantando", realisation);
+	}
+	
+	@Test
+	public void testModalPerfective(){
+		
+		cantar.setFeature(Feature.TENSE, Tense.SUBJUNCTIVE_FUTURE);
+		cantar.setFeature(Feature.PERSON, Person.SECOND);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
+		cantar.setFeature(Feature.MODAL, "poder");
+		cantar.setFeature(Feature.PROSPECTIVE, true);
+		String realisation = realiser.realise(cantar).getRealisation();
+//		System.out.println(realisation);
+		Assert.assertEquals("forem poder cantar", realisation);
 	}
 	
 }

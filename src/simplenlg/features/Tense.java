@@ -43,8 +43,8 @@ package simplenlg.features;
  * Nomenclature has been adapted to better correlate to the nomenclature of
  * English grammars. 
  * 
- * @author de Oliveira 
  * @author A. Gatt and D. Westwater, University of Aberdeen.
+ * @author R. de Oliveira, University of Aberdeen.
  * @version 4.0
  * 
  */

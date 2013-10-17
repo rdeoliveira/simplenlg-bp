@@ -20,20 +20,16 @@ package simplenlg.syntax.portuguese;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 
-import simplenlg.features.ClauseStatus;
 import simplenlg.features.DiscourseFunction;
 import simplenlg.features.Feature;
 import simplenlg.features.Form;
-import simplenlg.features.Gender;
 import simplenlg.features.InternalFeature;
 import simplenlg.features.InterrogativeType;
 import simplenlg.features.LexicalFeature;
 import simplenlg.features.NumberAgreement;
 import simplenlg.features.Person;
-import simplenlg.features.Tense;
 import simplenlg.features.portuguese.PortugueseFeature;
 import simplenlg.features.portuguese.PortugueseLexicalFeature;
 import simplenlg.features.portuguese.PronounType;
@@ -41,7 +37,6 @@ import simplenlg.features.portuguese.PortugueseInternalFeature;
 import simplenlg.framework.CoordinatedPhraseElement;
 import simplenlg.framework.InflectedWordElement;
 import simplenlg.framework.LexicalCategory;
-import simplenlg.framework.PhraseCategory;
 import simplenlg.framework.ListElement;
 import simplenlg.framework.NLGElement;
 import simplenlg.framework.NLGFactory;
@@ -192,7 +187,7 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 * 
 	 * Based on English method of the same name.
 	 * 
-	 * @author de Oliveira (edited)
+	 * @author R. de Oliveira, University of Aberdeen.
 	 * 
 	 * @param phrase
 	 *            the <code>PhraseElement</code> representing this verb phrase.
@@ -216,8 +211,8 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		boolean progressive = phrase.getFeatureAsBoolean(Feature.PROGRESSIVE);
 		boolean perfect = phrase.getFeatureAsBoolean(Feature.PERFECT);
 		boolean prospective = phrase.getFeatureAsBoolean(Feature.PROSPECTIVE);
+		String modal = phrase.getFeatureAsString(Feature.MODAL);
 		// TODO features yet to be used, once everything is implemented...
-		// boolean interrogative = phrase.hasFeature(Feature.INTERROGATIVE_TYPE);
 		// boolean passive = phrase.getFeatureAsBoolean(Feature.PASSIVE);
 		// boolean negative = phrase.getFeatureAsBoolean(Feature.NEGATED);
 		
@@ -229,7 +224,7 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 			return vgComponents;
 		}
 		
-		// if progressive...
+		// if the entire verb phrase has progressive feature...
 		if (progressive) {
 			// creates auxiliary "estar"...
 			WordElement auxWord = new WordElement("estar", LexicalCategory.VERB, 
@@ -242,6 +237,7 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 				setFeature(Feature.FORM, Form.PRESENT_PARTICIPLE);
 		}
 		
+		// if the entire verb phrase has perfect(ive) feature...
 		if (perfect) {
 			// creates auxiliary "ter"...
 			WordElement auxWord = new WordElement("ter", LexicalCategory.VERB, 
@@ -252,6 +248,19 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 			// and sets previous verb as past participle (-do).
 			vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
 				setFeature(Feature.FORM, Form.PAST_PARTICIPLE);
+		}
+		
+		// if the entire verb phrase has a modal (which should be a string)...
+		if (modal!=null) {
+			// creates modal with grabbed modal string...
+			WordElement auxWord = new WordElement(modal, LexicalCategory.VERB, 
+					ptLexicon);
+			InflectedWordElement aux = new InflectedWordElement(auxWord);
+			// adds it to the end of the array...
+			vgComponentsArray.add(aux);
+			// and sets previous verb as infinitive.
+			vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
+				setFeature(Feature.FORM, Form.BARE_INFINITIVE);
 		}
 	
 		if (prospective) {
@@ -301,32 +310,6 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		
 		// return stack
 		return vgComponents;
-	}
-
-	/**
-	 * Transfers the agreement features from the direct object to
-	 * the past participle with auxiliary "avoir" if the direct object
-	 * is placed before the past participle. (For now, this only means
-	 * if there is a direct object clitic pronoun. Eventually it will
-	 * include checks for relative clause, etc.)
-	 * 
-	 * @param auxReturn
-	 * @param cliticDirectObject
-	 */
-	protected void makePastParticipleWithAvoirAgreement(
-			NLGElement pastParticiple, NLGElement cliticDirectObject) {
-		
-		if (pastParticiple != null && cliticDirectObject != null) {
-			Object gender = cliticDirectObject.getFeature(LexicalFeature.GENDER);
-			if (gender instanceof Gender) {
-				pastParticiple.setFeature(LexicalFeature.GENDER, gender);
-			}
-			
-			Object number = cliticDirectObject.getFeature(Feature.NUMBER);
-			if (number instanceof NumberAgreement) {
-				pastParticiple.setFeature(Feature.NUMBER, number);
-			}
-		}
 	}
 
 	/**
@@ -492,91 +475,6 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 			frontVG.getLexicon().lookupWord("être", LexicalCategory.VERB); //$NON-NLS-1$
 		return new InflectedWordElement(passiveAuxiliary);
 	}
-
-	/**
-	 * Adds the progressive auxiliary verb to the front of the group.
-	 * 
-	 * @param frontVG
-	 *            the first verb in the verb group.
-	 * @param vgComponents
-	 *            the stack of verb components in the verb group.
-	 * @return the new element for the front of the group.
-	 */
-	protected NLGElement addProgressiveAuxiliary(NLGElement frontVG,
-			Stack<NLGElement> vgComponents, NLGFactory factory, PhraseElement phrase) {
-
-		// pushes on stack "en train de " + clitics + verb in infinitive form
-		if (frontVG != null) {
-			frontVG.setFeature(Feature.FORM, Form.INFINITIVE);
-			vgComponents.push(frontVG);
-			insertCliticComplementPronouns(phrase, vgComponents);
-			
-			PPPhraseSpec deVerb = factory.createPrepositionPhrase("de");
-//				deVerb.setComplement(frontVG);
-			NPPhraseSpec train = factory.createNounPhrase("train");
-			train.addPostModifier(deVerb);
-			PPPhraseSpec enTrain = factory.createPrepositionPhrase("en", train);
-			vgComponents.push(enTrain);
-			
-			PPPhraseSpec estarVerb = factory.createPrepositionPhrase("estar");
-			vgComponents.push(estarVerb);
-			
-			// adds auxiliary "être"
-			WordElement passiveAuxiliary = (WordElement)
-				frontVG.getLexicon().lookupWord("être", LexicalCategory.VERB); //$NON-NLS-1$
-			frontVG = new InflectedWordElement(passiveAuxiliary);
-		}
-		return frontVG;
-	}
-
-	/**
-	 * Adds <em>have</em> to the stack.
-	 * 
-	 * @param frontVG
-	 *            the first verb in the verb group.
-	 * @param vgComponents
-	 *            the stack of verb components in the verb group.
-	 * @param modal
-	 *            the modal to be used.
-	 * @param tenseValue
-	 *            the <code>Tense</code> of the phrase.
-	 * @return the new element for the front of the group.
-	 */
-	protected AddAuxiliaryReturn addAuxiliary(NLGElement frontVG,
-			Stack<NLGElement> vgComponents, String modal, Tense tenseValue,
-			PhraseElement phrase) {
-		NLGElement newFront = frontVG, pastParticipleAvoir = null;
-		WordElement auxiliaryWord = null;
-
-		if (frontVG != null) {
-			frontVG.setFeature(Feature.FORM, Form.PAST_PARTICIPLE);
-			vgComponents.push(frontVG);
-			// choose between "avoir" or "être" as auxiliary
-			String auxiliary = "avoir"; //$NON-NLS-1$
-			if ( frontVG.getFeatureAsBoolean(PortugueseLexicalFeature.AUXILIARY_ETRE)
-					|| hasReflexiveObject(phrase) ) {
-				// if auxiliary "être", the past participle agrees with the subject
-				auxiliary = "être"; //$NON-NLS-1$
-				Object number = phrase.getFeature(Feature.NUMBER);
-				frontVG.setFeature(Feature.NUMBER, number);
-				Object gender = phrase.getFeature(LexicalFeature.GENDER);
-				frontVG.setFeature(LexicalFeature.GENDER, gender);
-			} else {
-				pastParticipleAvoir = frontVG;
-			}
-			
-			auxiliaryWord = (WordElement)
-				frontVG.getLexicon().lookupWord(auxiliary, LexicalCategory.VERB); //$NON-NLS-1$
-		}
-		newFront = new InflectedWordElement(auxiliaryWord);
-		newFront.setFeature(Feature.FORM, Form.NORMAL);
-		newFront.setFeature(Feature.TENSE, tenseValue);
-		
-		if (modal != null) {
-			newFront.setFeature(InternalFeature.NON_MORPH, true);
-		}
-		return new AddAuxiliaryReturn(newFront, pastParticipleAvoir);
-	}
 	
 	/**
 	 * Says if the verb phrase has a reflexive object (direct or indirect)
@@ -620,19 +518,6 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		}
 		
 		return reflexiveObjectFound;
-	}
-
-	/**
-	 * Class used to get two return values from the addAuxiliary method
-	 * @author vaudrypl
-	 */
-	protected class AddAuxiliaryReturn {
-		public final NLGElement newFront, pastParticipleAvoir;
-		
-		public AddAuxiliaryReturn(NLGElement newFront, NLGElement pastParticipleAvoir) {
-			this.newFront = newFront;
-			this.pastParticipleAvoir = pastParticipleAvoir;
-		}
 	}
 
 	/**
@@ -725,55 +610,6 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		}
 		
 		return number;
-	}
-
-	/**
-	 * Pushes the front verb onto the stack of verb components.
-	 * Sets the front verb features.
-	 * 
-	 * @param phrase
-	 *            the <code>PhraseElement</code> representing this noun phrase.
-	 * @param vgComponents
-	 *            the stack of verb components in the verb group.
-	 * @param frontVG
-	 *            the first verb in the verb group.
-	 * @param formValue
-	 *            the <code>Form</code> of the phrase.
-	 * @param interrogative
-	 *            <code>true</code> if the phrase is interrogative.
-	 */
-	@Override
-	protected void pushFrontVerb(PhraseElement phrase,
-			Stack<NLGElement> vgComponents, NLGElement frontVG,
-			Object formValue, boolean interrogative) {
-		
-		if (Form.GERUND.equals(formValue)) {
-			frontVG.setFeature(Feature.FORM, Form.PRESENT_PARTICIPLE);
-			vgComponents.push(frontVG);
-		
-		} else if (Form.PAST_PARTICIPLE.equals(formValue)) {
-			frontVG.setFeature(Feature.FORM, Form.PAST_PARTICIPLE);
-			vgComponents.push(frontVG);
-		
-		} else if (Form.PRESENT_PARTICIPLE.equals(formValue)) {
-			frontVG.setFeature(Feature.FORM, Form.PRESENT_PARTICIPLE);
-			vgComponents.push(frontVG);
-		
-		} else if (!(formValue == null || Form.NORMAL.equals(formValue)
-						|| formValue == Form.SUBJUNCTIVE
-						|| formValue == Form.IMPERATIVE )
-				&& !isCopular(phrase.getHead()) && vgComponents.isEmpty()) {
-
-			vgComponents.push(frontVG);
-		
-		} else {
-			NumberAgreement numToUse = determineNumber(phrase.getParent(),
-					phrase);
-			frontVG.setFeature(Feature.PERSON, phrase
-					.getFeature(Feature.PERSON));
-			frontVG.setFeature(Feature.NUMBER, numToUse);
-			vgComponents.push(frontVG);
-		}
 	}
 
 	/**
@@ -991,83 +827,6 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		}
 		
 		return element;
-	}
-
-	/**
-	 * Pushes the modal onto the stack of verb components.
-	 * Sets the modal features.
-	 * Based on English VerbPhraseHelper
-	 * 
-	 * @param actualModal
-	 *            the modal to be used.
-	 * @param phrase
-	 *            the <code>PhraseElement</code> representing this noun phrase.
-	 * @param vgComponents
-	 *            the stack of verb components in the verb group.
-	 */
-	protected void pushModal(WordElement modalWord, PhraseElement phrase,
-			Stack<NLGElement> vgComponents) {
-		if (modalWord != null
-				&& !phrase.getFeatureAsBoolean(InternalFeature.IGNORE_MODAL)
-						.booleanValue()) {
-			InflectedWordElement inflectedModal = new InflectedWordElement(modalWord);
-			
-			Object form = phrase.getFeature(Feature.FORM);
-			inflectedModal.setFeature(Feature.FORM, form);
-			
-			Object tense = phrase.getFeature(Feature.TENSE);
-			tense = (tense != Tense.PAST) ? tense : Tense.PRESENT;
-			inflectedModal.setFeature(Feature.TENSE, tense);
-			
-			inflectedModal.setFeature(Feature.PERSON, phrase.getFeature(Feature.PERSON));
-			
-			NumberAgreement numToUse = determineNumber(phrase.getParent(), phrase);
-			inflectedModal.setFeature(Feature.NUMBER, numToUse);
-			
-			vgComponents.push(inflectedModal);
-		}
-	}
-
-	/**
-	 * Realises the auxiliary verbs in the verb group.
-	 * 
-	 * @param realisedElement
-	 *            the current realisation of the noun phrase.
-	 * @param auxiliaryRealisation
-	 *            the stack of auxiliary verbs.
-	 */
-	@Override
-	protected void realiseAuxiliaries(ListElement realisedElement,
-			Stack<NLGElement> auxiliaryRealisation) {
-
-		NLGElement aux = null;
-		NLGElement currentElement = null;
-		while (!auxiliaryRealisation.isEmpty()) {
-			aux = auxiliaryRealisation.pop();
-			currentElement = aux.realiseSyntax();
-			
-			if (currentElement != null) {
-				realisedElement.addComponent(currentElement);
-				
-				if (currentElement.isA(LexicalCategory.VERB)
-					|| currentElement.isA(LexicalCategory.MODAL)
-					|| currentElement.isA(PhraseCategory.VERB_PHRASE)) {
-				currentElement.setFeature(InternalFeature.DISCOURSE_FUNCTION,
-						DiscourseFunction.AUXILIARY);
-				}
-			}
-		
-//		NLGElement aux = null;
-//		NLGElement currentElement = null;
-//		while (!auxiliaryRealisation.isEmpty()) {
-//			aux = auxiliaryRealisation.pop();
-//			currentElement = aux.realiseSyntax();
-//			if (currentElement != null) {
-//				realisedElement.addComponent(currentElement);
-//				currentElement.setFeature(InternalFeature.DISCOURSE_FUNCTION,
-//						DiscourseFunction.AUXILIARY);
-//			}
-		}
 	}
 
 }

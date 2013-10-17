@@ -18,7 +18,7 @@ import simplenlg.features.Tense;
  * Cunha, Celso & Cintra, Lindley (1984). Nova Gramática do Português 
  * Contemporâneo. Edições João de Sá da Costa, Lisboa.
  * 
- * @author de Oliveira
+ * @author R. de Oliveira, University of Aberdeen.
  */
 public class VerbRules {
 	

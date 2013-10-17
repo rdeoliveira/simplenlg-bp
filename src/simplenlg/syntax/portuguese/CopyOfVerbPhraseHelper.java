@@ -54,7 +54,7 @@ import simplenlg.phrasespec.VPPhraseSpec;
 /**
  * Creates verb phrase.
  *  
- * @author de Oliveira
+ * @author R. de Oliveira, University of Aberdeen.
  */
 public class CopyOfVerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhraseHelper {
 }
