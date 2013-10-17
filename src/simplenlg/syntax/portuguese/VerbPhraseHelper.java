@@ -53,13 +53,7 @@ import simplenlg.phrasespec.VPPhraseSpec;
  * This class contains static methods to help the syntax processor realise verb
  * phrases for Portuguese.
  * 
- * Reference :
- * 
- * Grevisse, Maurice (1993). Le bon usage, grammaire française,
- * 12e édition refondue par André Goosse, 8e tirage, Éditions Duculot,
- * Louvain-la-Neuve, Belgique.
- * 
- * @author vaudrypl
+ * @author R. de Oliveira, University of Aberdeen.
  */
 public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhraseHelper {
 
@@ -186,6 +180,9 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 * verb order should be: ("ir" +)(modal +)("ter" +)("estar" +)main. 
 	 * 
 	 * Based on English method of the same name.
+	 * 
+	 * Source: Bechara, Evanildo. Moderna Gramática Portuguesa, pp. 230-233. 
+	 * Nova Fronteira, 2013. 
 	 * 
 	 * @author R. de Oliveira, University of Aberdeen.
 	 * 
