@@ -150,6 +150,7 @@ public class VerbPeriphrasis extends Setup {
 		String realisation = realiser.realise(cantar).getRealisation();
 //		System.out.println(realisation);
 		Assert.assertEquals("deveria estar cantando", realisation);
+		//
 	}
 	
 	@Test
