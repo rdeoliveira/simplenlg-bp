@@ -53,6 +53,18 @@ public class VerbPeriphrasis extends Setup {
 	}
 	
 	@Test
+	public void testAlternativeProgressive(){
+		
+		cantar.setFeature(Feature.TENSE, Tense.FUTURE);
+		cantar.setFeature(Feature.PERSON, Person.SECOND);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
+		cantar.setFeature(Feature.PROGRESSIVE, "continuar");
+		String realisation = realiser.realise(cantar).getRealisation();
+//		System.out.println(realisation);
+		Assert.assertEquals("continuarão cantando", realisation);
+	}
+	
+	@Test
 	public void testPerfective(){
 		
 		cantar.setFeature(Feature.TENSE, Tense.IMPERFECT);
@@ -87,6 +99,19 @@ public class VerbPeriphrasis extends Setup {
 		String realisation = realiser.realise(cantar).getRealisation();
 //		System.out.println(realisation);
 		Assert.assertEquals("vai estar cantando", realisation);
+	}
+	
+	@Test
+	public void testAlternativeProgressiveProspective(){
+		
+		cantar.setFeature(Feature.TENSE, Tense.PRESENT);
+		cantar.setFeature(Feature.PERSON, Person.THIRD);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+		cantar.setFeature(Feature.PROGRESSIVE, "viver");
+		cantar.setFeature(Feature.PROSPECTIVE, true);
+		String realisation = realiser.realise(cantar).getRealisation();
+//		System.out.println(realisation);
+		Assert.assertEquals("vai viver cantando", realisation);
 	}
 	
 	@Test
@@ -125,6 +150,19 @@ public class VerbPeriphrasis extends Setup {
 		String realisation = realiser.realise(cantar).getRealisation();
 //		System.out.println(realisation);
 		Assert.assertEquals("deveria estar cantando", realisation);
+	}
+	
+	@Test
+	public void testAlternativeModalProgressive(){
+		
+		cantar.setFeature(Feature.TENSE, Tense.CONDITIONAL);
+		cantar.setFeature(Feature.PERSON, Person.FIRST);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+		cantar.setFeature(Feature.MODAL, "dever");
+		cantar.setFeature(Feature.PROGRESSIVE, "ficar");
+		String realisation = realiser.realise(cantar).getRealisation();
+//		System.out.println(realisation);
+		Assert.assertEquals("deveria ficar cantando", realisation);
 	}
 	
 	@Test

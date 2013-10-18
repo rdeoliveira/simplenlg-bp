@@ -534,9 +534,9 @@ abstract public class Feature {
 	public static final String MODAL = "modal";
 	
 	/**
-	 * added for Portuguese by de Oliveira.
+	 * added for Portuguese by R. de Oliveira.
 	 * 
-	 * TODO adapt this comment. 
+	 * TODO really need this?
 	 * 
 	 * <p>
 	 * The modal represents the modal auxiliary verb that is used in a verb

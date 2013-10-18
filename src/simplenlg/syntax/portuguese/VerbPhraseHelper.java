@@ -205,14 +205,14 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		Object tenseValue = phrase.getFeature(Feature.TENSE);
 		Object personValue = phrase.getFeature(Feature.PERSON);
 		Object numberValue = phrase.getFeature(Feature.NUMBER);
-		boolean progressive = phrase.getFeatureAsBoolean(Feature.PROGRESSIVE);
+		String progressiveString = phrase.getFeatureAsString(Feature.PROGRESSIVE);
 		boolean perfect = phrase.getFeatureAsBoolean(Feature.PERFECT);
 		boolean prospective = phrase.getFeatureAsBoolean(Feature.PROSPECTIVE);
 		String modal = phrase.getFeatureAsString(Feature.MODAL);
 		// TODO features yet to be used, once everything is implemented...
 		// boolean passive = phrase.getFeatureAsBoolean(Feature.PASSIVE);
 		// boolean negative = phrase.getFeatureAsBoolean(Feature.NEGATED);
-		
+
 		// gets head verb and adds it as first element in the array
 		NLGElement headVerb = phrase.getHead();
 		if (headVerb != null) {
@@ -222,10 +222,22 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		}
 		
 		// if the entire verb phrase has progressive feature...
-		if (progressive) {
-			// creates auxiliary "estar"...
-			WordElement auxWord = new WordElement("estar", LexicalCategory.VERB, 
+		if (!progressiveString.equals("false")) {
+			// grabs the string associated with the progressive feature, if any...
+			String auxString = phrase.getFeatureAsString(Feature.PROGRESSIVE);
+			WordElement auxWord;
+			// if there was no string...
+			if (progressiveString.equals("true")){
+				// creates auxiliary "estar" as deafult...
+				auxWord = new WordElement("estar", LexicalCategory.VERB, 
 					ptLexicon);
+			// but if there was an specific string -- even if "estar"...
+			} else {
+				// creates auxiliary using that string 
+				auxWord = new WordElement(auxString, LexicalCategory.VERB, 
+					ptLexicon);
+			}
+			// finishes creation of auxiliary TODO really necessary?
 			InflectedWordElement aux = new InflectedWordElement(auxWord);
 			// adds it to the end of the array...
 			vgComponentsArray.add(aux);
