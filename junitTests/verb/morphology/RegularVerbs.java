@@ -153,6 +153,34 @@ public class RegularVerbs extends Setup {
 		Assert.assertEquals(
 				"cantaram", realiser.realise(cantar).getRealisation());
 		
+		// Tense = Pluperfect
+		cantar.setFeature(Feature.TENSE, Tense.PLUPERFECT);
+		cantar.setFeature(Feature.PERSON, Person.FIRST);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+		Assert.assertEquals(
+				"cantara", realiser.realise(cantar).getRealisation());
+		
+		cantar.setFeature(Feature.PERSON, Person.SECOND);
+		Assert.assertEquals(
+				"cantaras", realiser.realise(cantar).getRealisation());
+		
+		cantar.setFeature(Feature.PERSON, Person.THIRD);
+		Assert.assertEquals(
+				"cantara", realiser.realise(cantar).getRealisation());
+		
+		cantar.setFeature(Feature.PERSON, Person.FIRST);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
+		Assert.assertEquals(
+				"cantáramos", realiser.realise(cantar).getRealisation());
+		
+		cantar.setFeature(Feature.PERSON, Person.SECOND);
+		Assert.assertEquals(
+				"cantáreis", realiser.realise(cantar).getRealisation());
+		
+		cantar.setFeature(Feature.PERSON, Person.THIRD);
+		Assert.assertEquals(
+				"cantaram", realiser.realise(cantar).getRealisation());
+		
 		// Tense = Present
 		cantar.setFeature(Feature.TENSE, Tense.PRESENT);
 		cantar.setFeature(Feature.PERSON, Person.FIRST);
@@ -382,6 +410,34 @@ public class RegularVerbs extends Setup {
 		Assert.assertEquals(
 				"venderam", realiser.realise(vender).getRealisation());
 		
+		// Tense = Pluperfect
+		vender.setFeature(Feature.TENSE, Tense.PLUPERFECT);
+		vender.setFeature(Feature.PERSON, Person.FIRST);
+		vender.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+		Assert.assertEquals(
+				"vendera", realiser.realise(vender).getRealisation());
+		
+		vender.setFeature(Feature.PERSON, Person.SECOND);
+		Assert.assertEquals(
+				"venderas", realiser.realise(vender).getRealisation());
+		
+		vender.setFeature(Feature.PERSON, Person.THIRD);
+		Assert.assertEquals(
+				"vendera", realiser.realise(vender).getRealisation());
+		
+		vender.setFeature(Feature.PERSON, Person.FIRST);
+		vender.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
+		Assert.assertEquals(
+				"vendêramos", realiser.realise(vender).getRealisation());
+		
+		vender.setFeature(Feature.PERSON, Person.SECOND);
+		Assert.assertEquals(
+				"vendêreis", realiser.realise(vender).getRealisation());
+		
+		vender.setFeature(Feature.PERSON, Person.THIRD);
+		Assert.assertEquals(
+				"venderam", realiser.realise(vender).getRealisation());
+		
 		// Tense = Present
 		vender.setFeature(Feature.TENSE, Tense.PRESENT);
 		vender.setFeature(Feature.PERSON, Person.FIRST);
@@ -606,6 +662,34 @@ public class RegularVerbs extends Setup {
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
 				"partiram", realiser.realise(partir).getRealisation());
+		
+		partir.setFeature(Feature.PERSON, Person.THIRD);
+		Assert.assertEquals(
+				"partiram", realiser.realise(partir).getRealisation());
+		
+		// Tense = Pluperfect
+		partir.setFeature(Feature.TENSE, Tense.PLUPERFECT);
+		partir.setFeature(Feature.PERSON, Person.FIRST);
+		partir.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+		Assert.assertEquals(
+				"partira", realiser.realise(partir).getRealisation());
+		
+		partir.setFeature(Feature.PERSON, Person.SECOND);
+		Assert.assertEquals(
+				"partiras", realiser.realise(partir).getRealisation());
+		
+		partir.setFeature(Feature.PERSON, Person.THIRD);
+		Assert.assertEquals(
+				"partira", realiser.realise(partir).getRealisation());
+		
+		partir.setFeature(Feature.PERSON, Person.FIRST);
+		partir.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
+		Assert.assertEquals(
+				"partíramos", realiser.realise(partir).getRealisation());
+		
+		partir.setFeature(Feature.PERSON, Person.SECOND);
+		Assert.assertEquals(
+				"partíreis", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(

@@ -369,6 +369,96 @@ public class VerbRules {
 	}
 	
 	/**
+	 * Builds the pluperfect form for regular verbs. 
+	 *
+	 * @param baseForm
+	 *            the base form of the word.
+	 * @param number
+	 * @param person
+	 * @return the inflected word.
+	 */
+	protected static String buildPluperfectRegularVerb(String baseForm,
+			NumberAgreement number, Person person) {
+		int conjugationType = getConjugationType(baseForm);
+		String radical = getVerbRadical(baseForm, Tense.PLUPERFECT);
+		String suffix = "";		
+		if (conjugationType != 0) {
+			switch ( number ) {
+			case SINGULAR: case BOTH:
+				if(conjugationType == 1){
+					switch ( person ) {
+					case FIRST: case THIRD:
+						suffix = "ara";
+						break;
+					case SECOND:
+						suffix = "aras";
+						break;
+					}
+				} else if(conjugationType == 2){
+					switch ( person ) {
+					case FIRST: case THIRD:
+						suffix = "era";
+						break;
+					case SECOND:
+						suffix = "eras";
+						break;
+					}
+				} else if(conjugationType == 3){
+					switch ( person ) {
+					case FIRST: case THIRD:
+						suffix = "ira";
+						break;
+					case SECOND:
+						suffix = "iras";
+						break;
+					}
+				}
+				break;
+			case PLURAL:
+				if(conjugationType == 1){
+					switch ( person ) {
+					case FIRST:
+						suffix = "áramos";
+						break;
+					case SECOND:
+						suffix = "áreis";
+						break;
+					case THIRD:
+						suffix = "aram";
+						break;
+					}
+				} else if (conjugationType == 2){
+					switch ( person ) {
+					case FIRST:
+						suffix = "êramos";
+						break;
+					case SECOND:
+						suffix = "êreis";
+						break;
+					case THIRD:
+						suffix = "eram";
+						break;
+					}
+				} else if (conjugationType == 3){
+					switch ( person ) {
+					case FIRST:
+						suffix = "íramos";
+						break;
+					case SECOND:
+						suffix = "íreis";
+						break;
+					case THIRD:
+						suffix = "iram";
+						break;
+					}
+				}
+			}
+		}
+		
+		return addSuffix(radical, suffix);
+	}
+	
+	/**
 	 * Builds the indicative present form for regular verbs. 
 	 *
 	 * @param baseForm the base form of the word.
@@ -646,7 +736,7 @@ public class VerbRules {
 		
 		return addSuffix(radical, suffix);
 	}
-
+	
 	/**
 	 * Builds the appropriate form for the "estar" verb, in any tense. 
 	 *
@@ -743,6 +833,57 @@ public class VerbRules {
 				break;
 			}
 			break;
+		case PERSONAL_INFINITIVE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST: case THIRD:
+					realised = "estar";
+				case SECOND:
+					realised = "estares";
+				}
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "estarmos";
+					break;
+				case SECOND:
+					realised = "estardes";
+					break;
+				case THIRD:
+					realised = "estarem";
+					break;
+				}
+				break;
+			}
+			break;
+		case PLUPERFECT:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST: case THIRD:
+					realised = "estivera";
+					break;
+				case SECOND:
+					realised = "estiveras";
+					break;
+				}
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "estivéramos";
+					break;
+				case SECOND:
+					realised = "estivéreis";
+					break;
+				case THIRD:
+					realised = "estiveram";
+					break;
+				}
+				break;
+			}
+			break;
 		case PRESENT:
 			switch (person){
 			case FIRST:
@@ -766,7 +907,7 @@ public class VerbRules {
 				break;
 			}
 			break;
-		case SUBJUNCTIVE_IMPERFECT: case PERSONAL_INFINITIVE:
+		case SUBJUNCTIVE_IMPERFECT:
 			switch (number){
 			case SINGULAR: case BOTH:
 				realised = "estivesse";
@@ -938,7 +1079,7 @@ public class VerbRules {
 				break;
 			}
 			break;
-		case SUBJUNCTIVE_IMPERFECT: case PERSONAL_INFINITIVE:
+		case SUBJUNCTIVE_IMPERFECT: case PERSONAL_INFINITIVE: //TODO fix this, since s-imperfect and p-infinitive of irregulars is not the same
 			switch (number){
 			case SINGULAR: case BOTH:
 				realised = "tivesse";
@@ -1113,7 +1254,7 @@ public class VerbRules {
 				break;
 			}
 			break;
-		case SUBJUNCTIVE_IMPERFECT: case PERSONAL_INFINITIVE:
+		case SUBJUNCTIVE_IMPERFECT: case PERSONAL_INFINITIVE: //TODO fix this, since s-imperfect and p-infinitive of irregulars is not the same
 			switch (number){
 			case SINGULAR: case BOTH:
 				realised = "fosse";
@@ -1198,7 +1339,8 @@ public class VerbRules {
 	 */
 	protected static String getVerbRadical(String baseForm, Tense tense){
 		String radical = "";
-		// TODO Very simplified rule, and will need improvement.
+		// TODO This list is far from finished; additional irregular verbs
+		// must be added.
 		if (baseForm.equals("trazer") && tense == Tense.PAST) {
 			radical = "troux";
 		} else if (baseForm.equals("reunir") && tense == Tense.PRESENT) {

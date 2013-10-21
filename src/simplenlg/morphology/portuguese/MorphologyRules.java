@@ -504,12 +504,14 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 				break;
 			}
 			realised = radical+thematicVowel+"do";
+		// here begins a list of irregular verbs, that is far from complete
 		} else if(baseForm.equals("estar")){
 			realised = VerbRules.conjugateEstar(number, person, tense);
 		} else if(baseForm.equals("ter")){
 			realised = VerbRules.conjugateTer(number, person, tense);
 		} else if(baseForm.equals("ir")){
 			realised = VerbRules.conjugateIr(number, person, tense);
+		// here begins the set of regular verb conjugations
 		} else {
 			switch (tense) {
 			case CONDITIONAL:
@@ -533,11 +535,11 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 				realised = VerbRules.buildPastRegularVerb(
 						baseForm, number, person);
 				break;
-			// same method as subjunctive future
-			// TODO At present impersonal infinitive is triggered by a "tense" 
-			// choice, but does it make sense? Will it be confusing in real use?
 			case PERSONAL_INFINITIVE:
 				realised = VerbRules.buildSubjunctiveFutureRegularVerb(
+						baseForm, number, person);
+			case PLUPERFECT:
+				realised = VerbRules.buildPluperfectRegularVerb(
 						baseForm, number, person);
 				break;
 			case PRESENT:

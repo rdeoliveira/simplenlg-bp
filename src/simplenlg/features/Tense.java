@@ -110,5 +110,10 @@ public enum Tense {
 	 * This feature should exist just for flexibility of association, since
 	 * its morphological impact on the verb is the same as "subjunctive future".
 	 */
-	PERSONAL_INFINITIVE;
+	PERSONAL_INFINITIVE, 
+	
+	/**
+	 * Example: <em>João beijara Maria (John had kissed Mary)</em>.
+	 */
+	PLUPERFECT;
 }
