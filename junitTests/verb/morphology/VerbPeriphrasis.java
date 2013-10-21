@@ -127,6 +127,8 @@ public class VerbPeriphrasis extends Setup {
 		Assert.assertEquals("iríamos ter cantado", realisation);
 	}
 	
+	//TODO delete this
+	
 	@Test
 	public void testModal(){
 		
