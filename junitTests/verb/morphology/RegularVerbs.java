@@ -50,7 +50,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantaria", realiser.realise(cantar).getRealisation());
+				"cantarias", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
