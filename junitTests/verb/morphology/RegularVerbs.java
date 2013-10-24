@@ -63,7 +63,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantariam", realiser.realise(cantar).getRealisation());
+				"cantaríeis", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -78,7 +78,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantará", realiser.realise(cantar).getRealisation());
+				"cantarás", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -91,7 +91,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantarão", realiser.realise(cantar).getRealisation());
+				"cantareis", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -106,7 +106,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantava", realiser.realise(cantar).getRealisation());
+				"cantavas", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -119,7 +119,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantavam", realiser.realise(cantar).getRealisation());
+				"cantáveis", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -134,7 +134,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantou", realiser.realise(cantar).getRealisation());
+				"cantaste", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -147,7 +147,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantaram", realiser.realise(cantar).getRealisation());
+				"cantastes", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -190,7 +190,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"canta", realiser.realise(cantar).getRealisation());
+				"cantas", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -203,7 +203,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantam", realiser.realise(cantar).getRealisation());
+				"cantais", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -218,7 +218,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cante", realiser.realise(cantar).getRealisation());
+				"cantes", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -231,7 +231,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantem", realiser.realise(cantar).getRealisation());
+				"canteis", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -246,7 +246,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantar", realiser.realise(cantar).getRealisation());
+				"cantares", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -259,7 +259,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantarem", realiser.realise(cantar).getRealisation());
+				"cantardes", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -274,7 +274,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantasse", realiser.realise(cantar).getRealisation());
+				"cantasses", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -287,7 +287,7 @@ public class RegularVerbs extends Setup {
 		
 		cantar.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"cantassem", realiser.realise(cantar).getRealisation());
+				"cantásseis", realiser.realise(cantar).getRealisation());
 		
 		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -307,7 +307,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"venderia", realiser.realise(vender).getRealisation());
+				"venderias", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -320,7 +320,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"venderiam", realiser.realise(vender).getRealisation());
+				"venderíeis", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -335,7 +335,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"venderá", realiser.realise(vender).getRealisation());
+				"venderás", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -348,7 +348,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"venderão", realiser.realise(vender).getRealisation());
+				"vendereis", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -363,7 +363,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"vendia", realiser.realise(vender).getRealisation());
+				"vendias", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -376,7 +376,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"vendiam", realiser.realise(vender).getRealisation());
+				"vendíeis", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -391,7 +391,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"vendeu", realiser.realise(vender).getRealisation());
+				"vendeste", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -404,7 +404,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"venderam", realiser.realise(vender).getRealisation());
+				"vendestes", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -447,7 +447,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"vende", realiser.realise(vender).getRealisation());
+				"vendes", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -460,7 +460,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"vendem", realiser.realise(vender).getRealisation());
+				"vendeis", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -475,7 +475,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"venda", realiser.realise(vender).getRealisation());
+				"vendas", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -488,7 +488,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"vendam", realiser.realise(vender).getRealisation());
+				"vendais", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -503,7 +503,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"vender", realiser.realise(vender).getRealisation());
+				"venderes", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -516,7 +516,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"venderem", realiser.realise(vender).getRealisation());
+				"venderdes", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -531,7 +531,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"vendesse", realiser.realise(vender).getRealisation());
+				"vendesses", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -544,7 +544,7 @@ public class RegularVerbs extends Setup {
 		
 		vender.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"vendessem", realiser.realise(vender).getRealisation());
+				"vendêsseis", realiser.realise(vender).getRealisation());
 		
 		vender.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -564,7 +564,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partiria", realiser.realise(partir).getRealisation());
+				"partirias", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -577,7 +577,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partiriam", realiser.realise(partir).getRealisation());
+				"partiríeis", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -592,7 +592,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partirá", realiser.realise(partir).getRealisation());
+				"partirás", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -605,7 +605,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partirão", realiser.realise(partir).getRealisation());
+				"partireis", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -620,7 +620,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partia", realiser.realise(partir).getRealisation());
+				"partias", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -633,7 +633,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partiam", realiser.realise(partir).getRealisation());
+				"partíeis", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -648,7 +648,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partiu", realiser.realise(partir).getRealisation());
+				"partiste", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -661,7 +661,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partiram", realiser.realise(partir).getRealisation());
+				"partistes", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -704,7 +704,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"parte", realiser.realise(partir).getRealisation());
+				"partes", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -717,7 +717,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partem", realiser.realise(partir).getRealisation());
+				"partis", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -732,7 +732,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"parta", realiser.realise(partir).getRealisation());
+				"partas", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -745,7 +745,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partam", realiser.realise(partir).getRealisation());
+				"partais", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -760,7 +760,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partir", realiser.realise(partir).getRealisation());
+				"partires", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -773,7 +773,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partirem", realiser.realise(partir).getRealisation());
+				"partirdes", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -788,7 +788,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partisse", realiser.realise(partir).getRealisation());
+				"partisses", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(
@@ -801,7 +801,7 @@ public class RegularVerbs extends Setup {
 		
 		partir.setFeature(Feature.PERSON, Person.SECOND);
 		Assert.assertEquals(
-				"partissem", realiser.realise(partir).getRealisation());
+				"partísseis", realiser.realise(partir).getRealisation());
 		
 		partir.setFeature(Feature.PERSON, Person.THIRD);
 		Assert.assertEquals(

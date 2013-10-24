@@ -61,7 +61,7 @@ public class VerbPeriphrasis extends Setup {
 		cantar.setFeature(Feature.PROGRESSIVE, "continuar");
 		String realisation = realiser.realise(cantar).getRealisation();
 //		System.out.println(realisation);
-		Assert.assertEquals("continuarão cantando", realisation);
+		Assert.assertEquals("continuareis cantando", realisation);
 	}
 	
 	@Test
@@ -138,7 +138,7 @@ public class VerbPeriphrasis extends Setup {
 		cantar.setFeature(Feature.MODAL, "dever");
 		String realisation = realiser.realise(cantar).getRealisation();
 //		System.out.println(realisation);
-		Assert.assertEquals("deva cantar", realisation);
+		Assert.assertEquals("devas cantar", realisation);
 	}
 	
 	@Test

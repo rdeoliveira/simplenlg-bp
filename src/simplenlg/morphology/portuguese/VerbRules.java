@@ -72,58 +72,56 @@ public class VerbRules {
 		String suffix = "";
 		if (conjugationType != 0) {
 			switch ( number ) {
-			// if singular (regardless of person)
 			case SINGULAR: case BOTH:
-				// if -ar verb
-				if(conjugationType == 1){
-					suffix = "aria";
-				// if -er verb
-				} else if(conjugationType == 2){
-					suffix = "eria";
-				// if -ir verb
-				} else if(conjugationType == 3){
-					suffix = "iria";
+				switch ( person ) {
+				case FIRST: case THIRD:
+					if(conjugationType == 1) {
+						suffix = "aria";
+					} else if (conjugationType == 2) {
+						suffix = "eria";
+					} else if(conjugationType == 3) {
+						suffix = "iria";
+						}
+					break;
+				case SECOND:
+					if(conjugationType == 1) {
+						suffix = "arias";
+					} else if (conjugationType == 2) {
+						suffix = "erias";
+					} else if(conjugationType == 3) {
+						suffix = "irias";
+						}
+					break;
 				}
 				break;
-			// if plural
 			case PLURAL:
-				// if -ar verb
-				if(conjugationType == 1){
-					switch ( person ) {
-					// if 1st person 
-					case FIRST:
+				switch ( person ) {
+				case FIRST:
+					if(conjugationType == 1) {
 						suffix = "aríamos";
-						break;
-					// if 2nd or 3rd
-					case SECOND: case THIRD:
-						suffix = "ariam";
-						break;
-					}
-				// if -er verb
-				} else if(conjugationType == 2){
-					switch ( person ) {
-					// if first person
-					case FIRST:
+					} else if (conjugationType == 2) {
 						suffix = "eríamos";
-						break;
-					// if 2nd or 3rd
-					case SECOND: case THIRD:
-						suffix = "eriam";
-						break;
-					}
-					break;
-				// if -ir verb
-				} else if(conjugationType == 3){
-					switch ( person ) {
-					// if first person
-					case FIRST:
+					} else if(conjugationType == 3) {
 						suffix = "iríamos";
-						break;
-					// if 2nd or 3rd
-					case SECOND: case THIRD:
+						}
+					break;
+				case SECOND:
+					if(conjugationType == 1) {
+						suffix = "aríeis";
+					} else if (conjugationType == 2) {
+						suffix = "eríeis";
+					} else if(conjugationType == 3) {
+						suffix = "iríeis";
+						}
+					break;
+				case THIRD:
+					if(conjugationType == 1) {
+						suffix = "ariam";
+					} else if (conjugationType == 2) {
+						suffix = "eriam";
+					} else if(conjugationType == 3) {
 						suffix = "iriam";
-						break;
-					}
+						}
 					break;
 				}
 			}
@@ -144,84 +142,73 @@ public class VerbRules {
 	protected static String buildFutureRegularVerb(String baseForm,
 			NumberAgreement number, Person person) {
 		int conjugationType = getConjugationType(baseForm);
-		String radical = getVerbRadical(baseForm, Tense.CONDITIONAL);
+		String radical = getVerbRadical(baseForm, Tense.FUTURE);
 		String suffix = "";
-		if (conjugationType != 0) {
-			switch ( number ) {
-			// if singular
-			case SINGULAR: case BOTH:
-				switch ( person ) {
-				// if 1st person
-				case FIRST:
-					// if -ar verb
-					if(conjugationType == 1){
-						suffix = "arei";
-					// if -er verb
-					} else if(conjugationType == 2){
-						suffix = "erei";
-					// if -ir verb
-					} else if(conjugationType == 3){
-						suffix = "irei";
+			if (conjugationType != 0) {
+				switch ( number ) {
+				case SINGULAR: case BOTH:
+					switch ( person ) {
+					case FIRST:
+						if(conjugationType == 1) {
+							suffix = "arei";
+						} else if (conjugationType == 2) {
+							suffix = "erei";
+						} else if(conjugationType == 3) {
+							suffix = "irei";
+							}
+						break;
+					case SECOND:
+						if(conjugationType == 1) {
+							suffix = "arás";
+						} else if (conjugationType == 2) {
+							suffix = "erás";
+						} else if(conjugationType == 3) {
+							suffix = "irás";
+							}
+						break;
+					case THIRD:
+						if(conjugationType == 1) {
+							suffix = "ará";
+						} else if (conjugationType == 2) {
+							suffix = "erá";
+						} else if(conjugationType == 3) {
+							suffix = "irá";
+							}
+						break;
 					}
 					break;
-				case SECOND: case THIRD:
-					// if -ar verb
-					if(conjugationType == 1){
-						suffix = "ará";
-					// if -er verb
-					} else if(conjugationType == 2){
-						suffix = "erá";
-					// if -ir verb
-					} else if(conjugationType == 3){
-						suffix = "irá";
+				case PLURAL:
+					switch ( person ) {
+					case FIRST:
+						if(conjugationType == 1) {
+							suffix = "aremos";
+						} else if (conjugationType == 2) {
+							suffix = "eremos";
+						} else if(conjugationType == 3) {
+							suffix = "iremos";
+							}
+						break;
+					case SECOND:
+						if(conjugationType == 1) {
+							suffix = "areis";
+						} else if (conjugationType == 2) {
+							suffix = "ereis";
+						} else if(conjugationType == 3) {
+							suffix = "ireis";
+							}
+						break;
+					case THIRD:
+						if(conjugationType == 1) {
+							suffix = "arão";
+						} else if (conjugationType == 2) {
+							suffix = "erão";
+						} else if(conjugationType == 3) {
+							suffix = "irão";
+							}
+						break;
 					}
-					break;				
 				}
-				break;
-			// if plural
-			case PLURAL:
-				// if -ar verb
-				if(conjugationType == 1){
-					switch ( person ) {
-					// if 1st person 
-					case FIRST:
-						suffix = "aremos";
-						break;
-					// if 2nd or 3rd
-					case SECOND: case THIRD:
-						suffix = "arão";
-						break;
-					}
-				// if -er verb
-				} else if(conjugationType == 2){
-					switch ( person ) {
-					// if first person
-					case FIRST:
-						suffix = "eremos";
-						break;
-					// if 2nd or 3rd
-					case SECOND: case THIRD:
-						suffix = "erão";
-						break;
-					}
-					break;
-				// if -ir verb
-				} else if(conjugationType == 3){
-					switch ( person ) {
-					// if first person
-					case FIRST:
-						suffix = "iremos";
-						break;
-					// if 2nd or 3rd
-					case SECOND: case THIRD:
-						suffix = "irão";
-						break;
-					}
-					break;
-				}
-			}
-		}
-		
+			}				
 		return addSuffix(radical, suffix);
 	}
 		
@@ -242,39 +229,47 @@ public class VerbRules {
 		String suffix = "";		
 		if (conjugationType != 0) {
 			switch ( number ) {
-			// if singular (regardless of person)
 			case SINGULAR: case BOTH:
-				// if -ar verb 
-				if(conjugationType == 1){
-					suffix = "ava";
-				// if -er or -ir verb
-				} else {
-					suffix = "ia";
+				switch ( person ) {
+				case FIRST: case THIRD: {
+					if(conjugationType == 1){
+						suffix = "ava";
+					} else {
+						suffix = "ia";
+					}		
 				}
 				break;
-			// if plural
+				case SECOND: {
+					if(conjugationType == 1){
+						suffix = "avas";
+					} else {
+						suffix = "ias";
+					}
+				}
+				}
+				break;
 			case PLURAL:
-				// if -ar verb
 				if(conjugationType == 1){
-					switch ( person ) {
-					// if 1st person 
+					switch ( person ) { 
 					case FIRST:
 						suffix = "ávamos";
 						break;
-					// if 2nd or 3rd
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "áveis";
+						break;
+					case THIRD:
 						suffix = "avam";
 						break;
 					}
-				// if -er or -ir verb
 				} else {
 					switch ( person ) {
-					// if first person
 					case FIRST:
 						suffix = "íamos";
 						break;
-					// if 2nd or 3rd
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "íeis";
+						break;
+					case THIRD:
 						suffix = "iam";
 						break;
 					}
@@ -308,7 +303,10 @@ public class VerbRules {
 					case FIRST:
 						suffix = "ei";
 						break;
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "aste";
+						break;
+					case THIRD:
 						suffix = "ou";
 						break;
 					}
@@ -317,7 +315,10 @@ public class VerbRules {
 					case FIRST:
 						suffix = "i";
 						break;
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "este";
+						break;
+					case THIRD:
 						suffix = "eu";
 						break;
 					}
@@ -326,7 +327,10 @@ public class VerbRules {
 					case FIRST:
 						suffix = "i";
 						break;
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "iste";
+						break;
+					case THIRD:
 						suffix = "iu";
 						break;
 					}
@@ -338,7 +342,10 @@ public class VerbRules {
 					case FIRST:
 						suffix = "amos";
 						break;
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "astes";
+						break;
+					case THIRD:
 						suffix = "aram";
 						break;
 					}
@@ -347,7 +354,10 @@ public class VerbRules {
 					case FIRST:
 						suffix = "emos";
 						break;
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "estes";
+						break;
+					case THIRD:
 						suffix = "eram";
 						break;
 					}
@@ -356,7 +366,10 @@ public class VerbRules {
 					case FIRST:
 						suffix = "imos";
 						break;
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "istes";
+						break;
+					case THIRD:
 						suffix = "iram";
 						break;
 					}
@@ -482,7 +495,10 @@ public class VerbRules {
 					case FIRST:
 						suffix = "o";
 						break;
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "as";
+						break;
+					case THIRD:
 						suffix = "a";
 						break;
 					}
@@ -492,7 +508,10 @@ public class VerbRules {
 					case FIRST:
 						suffix = "o";
 						break;
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "es";
+						break;
+					case THIRD:
 						suffix = "e";
 						break;
 					}
@@ -506,7 +525,10 @@ public class VerbRules {
 					case FIRST:
 						suffix = "amos";
 						break;
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "ais";
+						break;
+					case THIRD:
 						suffix = "am";
 						break;
 					}
@@ -516,7 +538,10 @@ public class VerbRules {
 					case FIRST:
 						suffix = "emos";
 						break;
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "eis";
+						break;
+					case THIRD:
 						suffix = "em";
 						break;
 					}
@@ -526,7 +551,10 @@ public class VerbRules {
 					case FIRST:
 						suffix = "imos";
 						break;
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "is";
+						break;
+					case THIRD:
 						suffix = "em";
 						break;
 					}
@@ -554,49 +582,53 @@ public class VerbRules {
 		String radical = getVerbRadical(baseForm, Tense.SUBJUNCTIVE_FUTURE);
 		String suffix = "";
 		switch ( number ) {
-		// if singular
 		case SINGULAR: case BOTH:
 			switch ( person ) {
-			// regardless of person
-			case FIRST: case SECOND: case THIRD:
-				// if -ar verb
+			case FIRST: case THIRD:
 				if (conjugationType == 1) {
 					suffix = "ar";
-				// if -er verb
 				} else if (conjugationType == 2){
 					suffix = "er";
-				// if -ir verb
 				} else if (conjugationType == 3){
 					suffix = "ir";
 				}
 				break;
+			case SECOND:
+				if (conjugationType == 1) {
+					suffix = "ares";
+				} else if (conjugationType == 2){
+					suffix = "eres";
+				} else if (conjugationType == 3){
+					suffix = "ires";
+				}
+				break;
 			}
 			break;
-		// if plural
 		case PLURAL:
 			switch ( person ) {
-			// if 1st person
 			case FIRST:
-				// if -ar verb
 				if (conjugationType == 1) {
 					suffix = "armos";
-				// if -er verb
 				} else if (conjugationType == 2){
 					suffix = "ermos";
-				// if -ir verb
 				} else if (conjugationType == 3){
 					suffix = "irmos";
 				}
 				break;
-			// if 2nd or 3rd person
-			case SECOND: case THIRD:
-				// if -ar verb
+			case SECOND:
+				if (conjugationType == 1) {
+					suffix = "ardes";
+				} else if (conjugationType == 2){
+					suffix = "erdes";
+				} else if (conjugationType == 3){
+					suffix = "irdes";
+				}
+				break;
+			case THIRD:
 				if (conjugationType == 1) {
 					suffix = "arem";
-				// if -er verb
 				} else if (conjugationType == 2){
 					suffix = "erem";
-				// if -ir verb
 				} else if (conjugationType == 3){
 					suffix = "irem";
 				}
@@ -623,49 +655,53 @@ public class VerbRules {
 		String radical = getVerbRadical(baseForm, Tense.SUBJUNCTIVE_IMPERFECT);
 		String suffix = "";
 		switch ( number ) {
-		// if singular
 		case SINGULAR: case BOTH:
 			switch ( person ) {
-			// regardless of person
-			case FIRST: case SECOND: case THIRD:
-				// if -ar verb
+			case FIRST: case THIRD:
 				if (conjugationType == 1) {
 					suffix = "asse";
-				// if -er verb
 				} else if (conjugationType == 2){
 					suffix = "esse";
-				// if -ir verb
 				} else if (conjugationType == 3){
 					suffix = "isse";
 				}
 				break;
+			case SECOND:
+				if (conjugationType == 1) {
+					suffix = "asses";
+				} else if (conjugationType == 2){
+					suffix = "esses";
+				} else if (conjugationType == 3){
+					suffix = "isses";
+				}
+				break;
 			}
 			break;
-		// if plural
 		case PLURAL:
 			switch ( person ) {
-			// if 1st person
 			case FIRST:
-				// if -ar verb
 				if (conjugationType == 1) {
 					suffix = "ássemos";
-				// if -er verb
 				} else if (conjugationType == 2){
 					suffix = "êssemos";
-				// if -ir verb
 				} else if (conjugationType == 3){
 					suffix = "íssemos";
 				}
 				break;
-			// if 2nd or 3rd person
-			case SECOND: case THIRD:
-				// if -ar verb
+			case SECOND:
+				if (conjugationType == 1) {
+					suffix = "ásseis";
+				} else if (conjugationType == 2){
+					suffix = "êsseis";
+				} else if (conjugationType == 3){
+					suffix = "ísseis";
+				}
+				break;
+			case THIRD:
 				if (conjugationType == 1) {
 					suffix = "assem";
-				// if -er verb
 				} else if (conjugationType == 2){
 					suffix = "essem";
-				// if -ir verb
 				} else if (conjugationType == 3){
 					suffix = "issem";
 				}
@@ -693,39 +729,46 @@ public class VerbRules {
 		String suffix = "";		
 		if (conjugationType != 0) {
 			switch ( number ) {
-			// if singular (regardless of person)
 			case SINGULAR: case BOTH:
-				// if -ar verb 
-				if(conjugationType == 1){
-					suffix = "e";
-				// if -er or -ir verb
-				} else {
-					suffix = "a";
+				switch ( person ) {
+				case FIRST: case THIRD:
+					if(conjugationType == 1){
+						suffix = "e";
+					} else {
+						suffix = "a";
+					}
+					break;
+				case SECOND:
+					if(conjugationType == 1){
+						suffix = "es";
+					} else {
+						suffix = "as";
+					}
+					break;
 				}
 				break;
-			// if plural
 			case PLURAL:
-				// if -ar verb
 				if(conjugationType == 1){
-					switch ( person ) {
-					// if 1st person 
+					switch ( person ) { 
 					case FIRST:
 						suffix = "emos";
 						break;
-					// if 2nd or 3rd
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "eis";
+						break;
+					case THIRD:
 						suffix = "em";
 						break;
 					}
-				// if -er or -ir verb
 				} else {
 					switch ( person ) {
-					// if first person
 					case FIRST:
 						suffix = "amos";
 						break;
-					// if 2nd or 3rd
-					case SECOND: case THIRD:
+					case SECOND:
+						suffix = "ais";
+						break;
+					case THIRD:
 						suffix = "am";
 						break;
 					}
