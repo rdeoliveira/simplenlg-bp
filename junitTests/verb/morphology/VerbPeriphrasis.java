@@ -32,6 +32,7 @@ import simplenlg.features.Tense;
  * This jUnit class tests the many possible forms of periphrastic verb groups,
  * i.e. when main and auxiliary verbs compose the verb group.
  * 
+ * 
  *  @author R. de Oliveira, University of Aberdeen.
  */
 public class VerbPeriphrasis extends Setup {
