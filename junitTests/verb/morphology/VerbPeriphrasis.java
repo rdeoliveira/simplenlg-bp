@@ -181,6 +181,4 @@ public class VerbPeriphrasis extends Setup {
 		Assert.assertEquals("forem poder cantar", realisation);
 	}
 	
-	//TODO start negative tests
-	
 }

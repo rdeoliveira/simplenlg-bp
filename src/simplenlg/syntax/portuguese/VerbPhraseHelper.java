@@ -209,9 +209,10 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		boolean perfect = phrase.getFeatureAsBoolean(Feature.PERFECT);
 		boolean prospective = phrase.getFeatureAsBoolean(Feature.PROSPECTIVE);
 		String modal = phrase.getFeatureAsString(Feature.MODAL);
+		boolean negated = phrase.getFeatureAsBoolean(Feature.NEGATED);
 		// TODO features yet to be used, once everything is implemented...
 		// boolean passive = phrase.getFeatureAsBoolean(Feature.PASSIVE);
-		// boolean negative = phrase.getFeatureAsBoolean(Feature.NEGATED);
+
 
 		// gets head verb and adds it as first element in the array
 		NLGElement headVerb = phrase.getHead();
@@ -284,8 +285,25 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 				setFeature(Feature.FORM, Form.BARE_INFINITIVE);
 		}
 		
-		// passing features to agreement verb (last in array, top of stack)
-		NLGElement lastVerb = vgComponentsArray.get(vgComponentsArray.size()-1);
+		if (negated) {
+			// creates particle "não"...
+			WordElement auxWord = new WordElement("não", LexicalCategory.ANY, 
+					ptLexicon);
+			InflectedWordElement aux = new InflectedWordElement(auxWord);
+			// adds it to the end of the array...
+			vgComponentsArray.add(aux);
+		}
+		
+		// passing features to agreement verb (last verb in array, topmost in stack)
+		NLGElement lastVerb;
+		// if there is "não" in the VP, the second last element is last verb 
+		if (negated) {
+			lastVerb = vgComponentsArray.get(vgComponentsArray.size()-2);
+		// if there isn't a "não" the last element is the last verb
+		} else {
+			lastVerb = vgComponentsArray.get(vgComponentsArray.size()-1);
+		}
+		// now passing features
 		lastVerb.setFeature(Feature.TENSE, tenseValue);
 		lastVerb.setFeature(Feature.PERSON, personValue);
 		lastVerb.setFeature(Feature.NUMBER, numberValue);
