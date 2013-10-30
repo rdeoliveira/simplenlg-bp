@@ -19,6 +19,7 @@
 package simplenlg.syntax.portuguese;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
@@ -56,7 +57,12 @@ import simplenlg.phrasespec.VPPhraseSpec;
  * @author R. de Oliveira, University of Aberdeen.
  */
 public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhraseHelper {
-
+	
+	// the following lists are BY NO MEANS exhaustive; they shall grow as required
+	List<String> aModals = Arrays.asList("começar","continuar","voltar");
+	List<String> deModals = Arrays.asList("acabar","chegar","deixar","gostar",
+			"gostar","parar","ter");
+	
 	/**
 	 * The main method for realising verb phrases.
 	 * 
@@ -266,11 +272,40 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 			WordElement auxWord = new WordElement(modal, LexicalCategory.VERB, 
 					ptLexicon);
 			InflectedWordElement aux = new InflectedWordElement(auxWord);
-			// adds it to the end of the array...
-			vgComponentsArray.add(aux);
-			// and sets previous verb as infinitive.
-			vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
-				setFeature(Feature.FORM, Form.BARE_INFINITIVE);
+			// checks if the modal requires preposition "a"
+			if (aModals.contains(modal)){
+				// creates preposition "a"
+				WordElement aPrepWord = new WordElement("a", LexicalCategory.PREPOSITION, 
+						ptLexicon);
+				InflectedWordElement aPrep = new InflectedWordElement(aPrepWord);
+				// adds preposition to array
+				vgComponentsArray.add(aPrep);
+				// adds modal to the end of the array...
+				vgComponentsArray.add(aux);
+				// and sets previous verb as infinitive.
+				vgComponentsArray.get(vgComponentsArray.indexOf(aux)-2).
+					setFeature(Feature.FORM, Form.BARE_INFINITIVE);
+			// checks if the modal requires preposition "de"
+			} else if (deModals.contains(modal)){
+					// creates preposition "de"
+					WordElement dePrepWord = new WordElement("de", LexicalCategory.PREPOSITION, 
+							ptLexicon);
+					InflectedWordElement dePrep = new InflectedWordElement(dePrepWord);
+					// adds preposition to array
+					vgComponentsArray.add(dePrep);
+					// adds modal to the end of the array...
+					vgComponentsArray.add(aux);
+					// and sets previous verb as infinitive.
+					vgComponentsArray.get(vgComponentsArray.indexOf(aux)-2).
+						setFeature(Feature.FORM, Form.BARE_INFINITIVE);
+			// in case the modal doesn't require a preposition
+			} else {
+				// adds the modal to the end of the array...
+				vgComponentsArray.add(aux);
+				// and sets previous verb as infinitive.
+				vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
+					setFeature(Feature.FORM, Form.BARE_INFINITIVE);
+			}
 		}
 	
 		if (prospective) {
@@ -287,11 +322,11 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		
 		if (negated) {
 			// creates particle "não"...
-			WordElement auxWord = new WordElement("não", LexicalCategory.ANY, 
+			WordElement notWord = new WordElement("não", LexicalCategory.ANY, 
 					ptLexicon);
-			InflectedWordElement aux = new InflectedWordElement(auxWord);
+			InflectedWordElement not = new InflectedWordElement(notWord);
 			// adds it to the end of the array...
-			vgComponentsArray.add(aux);
+			vgComponentsArray.add(not);
 		}
 		
 		// passing features to agreement verb (last verb in array, topmost in stack)

@@ -127,8 +127,6 @@ public class VerbPeriphrasis extends Setup {
 		Assert.assertEquals("iríamos ter cantado", realisation);
 	}
 	
-	//TODO delete this
-	
 	@Test
 	public void testModal(){
 		
@@ -180,5 +178,32 @@ public class VerbPeriphrasis extends Setup {
 //		System.out.println(realisation);
 		Assert.assertEquals("forem poder cantar", realisation);
 	}
+	
+	@Test
+	public void testAPrepositionedModal(){
+		
+		cantar.setFeature(Feature.TENSE, Tense.PRESENT);
+		cantar.setFeature(Feature.PERSON, Person.THIRD);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+		cantar.setFeature(Feature.MODAL, "começar");
+		cantar.setFeature(Feature.PROSPECTIVE, true);
+		String realisation = realiser.realise(cantar).getRealisation();
+//		System.out.println(realisation);
+		Assert.assertEquals("vai começar a cantar", realisation);
+	}
+	
+	@Test
+	public void testDePrepositionedModal(){
+		
+		cantar.setFeature(Feature.TENSE, Tense.CONDITIONAL);
+		cantar.setFeature(Feature.PERSON, Person.FIRST);
+		cantar.setFeature(Feature.NUMBER, NumberAgreement.SINGULAR);
+		cantar.setFeature(Feature.MODAL, "gostar");
+		cantar.setFeature(Feature.PROGRESSIVE, "ficar");
+		String realisation = realiser.realise(cantar).getRealisation();
+//		System.out.println(realisation);
+		Assert.assertEquals("gostaria de ficar cantando", realisation);
+	}
+
 	
 }
