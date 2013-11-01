@@ -1007,6 +1007,305 @@ public class VerbRules {
 	}
 	
 	/**
+	 * Builds the appropriate form for the "estar" verb, in any tense. 
+	 *
+	 * @param baseForm
+	 *            the base form of the word.
+	 * @param number
+	 * @param person
+	 * @param tense
+	 * @return the inflected word.
+	 */
+	protected static String conjugateSer(NumberAgreement number,
+			Person person, Tense tense){
+		
+		String realised = "ser";
+		
+		switch (tense){
+		case CONDITIONAL:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST: case THIRD:
+					realised = "seria";
+					break;
+				case SECOND:
+					realised = "serias";
+					break;
+				}
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "seríamos";
+					break;
+				case SECOND:
+					realised = "seríeis";
+					break;
+				case THIRD:
+					realised = "seriam";
+					break;
+				}
+				break;
+			}
+			break;
+		case FUTURE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST:
+					realised = "serei";
+					break;
+				case SECOND:
+					realised = "serás";
+					break;
+				case THIRD:
+					realised = "será";
+					break;
+				}
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "seremos";
+					break;
+				case SECOND:
+					realised = "sereis";
+					break;
+				case THIRD:
+					realised = "serão";
+					break;
+				}
+				break;
+			}
+			break;
+		case IMPERFECT:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST: case THIRD:
+					realised = "era";
+					break;
+				case SECOND:
+					realised = "eras";
+					break;
+				}
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "éramos";
+					break;
+				case SECOND:
+					realised = "eréis";
+					break;
+				case THIRD:
+					realised = "eram";
+					break;
+				}
+				break;
+			}
+			break;
+		case PAST:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST:
+					realised = "fui";
+					break;
+				case SECOND:
+					realised = "foste";
+					break;
+				case THIRD:
+					realised = "foi";
+					break;
+				}
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "fomos";
+					break;
+				case SECOND:
+					realised = "fostes";
+					break;
+				case THIRD:
+					realised = "foram";
+					break;
+				}
+				break;
+			}
+			break;
+		case PERSONAL_INFINITIVE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST: case THIRD:
+					realised = "ser";
+					break;
+				case SECOND:
+					realised = "seres";
+					break;
+				}
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "sermos";
+					break;
+				case SECOND:
+					realised = "serdes";
+					break;
+				case THIRD:
+					realised = "serem";
+					break;
+				}
+				break;
+			}
+			break;
+		case PLUPERFECT:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST: case THIRD:
+					realised = "fora";
+					break;
+				case SECOND:
+					realised = "foras";
+					break;
+				}
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "fôramos";
+					break;
+				case SECOND:
+					realised = "fôreis";
+					break;
+				case THIRD:
+					realised = "foram";
+					break;
+				}
+				break;
+			}
+			break;
+		case PRESENT:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST:
+					realised = "sou";
+					break;
+				case SECOND:
+					realised = "és";
+					break;
+				case THIRD:
+					realised = "é";
+					break;
+				}
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "somos";
+					break;
+				case SECOND:
+					realised = "sois";
+					break;
+				case THIRD:
+					realised = "são";
+					break;
+				}
+				break;
+			}
+			break;
+		case SUBJUNCTIVE_IMPERFECT:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST: case THIRD:
+					realised = "fosse";
+					break;
+				case SECOND:
+					realised = "fosses";
+					break;
+				}
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "fôssemos";
+					break;
+				case SECOND:
+					realised = "fôsseis";
+					break;
+				case THIRD:
+					realised = "fossem";
+					break;
+				}
+				break;
+			}
+			break;
+		case SUBJUNCTIVE_FUTURE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST: case THIRD:
+					realised = "for";
+					break;
+				case SECOND:
+					realised = "fores";
+					break;
+				}
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "formos";
+					break;
+				case SECOND:
+					realised = "fordes";
+					break;
+				case THIRD:
+					realised = "forem";
+					break;
+				}
+				break;
+			}
+			break;
+		case SUBJUNCTIVE_PRESENT: case IMPERATIVE:
+			switch (number){
+			case SINGULAR: case BOTH:
+				switch (person){
+				case FIRST: case THIRD:
+					realised = "seja";
+					break;
+				case SECOND:
+					realised = "sejas";
+					break;
+				}
+				break;
+			case PLURAL:
+				switch (person){
+				case FIRST:
+					realised = "sejamos";
+					break;
+				case SECOND:
+					realised = "sejais";
+					break;
+				case THIRD:
+					realised = "sejam";
+					break;
+				}
+				break;
+			}
+			break;
+		}
+		
+		return realised;		
+	}
+	
+	/**
 	 * Builds the appropriate form for the "ter" verb, in any tense. 
 	 *
 	 * @param baseForm
@@ -1388,8 +1687,8 @@ public class VerbRules {
 			radical = "troux";
 		} else if (baseForm.equals("reunir") && tense == Tense.PRESENT) {
 			radical = "reún";
-		} else if (baseForm.equals("ser")) {
-			radical = baseForm;
+//		} else if (baseForm.equals("ser")) {
+//			radical = baseForm;
 		} else {
 			radical = baseForm.substring(0,baseForm.length()-2);
 		}

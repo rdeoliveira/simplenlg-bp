@@ -30,8 +30,8 @@ import simplenlg.features.Tense;
 
 /**
  * This jUnit class tests the negative forms of 1-verb verb groups and 
- * periphrastic verb groups, i.e. when more than 1 verb (e.g. main and/or 
- * auxiliary verbs) compose the verb group.
+ * periphrastic verb groups, i.e. when more than 1 verb (e.g. main and auxiliary 
+ * verbs) compose the verb group.
  * 
  *  @author R. de Oliveira, University of Aberdeen.
  */

@@ -216,9 +216,7 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		boolean prospective = phrase.getFeatureAsBoolean(Feature.PROSPECTIVE);
 		String modal = phrase.getFeatureAsString(Feature.MODAL);
 		boolean negated = phrase.getFeatureAsBoolean(Feature.NEGATED);
-		// TODO features yet to be used, once everything is implemented...
-		// boolean passive = phrase.getFeatureAsBoolean(Feature.PASSIVE);
-
+		boolean passive = phrase.getFeatureAsBoolean(Feature.PASSIVE);
 
 		// gets head verb and adds it as first element in the array
 		NLGElement headVerb = phrase.getHead();
@@ -226,6 +224,22 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 			vgComponentsArray.add(headVerb);
 		} else {
 			return vgComponents;
+		}
+		
+		// if the entire verb phrase has passive feature...
+		if (passive) {
+			// creates auxiliary "ser"...
+			WordElement auxWord = new WordElement("ser", LexicalCategory.VERB, 
+					ptLexicon);
+			InflectedWordElement aux = new InflectedWordElement(auxWord);
+			// adds it to the end of the array...
+			vgComponentsArray.add(aux);
+			// and sets previous verb as past participle with according number
+			// and gender.
+			vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
+				setFeature(Feature.FORM, Form.PAST_PARTICIPLE);
+			vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
+			setFeature(Feature.NUMBER, numberValue);
 		}
 		
 		// if the entire verb phrase has progressive feature...

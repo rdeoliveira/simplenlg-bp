@@ -491,9 +491,11 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 			}
 			realised = radical+thematicVowel+"ndo";
 		// TODO make this method neater and move it to verb rules
+		// TODO include gender
 		} else if (Form.PAST_PARTICIPLE.equals(formValue)){
 			String radical = VerbRules.getVerbRadical(baseForm, tense);
 			String thematicVowel = "";
+			String suffix = "";
 			int conjugationType = VerbRules.getConjugationType(baseForm);
 			switch (conjugationType){
 			case 1:
@@ -503,10 +505,20 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 				thematicVowel = "i";
 				break;
 			}
-			realised = radical+thematicVowel+"do";
+			switch (number){
+			case SINGULAR: case BOTH:
+				suffix = "o";
+				break;
+			case PLURAL:
+				suffix = "os";
+				break;
+			}
+			realised = radical+thematicVowel+"d"+suffix;
 		// here begins a list of irregular verbs, that is far from complete
 		} else if(baseForm.equals("estar")){
 			realised = VerbRules.conjugateEstar(number, person, tense);
+		} else if(baseForm.equals("ser")){
+			realised = VerbRules.conjugateSer(number, person, tense);
 		} else if(baseForm.equals("ter")){
 			realised = VerbRules.conjugateTer(number, person, tense);
 		} else if(baseForm.equals("ir")){

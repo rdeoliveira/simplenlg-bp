@@ -159,7 +159,6 @@ abstract public class Feature {
 	 */
 	public static final String AGGREGATE_AUXILIARY = "aggregate_auxiliary";
 
-
 	/**
 	 * <p>
 	 * The complementiser is the word that joins a subordinate clause to the
