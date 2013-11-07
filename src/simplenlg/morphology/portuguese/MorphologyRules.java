@@ -451,13 +451,12 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 			person = (Person) personValue;
 		}
 		
-		//might never need it for Portuguese
-//		Object genderValue = element.getFeature(LexicalFeature.GENDER);
-//		// default gender is MASCULINE
-//		Gender gender = Gender.MASCULINE;
-//		if (genderValue instanceof Gender) {
-//			gender = (Gender) genderValue;
-//		}
+		Object genderValue = element.getFeature(LexicalFeature.GENDER);
+		// default gender is MASCULINE
+		Gender gender = Gender.MASCULINE;
+		if (genderValue instanceof Gender) {
+			gender = (Gender) genderValue;
+		}
 		
 		Object tenseValue = element.getFeature(Feature.TENSE);
 		// default tense is PRESENT
@@ -507,10 +506,24 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 			}
 			switch (number){
 			case SINGULAR: case BOTH:
-				suffix = "o";
+				switch (gender){
+				case MASCULINE: case NEUTER:
+					suffix = "o";
+					break;
+				case FEMININE:
+					suffix = "a";
+					break;
+				}
 				break;
 			case PLURAL:
-				suffix = "os";
+				switch (gender){
+				case MASCULINE: case NEUTER:
+					suffix = "os";
+					break;
+				case FEMININE:
+					suffix = "as";
+					break;
+				}
 				break;
 			}
 			realised = radical+thematicVowel+"d"+suffix;

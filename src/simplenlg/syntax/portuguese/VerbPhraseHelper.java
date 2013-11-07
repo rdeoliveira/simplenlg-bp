@@ -217,6 +217,7 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		String modal = phrase.getFeatureAsString(Feature.MODAL);
 		boolean negated = phrase.getFeatureAsBoolean(Feature.NEGATED);
 		boolean passive = phrase.getFeatureAsBoolean(Feature.PASSIVE);
+		Object gender = phrase.getFeature(LexicalFeature.GENDER);
 
 		// gets head verb and adds it as first element in the array
 		NLGElement headVerb = phrase.getHead();
@@ -357,6 +358,11 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		lastVerb.setFeature(Feature.PERSON, personValue);
 		lastVerb.setFeature(Feature.NUMBER, numberValue);
 		lastVerb.setFeature(Feature.FORM, Form.NORMAL);
+		
+		if (passive) {
+			NLGElement firstVerb = vgComponentsArray.get(0);
+			firstVerb.setFeature(LexicalFeature.GENDER, gender);
+		}
 		
 //		// printing verb phrase...
 //		System.out.println("Verb Phrase: "+
