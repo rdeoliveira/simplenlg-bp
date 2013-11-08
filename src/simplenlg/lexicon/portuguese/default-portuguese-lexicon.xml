@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- French default lexicon for simpleNLG bilingual
-     assembled by Pierre-Luc Vaudry -->
+<!-- Portuguese default lexicon -->
 <lexicon>
+<!-- pronouns -->
+  <word>
+    <base>eles</base>
+    <category>pronoun</category>
+    <pronoun_type>personal</pronoun_type>
+    <person>third</person>
+    <number>plural</number>
+    <gender>neuter</gender>
+    <discourse_function>subject</discourse_function>
+  </word>
 </lexicon>
