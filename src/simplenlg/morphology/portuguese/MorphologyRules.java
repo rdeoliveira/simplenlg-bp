@@ -437,18 +437,43 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 
 		String realised = null;
 		
-		Object numberValue = element.getFeature(Feature.NUMBER);
-		// default number is SINGULAR
-		NumberAgreement number = NumberAgreement.SINGULAR;
-		if (numberValue instanceof NumberAgreement) {
-			number = (NumberAgreement) numberValue;
+		Object tenseValue = element.getFeature(Feature.TENSE);
+		String t = null;
+		// default tense is PRESENT
+		Tense tense = Tense.PRESENT;
+		if (tenseValue instanceof Tense) {
+			tense = (Tense) tenseValue;
+			t = tense.name().toLowerCase();
 		}
 		
 		Object personValue = element.getFeature(Feature.PERSON);
+		String p = null;
 		// default person is THIRD
 		Person person = Person.THIRD;
 		if (personValue instanceof Person) {
 			person = (Person) personValue;
+			p = person.name();
+			if (p.equals("FIRST")){
+				p = "1";
+			} else if (p.equals("SECOND")){
+				p = "2";
+			} else if (p.equals("THIRD")){
+				p = "3";
+			}
+		}
+		
+		Object numberValue = element.getFeature(Feature.NUMBER);
+		String n = null;
+		// default number is SINGULAR
+		NumberAgreement number = NumberAgreement.SINGULAR;
+		if (numberValue instanceof NumberAgreement) {
+			number = (NumberAgreement) numberValue;
+			n = number.name();
+			if (n.equals("SINGULAR")){
+				n = "s";
+			} else if (n.equals("PLURAL")){
+				n = "p";
+				}
 		}
 		
 		Object genderValue = element.getFeature(LexicalFeature.GENDER);
@@ -458,17 +483,20 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 			gender = (Gender) genderValue;
 		}
 		
-		Object tenseValue = element.getFeature(Feature.TENSE);
-		// default tense is PRESENT
-		Tense tense = Tense.PRESENT;
-		if (tenseValue instanceof Tense) {
-			tense = (Tense) tenseValue;
-		}
-		
+		// if verb form (e.g. infinitive) is previously given, get it
 		Object formValue = element.getFeature(Feature.FORM);
 		
 		// base form from baseWord if it exists, otherwise from element
 		String baseForm = getBaseForm(element, baseWord);
+		
+		// if inflected form based on tense, person and number exists in lexicon file,
+		// get that form and finish method here; otherwise apply rules below
+		String realisedFromLexicon = baseWord.getFeatureAsString(t+p+n);
+		if (realisedFromLexicon != null) {
+			realised = realisedFromLexicon;
+			StringElement realisedElement = new StringElement(realised, element);
+			return realisedElement;
+		}
 		
 		if (Form.BARE_INFINITIVE.equals(formValue)) {
 			realised = baseForm;

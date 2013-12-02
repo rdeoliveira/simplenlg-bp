@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="manualTests"/>
 	<classpathentry kind="src" path="junitTests"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="/home/r01rg13/Downloads/simplenlg.en/simplenlg-v44/lib/lexAccess2011dist.jar"/>
-	<classpathentry kind="lib" path="/home/r01rg13/Downloads/simplenlg.en/simplenlg-v44/lib/junit-4.4.jar"/>
+	<classpathentry kind="lib" path="/home/rgdo/workspace/snlgEnFrPt/lib/junit-4.4.jar"/>
+	<classpathentry kind="lib" path="/home/rgdo/workspace/snlgEnFrPt/lib/lexAccess2011dist.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

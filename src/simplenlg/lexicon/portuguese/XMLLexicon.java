@@ -174,12 +174,7 @@ public class XMLLexicon extends simplenlg.lexicon.XMLLexicon {
 				// optional variant : "liaison" form
 				addVarriant(variants, word, PortugueseLexicalFeature.LIAISON);
 				break;
-			
-			// TODO: temporarily commented out by de Oliveira as
-				// 1 - not sure what this was doing
-				// 2 - jeopardized debugging of verbs, since it overloaded
-				// MorphologyRules.doVerbMorphology() with unnecessary inflected
-				// forms.
+
 			case VERB:
 //				// indicative, varying tense, person and number
 //				for (Tense tense : Tense.values()) {

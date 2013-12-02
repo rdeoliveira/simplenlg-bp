@@ -7,7 +7,7 @@ import simplenlg.phrasespec.PPPhraseSpec;
 import simplenlg.phrasespec.SPhraseSpec;
 import simplenlg.realiser.Realiser;
 
-import simplenlg.lexicon.english.XMLLexicon;
+import simplenlg.lexicon.portuguese.XMLLexicon;
 
 public class SingleExample {
 
@@ -27,7 +27,7 @@ public class SingleExample {
         locatum.setSpecifier("o");
 //        System.out.println(ex+"\n");
         ex.setSubject(locatum);
-        ex.setVerb("sucker-punches");
+        ex.setVerb("caber");
         PPPhraseSpec generalizedLocation = nlgFactory.createPrepositionPhrase();
         NPPhraseSpec relatum = nlgFactory.createNounPhrase("praça");
         relatum.setSpecifier("a");

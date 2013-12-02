@@ -90,4 +90,18 @@
     <number>plural</number>
     <gender>neuter</gender>
   </word>
+<!-- irregular verbs -->
+  <word>
+    <base>caber</base>
+    <category>verb</category>
+    <id>caber-id</id>
+    <present1s>caibo</present1s>
+  </word>
+    <word>
+    <base>fazer</base>
+    <category>verb</category>
+    <id>fazer-id</id>
+    <present1s>faço</present1s>
+    <past1s>fiz</past1s>
+  </word>
 </lexicon>

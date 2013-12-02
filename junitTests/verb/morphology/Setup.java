@@ -43,7 +43,7 @@ public abstract class Setup extends TestCase {
 	
 	VPPhraseSpec cantar, vender, partir;
 	
-	VPPhraseSpec estar;
+	VPPhraseSpec estar, caber, fazer;
 
 	/**
 	 * Instantiates a new SimpleNLG test.
@@ -71,5 +71,7 @@ public abstract class Setup extends TestCase {
 		this.partir = this.phraseFactory.createVerbPhrase("partir");
 		
 		this.estar = this.phraseFactory.createVerbPhrase("estar");
+		this.caber = this.phraseFactory.createVerbPhrase("caber");
+		this.fazer = this.phraseFactory.createVerbPhrase("fazer");
 	}
 }
