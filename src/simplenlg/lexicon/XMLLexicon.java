@@ -243,6 +243,7 @@ public class XMLLexicon extends Lexicon {
 	 */
 	private void createLexicon(URI lexiconURI) {
 		// initialise objects
+		System.out.println("Creating lexicon.");
 		words = new HashSet<WordElement>();
 		indexByID = new HashMap<String, WordElement>();
 		indexByBase = new HashMap<String, List<WordElement>>();

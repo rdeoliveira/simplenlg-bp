@@ -60,6 +60,7 @@ public class Realiser {
 			System.out.println(element.printTree(null));
 		}
 		NLGElement postSyntax = element.realiseSyntax();
+		// TODO
 		if (this.debug) {
 			System.out.println("\nPOST-SYNTAX TREE\n"); //$NON-NLS-1$
 			System.out.println(postSyntax.printTree(null));

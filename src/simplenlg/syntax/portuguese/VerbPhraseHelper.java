@@ -58,7 +58,7 @@ import simplenlg.phrasespec.VPPhraseSpec;
  */
 public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhraseHelper {
 	
-	// the following lists are BY NO MEANS exhaustive; they shall grow as required
+	// the following lists are NOT exhaustive; they shall grow as required
 	List<String> aModals = Arrays.asList("começar","continuar","voltar");
 	List<String> deModals = Arrays.asList("acabar","chegar","deixar","gostar",
 			"gostar","parar","ter");
@@ -86,6 +86,8 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 			// to copy all features from the PhraseElement
 //			realisedElement = new ListElement(phrase);
 			realisedElement = new ListElement();
+			// TODO: double check that setFactory does not do anything else
+			realisedElement.setFactory(phrase.getFactory());
 
 			if ((!phrase.hasFeature(InternalFeature.REALISE_AUXILIARY)
 					|| phrase.getFeatureAsBoolean(InternalFeature.REALISE_AUXILIARY))
@@ -205,8 +207,7 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		ArrayList<NLGElement> vgComponentsArray = new ArrayList<NLGElement>();
 		
 		// constructs lexicon, so morphological rules are set for Portuguese
-		Lexicon ptLexicon = new XMLLexicon();
-		
+		Lexicon ptLexicon = phrase.getLexicon();
 		// get all verb phrase features
 		Object tenseValue = phrase.getFeature(Feature.TENSE);
 		Object personValue = phrase.getFeature(Feature.PERSON);
