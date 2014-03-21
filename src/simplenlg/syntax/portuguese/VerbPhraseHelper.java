@@ -62,6 +62,7 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	List<String> aModals = Arrays.asList("começar","continuar","voltar");
 	List<String> deModals = Arrays.asList("acabar","chegar","deixar","gostar",
 			"gostar","parar","ter");
+	List<String> paraModals = Arrays.asList("dar");
 	
 	/**
 	 * The main method for realising verb phrases.
@@ -314,7 +315,20 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 					// and sets previous verb as infinitive.
 					vgComponentsArray.get(vgComponentsArray.indexOf(aux)-2).
 						setFeature(Feature.FORM, Form.BARE_INFINITIVE);
-			// in case the modal doesn't require a preposition
+					// checks if the modal requires preposition "para"
+			} else if (paraModals.contains(modal)){
+				// creates preposition "para"
+				WordElement paraPrepWord = new WordElement("para", LexicalCategory.PREPOSITION, 
+						ptLexicon);
+				InflectedWordElement paraPrep = new InflectedWordElement(paraPrepWord);
+				// adds preposition to array
+				vgComponentsArray.add(paraPrep);
+				// adds modal to the end of the array...
+				vgComponentsArray.add(aux);
+				// and sets previous verb as infinitive.
+				vgComponentsArray.get(vgComponentsArray.indexOf(aux)-2).
+					setFeature(Feature.FORM, Form.BARE_INFINITIVE);
+		// in case the modal doesn't require a preposition
 			} else {
 				// adds the modal to the end of the array...
 				vgComponentsArray.add(aux);

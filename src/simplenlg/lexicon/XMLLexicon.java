@@ -243,7 +243,8 @@ public class XMLLexicon extends Lexicon {
 	 */
 	private void createLexicon(URI lexiconURI) {
 		// initialise objects
-		System.out.println("Creating lexicon.");
+//		long startTime = System.nanoTime();
+//		System.out.println("building lexicon");
 		words = new HashSet<WordElement>();
 		indexByID = new HashMap<String, WordElement>();
 		indexByBase = new HashMap<String, List<WordElement>>();
@@ -273,8 +274,12 @@ public class XMLLexicon extends Lexicon {
 				}
 			}
 		} catch (Exception ex) {
-			System.out.println(ex.toString());
+			ex.printStackTrace();
 		}
+//		long endTime = System.nanoTime();
+//		double elapsed = (double)(endTime-startTime)/1000000000.0;
+//		System.out.println("lexicon built");
+//		System.out.println("elapsed time: "+elapsed+" seconds");
 	}
 
 	/**

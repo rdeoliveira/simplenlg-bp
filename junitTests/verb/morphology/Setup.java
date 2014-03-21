@@ -24,7 +24,7 @@ import org.junit.Before;
 
 import simplenlg.framework.NLGFactory;
 import simplenlg.lexicon.Lexicon;
-import simplenlg.lexicon.french.XMLLexicon;
+import simplenlg.lexicon.portuguese.XMLLexicon;
 import simplenlg.phrasespec.VPPhraseSpec;
 import simplenlg.realiser.Realiser;
 
@@ -34,10 +34,6 @@ import simplenlg.realiser.Realiser;
  */
 public abstract class Setup extends TestCase {
 	
-//	long startTime;
-//	long endTime;
-//	double elapsed;
-	
 	/** The realiser. */
 	Realiser realiser;
 
@@ -45,9 +41,11 @@ public abstract class Setup extends TestCase {
 	
 	Lexicon lexicon;
 	
+	// regular verbs
 	VPPhraseSpec cantar, vender, partir;
 	
-	VPPhraseSpec estar, caber, fazer;
+	// irregular verbs
+	VPPhraseSpec estar, caber, fazer, ouvir;
 
 	/**
 	 * Instantiates a new SimpleNLG test.
@@ -66,16 +64,8 @@ public abstract class Setup extends TestCase {
 	@Override
 	@Before
 	protected void setUp() {
-//		System.out.println("constructing lexicon");
-//		startTime = System.nanoTime();
 		lexicon = new XMLLexicon();
-//		endTime = System.nanoTime();
-//		elapsed = (double)(endTime-startTime)/1000000000.0;
-//		System.out.println("lexicon constructed");
-//		System.out.println("elapsed time: "+elapsed+" seconds\n");
-//		System.out.println("constructing NLGFactory");
 		this.phraseFactory = new NLGFactory(this.lexicon);
-//		System.out.println("NLGFactory constructed\n");
 		this.realiser = new Realiser();
 		
 		this.cantar = this.phraseFactory.createVerbPhrase("cantar");
@@ -85,5 +75,6 @@ public abstract class Setup extends TestCase {
 		this.estar = this.phraseFactory.createVerbPhrase("estar");
 		this.caber = this.phraseFactory.createVerbPhrase("caber");
 		this.fazer = this.phraseFactory.createVerbPhrase("fazer");
+		this.ouvir = this.phraseFactory.createVerbPhrase("ouvir");
 	}
 }

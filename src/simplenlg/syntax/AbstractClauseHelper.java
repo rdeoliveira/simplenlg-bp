@@ -62,7 +62,7 @@ public abstract class AbstractClauseHelper {
 		ListElement realisedElement = null;
 		NLGFactory phraseFactory = phrase.getFactory();
 		NLGElement splitVerb = null;
-
+		
 		if (phrase != null) {
 			// vaudrypl added phrase argument to ListElement constructor
 			// to copy all features from the PhraseElement
@@ -70,11 +70,12 @@ public abstract class AbstractClauseHelper {
 			
 			NLGElement verbElement = phrase
 					.getFeatureAsElement(InternalFeature.VERB_PHRASE);
+			
 
 			if (verbElement == null) {
 				verbElement = phrase.getHead();
 			}
-
+			
 			checkClausalSubjects(phrase);
 			checkSubjectNumberPerson(phrase, verbElement);
 			checkDiscourseFunction(phrase);
@@ -241,7 +242,7 @@ public abstract class AbstractClauseHelper {
 	protected void realiseVerb(PhraseElement phrase,
 			ListElement realisedElement,
 			NLGElement splitVerb, NLGElement verbElement) {
-
+		
 		NLGElement currentElement = verbElement.realiseSyntax();
 		if (currentElement != null) {
 			if (splitVerb == null) {
@@ -731,10 +732,14 @@ public abstract class AbstractClauseHelper {
 				break;
 			}
 		}
+		// edited by de Oliveira. If a verb phrase is not plural, it is singular by default.
+		// this makes sure "s" is used in the string to do a lexicon lookup of a verb, whose 
+		// verb phrase does not carry feature plural or is deliberately marked as singular.
 		if (verbElement != null) {
-			verbElement.setFeature(Feature.NUMBER,
-					pluralSubjects ? NumberAgreement.PLURAL : phrase
-							.getFeature(Feature.NUMBER));
+//			verbElement.setFeature(Feature.NUMBER, 
+				// pluralSubjects ? NumberAgreement.PLURAL : phrase.getFeature(Feature.NUMBER));
+			verbElement.setFeature(Feature.NUMBER, 
+					pluralSubjects ? NumberAgreement.PLURAL : NumberAgreement.SINGULAR);
 			if (person != null)
 				verbElement.setFeature(Feature.PERSON, person);
 		}

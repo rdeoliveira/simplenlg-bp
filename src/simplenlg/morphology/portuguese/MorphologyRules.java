@@ -280,6 +280,9 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 	 */
 	public String buildRegularPlural(String form) {
 		
+//		System.out.println("building regular plural");
+		//TODO this method is being called several times for a single sentence 		
+		
 		//if form ends in "ão", delete "ão" and add "ões" (too generic rule)
 		// TODO improve rule for "ão"
 		if(form.endsWith("ão")){
@@ -327,15 +330,12 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 			// get the last character of form as ending
 			String ending = form.substring(form.length()-1);
 			
-			// if ending is any vowel, add "s"
-			if (ending.matches("[aáãeéiíoóõuú]")) {
+			// if ending is any vowel and the word is not 'que', add "s"
+			if (ending.matches("[aáãeéiíoóõuú]") && !form.equals("que")) {
 				form += "s";
 			// if ending is "r", "z" or "n", add "es"
 			} else if (ending.matches("[rzn]")) {
 				form += "es";
-			// if rule not implemented yet, add message (TODO finish rules)
-			} else {
-				form += "[unkown plural form]";
 			}
 		}
 		return form;
@@ -555,6 +555,8 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 				break;
 			}
 			realised = radical+thematicVowel+"d"+suffix;
+		//TODO once debugged auxiliary creation in VerbPhraseHelper, delete these (and
+		// called methods
 		// here begins a list of irregular verbs, that is far from complete
 		} else if(baseForm.equals("estar")){
 			realised = VerbRules.conjugateEstar(number, person, tense);
@@ -564,6 +566,8 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 			realised = VerbRules.conjugateTer(number, person, tense);
 		} else if(baseForm.equals("ir")){
 			realised = VerbRules.conjugateIr(number, person, tense);
+		} else if(baseForm.equals("dar")){
+			realised = VerbRules.conjugateDar(number, person, tense);
 		// here begins the set of regular verb conjugations
 		} else {
 			switch (tense) {
@@ -575,7 +579,7 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 				realised = VerbRules.buildFutureRegularVerb(
 						baseForm, number, person);
 				break;
-			// same method as subjunctive present 
+			// same mechanism as subjunctive present 
 			case IMPERATIVE:
 				realised = VerbRules.buildSubjunctivePresentRegularVerb(
 						baseForm, number, person);
@@ -584,13 +588,19 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 				realised = VerbRules.buildImperfectRegularVerb(
 						baseForm, number, person);
 				break;
+			// no morphological mechanism required
+			case IMPERSONAL_INFINITIVE:
+				realised = baseForm;
+				break;
 			case PAST:
 				realised = VerbRules.buildPastRegularVerb(
 						baseForm, number, person);
 				break;
+			// same mechanism as subjunctive future
 			case PERSONAL_INFINITIVE:
 				realised = VerbRules.buildSubjunctiveFutureRegularVerb(
 						baseForm, number, person);
+				break;
 			case PLUPERFECT:
 				realised = VerbRules.buildPluperfectRegularVerb(
 						baseForm, number, person);

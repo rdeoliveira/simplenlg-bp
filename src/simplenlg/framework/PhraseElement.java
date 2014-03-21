@@ -738,8 +738,8 @@ public class PhraseElement extends NLGElement {
 	 * @return syntactically realised form
 	 * @author vaudrypl
 	 */
-	public NLGElement realiseSyntax()
-	{
+	public NLGElement realiseSyntax() {
+		
 		if (getFeatureAsBoolean(Feature.ELIDED).booleanValue()) {
 			return null;
 		}
@@ -765,6 +765,7 @@ public class PhraseElement extends NLGElement {
 				// TODO roman suggested swapping the above code with one below
 //				AbstractVerbPhraseHelper tmp = getVerbPhraseHelper();
 //				realisedElement = tmp.realise(this);
+//				break;
 
 			case PREPOSITIONAL_PHRASE:
 			case ADJECTIVE_PHRASE:

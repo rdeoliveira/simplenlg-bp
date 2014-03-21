@@ -31,8 +31,8 @@ import simplenlg.morphophonology.MorphophonologyRulesInterface;
  * 
  * Reference:
  * 
- * Cunha, Celso & Cintra, Lindley (1984). Nova Gramática do Português 
- * Contemporâneo. Edições João de Sá da Costa, Lisboa.
+ * Source: Bechara, Evanildo. Moderna Gramática Portuguesa, pp. 302-304. 
+ * Nova Fronteira, 2013.
  * 
  * @author R. de Oliveira, University of Aberdeen.
  */
@@ -42,12 +42,12 @@ public class MorphophonologyRules implements MorphophonologyRulesInterface {
 	//entirely implemented; generation should succeed nonetheless if one defines
 	//things like "este" or "aquele" as the specifier of the NP inside the PP.
 	/**
-	 * This method performs the morphophonology on two StringElements. General
-	 * PPs with preposition that undergo elision. These are "a", "de"
-	 * 	 and "por" or prepositional complexes formed with those such as "próximo
-	 * 	 a" or "longe de". Note that "desde", a preposition, ends with -de but
-	 * 	 should not undergo elision. The same applies for "contra" and "para";
-	 * 	 both end in -a but should not undergo elision.
+	 * This method performs the morphophonology on two StringElements, general
+	 * PPs with preposition that undergo contraction. These are "a", "de"
+	 * and "por" or prepositional complexes ending in those, such as "próximo
+	 * a" or "longe de". Note that "desde", a preposition, ends with -de but
+	 * should not undergo contraction. The same applies for "contra" and "para";
+	 * both end in -a but should not undergo contraction.
 	 */
 	 public void doMorphophonology(StringElement leftWord, StringElement rightWord) {		
 		ElementCategory leftCategory = leftWord.getCategory();
@@ -56,11 +56,14 @@ public class MorphophonologyRules implements MorphophonologyRulesInterface {
 		String rightRealisation = rightWord.getRealisation();
 		
 		if (leftRealisation != null && rightRealisation != null) {
-		
+			
+			// contraction will happen with determiners such as 'a', 'este', and
+			// adverbs such as 'aqui', 'ali'.
 			if (LexicalCategory.PREPOSITION.equalTo(leftCategory)
-					&& (LexicalCategory.DETERMINER.equalTo(rightCategory)
-							|| rightWord.getFeature(PortugueseLexicalFeature.PRONOUN_TYPE)
-								== PronounType.RELATIVE)) {
+					&& ((LexicalCategory.DETERMINER.equalTo(rightCategory)
+							|| LexicalCategory.ADVERB.equalTo(rightCategory))
+								|| rightWord.getFeature(PortugueseLexicalFeature.PRONOUN_TYPE)
+									== PronounType.RELATIVE)) {
 				// edited by de Oliveira
 				// if the preposition is "de" or ends with " de"
 				if (leftRealisation.matches("(.+ |)de\\z")) {

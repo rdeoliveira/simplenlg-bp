@@ -44,7 +44,7 @@ public class VerbPeriphrasis extends Setup {
 	public void testProgressive(){
 		
 		cantar.setFeature(Feature.TENSE, Tense.FUTURE);
-		cantar.setFeature(Feature.PERSON, Person.SECOND);
+		cantar.setFeature(Feature.PERSON, Person.THIRD);
 		cantar.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
 		cantar.setFeature(Feature.PROGRESSIVE, true);
 		String realisation = realiser.realise(cantar).getRealisation();

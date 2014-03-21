@@ -15,13 +15,14 @@ import simplenlg.features.Tense;
  * 
  * Reference:
  * 
- * Cunha, Celso & Cintra, Lindley (1984). Nova Gramática do Português 
- * Contemporâneo. Edições João de Sá da Costa, Lisboa.
+ * Source: Bechara, Evanildo. Moderna Gramática Portuguesa. 
+ * Nova Fronteira, 2013.
  * 
  * @author R. de Oliveira, University of Aberdeen.
  */
 public class VerbRules {
 	
+	//TODO delete this?
 	/**
 	 * Adds a radical and a suffix applying phonological rules
 	 * Reference : sections 760-761 of Grevisse (1993)
@@ -31,6 +32,7 @@ public class VerbRules {
 	 * @return resultant form
 	 */
 	public static String addSuffix(String radical, String suffix) {
+		//TODO
 //		int length = radical.length();
 //		// change "c" to "ç" and "g" to "ge" before "a" and "o";
 //		if (suffix.matches("a")) {
@@ -780,6 +782,8 @@ public class VerbRules {
 		return addSuffix(radical, suffix);
 	}
 	
+	//TODO if not debugged in auxiliary creation in VerbPhraseHelper, finish method for
+	// "tu and "vos"
 	/**
 	 * Builds the appropriate form for the "estar" verb, in any tense. 
 	 *
@@ -799,14 +803,24 @@ public class VerbRules {
 		case CONDITIONAL:
 			switch (number){
 			case SINGULAR: case BOTH:
-				realised = "estaria";
+				switch (person){
+				case FIRST: case THIRD:
+					realised = "estaria";
+					break;
+				case SECOND:
+					realised = "estarias";
+					break;
+				}
 				break;
 			case PLURAL:
 				switch (person){
 				case FIRST:
 					realised = "estaríamos";
 					break;
-				case SECOND: case THIRD:
+				case SECOND:
+					realised = "estaríeis";
+					break;
+				case THIRD:
 					realised = "estariam";
 					break;
 				}
@@ -820,16 +834,23 @@ public class VerbRules {
 				case FIRST:
 					realised = "estarei";
 					break;
-				case SECOND: case THIRD:
+				case SECOND:
+					realised = "estarás";
+					break;
+				case THIRD:
 					realised = "estará";
 					break;
 				}
+			break;
 			case PLURAL:
 				switch (person){
 				case FIRST:
 					realised = "estaremos";
 					break;
-				case SECOND: case THIRD:
+				case SECOND: 
+					realised = "estareis";
+					break;
+				case THIRD:
 					realised = "estarão";
 					break;
 				}
@@ -839,14 +860,24 @@ public class VerbRules {
 		case IMPERFECT:
 			switch (number){
 			case SINGULAR: case BOTH:
-				realised = "estava";
+				switch (person){
+				case FIRST: case THIRD:
+					realised = "estava";
+					break;
+				case SECOND:
+					realised = "estavas";
+					break;
+				}
 				break;
 			case PLURAL:
 				switch (person){
 				case FIRST:
 					realised = "estávamos";
 					break;
-				case SECOND: case THIRD:
+				case SECOND:
+					realised = "estáveis";
+					break;
+				case THIRD:
 					realised = "estavam";
 					break;
 				}
@@ -1001,13 +1032,19 @@ public class VerbRules {
 				break;
 			}
 			break;
+		case IMPERSONAL_INFINITIVE:
+			break;
+		default:
+			break;
 		}
 		
 		return realised;		
 	}
 	
+	//TODO if not debugged in auxiliary creation in VerbPhraseHelper, finish method for
+		// "tu and "vos"
 	/**
-	 * Builds the appropriate form for the "estar" verb, in any tense. 
+	 * Builds the appropriate form for the "ser" verb, in any tense. 
 	 *
 	 * @param baseForm
 	 *            the base form of the word.
@@ -1305,6 +1342,8 @@ public class VerbRules {
 		return realised;		
 	}
 	
+	//TODO if not debugged in auxiliary creation in VerbPhraseHelper, finish method for
+		// "tu and "vos"
 	/**
 	 * Builds the appropriate form for the "ter" verb, in any tense. 
 	 *
@@ -1477,6 +1516,8 @@ public class VerbRules {
 		return realised;		
 	}
 	
+	//TODO if not debugged in auxiliary creation in VerbPhraseHelper, finish method for
+		// "tu and "vos"
 	/**
 	 * Builds the appropriate form for the "ir" verb, in any tense. 
 	 *
@@ -1651,6 +1692,183 @@ public class VerbRules {
 		
 		return realised;		
 	}
+	
+	//TODO if not debugged in auxiliary creation in VerbPhraseHelper, finish method for
+			// "tu and "vos"
+		/**
+		 * Builds the appropriate form for the "ir" verb, in any tense. 
+		 *
+		 * @param baseForm
+		 *            the base form of the word.
+		 * @param number
+		 * @param person
+		 * @param tense
+		 * @return the inflected word.
+		 */
+		protected static String conjugateDar(NumberAgreement number,
+				Person person, Tense tense){
+			
+			String realised = "dar";
+			
+			switch (tense){
+			case CONDITIONAL:
+				switch (number){
+				case SINGULAR: case BOTH:
+					realised = "daria";
+					break;
+				case PLURAL:
+					switch (person){
+					case FIRST:
+						realised = "daríamos";
+						break;
+					case SECOND: case THIRD:
+						realised = "dariam";
+						break;
+					}
+					break;
+				}
+				break;
+			case FUTURE:
+				switch (number){
+				case SINGULAR: case BOTH:
+					switch (person){
+					case FIRST:
+						realised = "darei";
+						break;
+					case SECOND: case THIRD:
+						realised = "dará";
+						break;
+					}
+				case PLURAL:
+					switch (person){
+					case FIRST:
+						realised = "daremos";
+						break;
+					case SECOND: case THIRD:
+						realised = "darão";
+						break;
+					}
+					break;
+				}
+				break;
+			case IMPERFECT:
+				switch (number){
+				case SINGULAR: case BOTH:
+					realised = "dava";
+					break;
+				case PLURAL:
+					switch (person){
+					case FIRST:
+						realised = "dávamos";
+						break;
+					case SECOND: case THIRD:
+						realised = "davam";
+						break;
+					}
+					break;
+				}
+				break;
+			case PAST:
+				switch (number){
+				case SINGULAR: case BOTH:
+					switch (person){
+					case FIRST:
+						realised = "dei";
+						break;
+					case SECOND: case THIRD:
+						realised = "deu";
+						break;
+					}
+				case PLURAL:
+					switch (person){
+					case FIRST:
+						realised = "demos";
+						break;
+					case SECOND: case THIRD:
+						realised = "deram";
+						break;
+					}
+					break;
+				}
+				break;
+			case PRESENT:
+				switch (person){
+				case FIRST:
+					switch (number){
+					case SINGULAR: case BOTH:
+						realised = "dou";
+						break;
+					case PLURAL:
+						realised = "damos";
+						break;
+					}
+				case SECOND: case THIRD:
+					switch (number){
+					case SINGULAR: case BOTH:
+						realised = "dá";
+						break;
+					case PLURAL:
+						realised = "dão";
+						break;
+					}
+					break;
+				}
+				break;
+			case SUBJUNCTIVE_IMPERFECT: case PERSONAL_INFINITIVE: //TODO fix this, since s-imperfect and p-infinitive of irregulars is not the same
+				switch (number){
+				case SINGULAR: case BOTH:
+					realised = "desse";
+					break;
+				case PLURAL:
+					switch (person){
+					case FIRST:
+						realised = "déssemos";
+						break;
+					case SECOND: case THIRD:
+						realised = "dessem";
+						break;
+					}
+					break;
+				}
+				break;
+			case SUBJUNCTIVE_FUTURE:
+				switch (number){
+				case SINGULAR: case BOTH:
+					realised = "der";
+					break;
+				case PLURAL:
+					switch (person){
+					case FIRST:
+						realised = "dermos";
+						break;
+					case SECOND: case THIRD:
+						realised = "derem";
+						break;
+					}
+					break;
+				}
+				break;
+			case SUBJUNCTIVE_PRESENT: case IMPERATIVE:
+				switch (number){
+				case SINGULAR: case BOTH:
+					realised = "dê";
+					break;
+				case PLURAL:
+					switch (person){
+					case FIRST:
+						realised = "demos";
+						break;
+					case SECOND: case THIRD:
+						realised = "deem";
+						break;
+					}
+					break;
+				}
+				break;
+			}
+			
+			return realised;		
+		}
 	
 	/**
 	 * Returns the conjugation type (pattern) of the finite verb, which may be:

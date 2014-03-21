@@ -66,12 +66,6 @@ public enum Tense {
 	 */
 	IMPERFECT,
 	
-	// Not used, since modern Portuguese hardly ever uses it.
-//	/**
-//	 * Example: <em>João beijara Maria (John had kissed Mary)</em>.
-//	 */
-//	PLUPERFECT,
-	
 	/**
 	 * Example: <em>João beijará Maria (John will kiss Mary)</em>.
 	 */
@@ -115,5 +109,12 @@ public enum Tense {
 	/**
 	 * Example: <em>João beijara Maria (John had kissed Mary)</em>.
 	 */
-	PLUPERFECT;
+	PLUPERFECT,
+	
+	/**
+	 * Example: <em>Para beijar Maria (To kiss Mary)</em>.
+	 * This feature should exist just for flexibility of association, since
+	 * its morphological impact on the verb is none.
+	 */
+	IMPERSONAL_INFINITIVE;
 }
