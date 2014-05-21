@@ -272,7 +272,9 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 
 	/**
 	 * Builds the plural form of a noun or adjective following regular rules.
-	 * Reference : 180-187 of Cunha & Cintra (1984)
+	 * 
+	 * Source: Bechara, Evanildo. Moderna Gramática Portuguesa, pp. 117-123. 
+	 * Nova Fronteira, 2009.
 	 * 
 	 * @author R. de Oliveira, University of Aberdeen.
 	 * @param form form being realised on which to apply the plural morphology
@@ -283,8 +285,8 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 //		System.out.println("building regular plural");
 		//TODO this method is being called several times for a single sentence 		
 		
-		//if form ends in "ão", delete "ão" and add "ões" (too generic rule)
-		// TODO improve rule for "ão"
+		// TODO improve rule for "ão";  too generic rule as it is
+		//if form ends in "ão", delete "ão" and add "ões"
 		if(form.endsWith("ão")){
 			form = form.substring(0, form.length()-2) + "ões";
 			
@@ -294,13 +296,9 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 			if(form.substring(form.length()-2, form.length()-1).matches("[áãâ]")){
 				form = form.substring(0, form.length()-2) + "ases";
 			}
-			// and vowel is stressed "e", unstress "e" and add "es"
-			if(form.substring(form.length()-2, form.length()-1).matches("[éê]")){
-				form = form.substring(0, form.length()-2) + "eses";
-			}
-			// and vowel is stressed "i", unstress "i" and add "es"
-			if(form.substring(form.length()-2, form.length()-1).matches("[í]")){
-				form = form.substring(0, form.length()-2) + "ises";
+			// and vowel is stressed "e" or "i", just add "es"
+			if(form.substring(form.length()-2, form.length()-1).matches("[éêí]")){
+				form = form + "es";
 			}
 			// and vowel is stressed "o", unstress "o" and add "es"
 			if(form.substring(form.length()-2, form.length()-1).matches("[óõô]")){
@@ -330,13 +328,13 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 			// get the last character of form as ending
 			String ending = form.substring(form.length()-1);
 			
-			// if ending is any vowel and the word is not 'que', add "s"
-			if (ending.matches("[aáãeéiíoóõuú]") && !form.equals("que")) {
+			// if ending is -n or any vowel and the word is not 'que', add "s"
+			if (ending.matches("[aáãeéiíoóõuún]") && !form.equals("que")) {
 				form += "s";
-			// if ending is "r", "z" or "n", add "es"
-			} else if (ending.matches("[rzn]")) {
+			// if ending is "r" or "z", add "es"
+			} else if (ending.matches("[rz]")) {
 				form += "es";
-			}
+			}		
 		}
 		return form;
 	}

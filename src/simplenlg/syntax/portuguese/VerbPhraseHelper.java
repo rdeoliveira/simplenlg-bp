@@ -191,7 +191,7 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 * Based on English method of the same name.
 	 * 
 	 * Source: Bechara, Evanildo. Moderna Gramática Portuguesa, pp. 230-233. 
-	 * Nova Fronteira, 2013. 
+	 * Nova Fronteira, 2009. 
 	 * 
 	 * @author R. de Oliveira, University of Aberdeen.
 	 * 

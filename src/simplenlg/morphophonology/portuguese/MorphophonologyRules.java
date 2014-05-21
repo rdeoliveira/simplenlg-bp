@@ -32,7 +32,7 @@ import simplenlg.morphophonology.MorphophonologyRulesInterface;
  * Reference:
  * 
  * Source: Bechara, Evanildo. Moderna Gramática Portuguesa, pp. 302-304. 
- * Nova Fronteira, 2013.
+ * Nova Fronteira, 2009.
  * 
  * @author R. de Oliveira, University of Aberdeen.
  */

@@ -16,7 +16,7 @@ import simplenlg.features.Tense;
  * Reference:
  * 
  * Source: Bechara, Evanildo. Moderna Gramática Portuguesa. 
- * Nova Fronteira, 2013.
+ * Nova Fronteira, 2009.
  * 
  * @author R. de Oliveira, University of Aberdeen.
  */
