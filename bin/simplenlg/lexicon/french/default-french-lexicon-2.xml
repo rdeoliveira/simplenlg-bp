@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- French default lexicon for simpleNLG bilingual
+     assembled by Pierre-Luc Vaudry -->
+<lexicon>
+	<!-- This first part of the lexicon was constructed manually.
+     Word ids in this part are the same as those of their
+     English counterparts in the English default lexicon.
+-->
+  <word>
+    <base>caber</base>
+    <category>verb</category>
+    <id>caber-id</id>
+    <present1s>caibo</present1s>
+  </word>
+</lexicon>
