@@ -27,9 +27,11 @@ import simplenlg.features.ClauseStatus;
 import simplenlg.features.DiscourseFunction;
 import simplenlg.features.Feature;
 import simplenlg.features.InternalFeature;
-import simplenlg.features.french.FrenchFeature;
-import simplenlg.phrasespec.*;
-import simplenlg.syntax.*;
+import simplenlg.phrasespec.NPPhraseSpec;
+import simplenlg.syntax.AbstractClauseHelper;
+import simplenlg.syntax.AbstractNounPhraseHelper;
+import simplenlg.syntax.AbstractVerbPhraseHelper;
+import simplenlg.syntax.GenericPhraseHelper;
 
 /**
  * <p>
@@ -49,10 +51,10 @@ import simplenlg.syntax.*;
 public class PhraseElement extends NLGElement {
 
 	// added by vaudrypl
-	private static Map<Language, AbstractClauseHelper> clauseHelpers = null; 
-	private static Map<Language, AbstractNounPhraseHelper> nounPhraseHelpers = null; 
-	private static Map<Language, GenericPhraseHelper> phraseHelpers = null; 
-	private static Map<Language, AbstractVerbPhraseHelper> verbPhraseHelpers = null; 
+	private static Map<Language, AbstractClauseHelper>     clauseHelpers     = null;
+	private static Map<Language, AbstractNounPhraseHelper> nounPhraseHelpers = null;
+	private static Map<Language, GenericPhraseHelper>      phraseHelpers     = null;
+	private static Map<Language, AbstractVerbPhraseHelper> verbPhraseHelpers = null;
 
 	/**
 	 * Creates a new phrase of the given type.
@@ -71,11 +73,10 @@ public class PhraseElement extends NLGElement {
 	 * @return the clause helper to be used to do the syntax of this word
 	 * @author vaudrypl
 	 */
-	public AbstractClauseHelper getClauseHelper()
-	{
-		return getClauseHelper( getLanguage() );
+	public AbstractClauseHelper getClauseHelper() {
+		return getClauseHelper(getLanguage());
 	}
-	
+
 	/**
 	 * This static method returns the clause helper corresponding to
 	 * a particular language and instantiates it if necessary.
@@ -85,22 +86,20 @@ public class PhraseElement extends NLGElement {
 	 * @author vaudrypl
 	 * @author edited by R. de Oliveira
 	 */
-	public static AbstractClauseHelper getClauseHelper(Language language)
-	{
-		if (clauseHelpers == null) {
-			clauseHelpers =
-				new EnumMap<Language,AbstractClauseHelper>(Language.class); 
+	public static AbstractClauseHelper getClauseHelper(Language language) {
+		if(clauseHelpers == null) {
+			clauseHelpers = new EnumMap<Language, AbstractClauseHelper>(Language.class);
 		}
 		AbstractClauseHelper clauseHelper = clauseHelpers.get(language);
-		if (clauseHelper == null) {
-			switch (language) {
-			case ENGLISH:
+		if(clauseHelper == null) {
+			switch(language){
+			case ENGLISH :
 				clauseHelper = new simplenlg.syntax.english.nonstatic.ClauseHelper();
 				break;
-			case FRENCH:
+			case FRENCH :
 				clauseHelper = new simplenlg.syntax.french.ClauseHelper();
 				break;
-			case PORTUGUESE:
+			case PORTUGUESE :
 				clauseHelper = new simplenlg.syntax.portuguese.ClauseHelper();
 				break;
 			}
@@ -108,16 +107,15 @@ public class PhraseElement extends NLGElement {
 		}
 		return clauseHelper;
 	}
-	
+
 	/**
 	 * @return the noun phrase helper to be used to do the syntax of this word
 	 * @author vaudrypl
 	 */
-	public AbstractNounPhraseHelper getNounPhraseHelper()
-	{
-		return getNounPhraseHelper( getLanguage() );
+	public AbstractNounPhraseHelper getNounPhraseHelper() {
+		return getNounPhraseHelper(getLanguage());
 	}
-	
+
 	/**
 	 * This static method returns the noun phrase helper corresponding to
 	 * a particular language and instantiates it if necessary.
@@ -127,27 +125,21 @@ public class PhraseElement extends NLGElement {
 	 * @author vaudrypl
 	 * @author edited by R. de Oliveira
 	 */
-	public static AbstractNounPhraseHelper getNounPhraseHelper(Language language)
-	{
-		if (nounPhraseHelpers == null) {
-			nounPhraseHelpers =
-				new EnumMap<Language,AbstractNounPhraseHelper>(Language.class); 
+	public static AbstractNounPhraseHelper getNounPhraseHelper(Language language) {
+		if(nounPhraseHelpers == null) {
+			nounPhraseHelpers = new EnumMap<Language, AbstractNounPhraseHelper>(Language.class);
 		}
-		AbstractNounPhraseHelper nounPhraseHelper =
-			nounPhraseHelpers.get(language);
-		if (nounPhraseHelper == null) {
-			switch (language) {
-			case ENGLISH:
-				nounPhraseHelper =
-					new simplenlg.syntax.english.nonstatic.NounPhraseHelper();
+		AbstractNounPhraseHelper nounPhraseHelper = nounPhraseHelpers.get(language);
+		if(nounPhraseHelper == null) {
+			switch(language){
+			case ENGLISH :
+				nounPhraseHelper = new simplenlg.syntax.english.nonstatic.NounPhraseHelper();
 				break;
-			case FRENCH:
-				nounPhraseHelper =
-					new simplenlg.syntax.french.NounPhraseHelper();
+			case FRENCH :
+				nounPhraseHelper = new simplenlg.syntax.french.NounPhraseHelper();
 				break;
-			case PORTUGUESE:
-				nounPhraseHelper =
-					new simplenlg.syntax.portuguese.NounPhraseHelper();
+			case PORTUGUESE :
+				nounPhraseHelper = new simplenlg.syntax.portuguese.NounPhraseHelper();
 				break;
 			}
 			nounPhraseHelpers.put(language, nounPhraseHelper);
@@ -159,11 +151,10 @@ public class PhraseElement extends NLGElement {
 	 * @return the phrase helper to be used to do the syntax of this word
 	 * @author vaudrypl
 	 */
-	public GenericPhraseHelper getPhraseHelper()
-	{
-		return getPhraseHelper( getLanguage() );
+	public GenericPhraseHelper getPhraseHelper() {
+		return getPhraseHelper(getLanguage());
 	}
-	
+
 	/**
 	 * This static method returns the phrase helper corresponding to
 	 * a particular language and instantiates it if necessary.
@@ -173,27 +164,21 @@ public class PhraseElement extends NLGElement {
 	 * @author vaudrypl
 	 * @author edited by R. de Oliveira
 	 */
-	public static GenericPhraseHelper getPhraseHelper(Language language)
-	{
-		if (phraseHelpers == null) {
-			phraseHelpers =
-				new EnumMap<Language,GenericPhraseHelper>(Language.class); 
+	public static GenericPhraseHelper getPhraseHelper(Language language) {
+		if(phraseHelpers == null) {
+			phraseHelpers = new EnumMap<Language, GenericPhraseHelper>(Language.class);
 		}
-		GenericPhraseHelper phraseHelper =
-			phraseHelpers.get(language);
-		if (phraseHelper == null) {
-			switch (language) {
-			case ENGLISH:
-				phraseHelper =
-					new simplenlg.syntax.english.nonstatic.PhraseHelper();
+		GenericPhraseHelper phraseHelper = phraseHelpers.get(language);
+		if(phraseHelper == null) {
+			switch(language){
+			case ENGLISH :
+				phraseHelper = new simplenlg.syntax.english.nonstatic.PhraseHelper();
 				break;
-			case FRENCH:
-				phraseHelper =
-					new simplenlg.syntax.french.PhraseHelper();
+			case FRENCH :
+				phraseHelper = new simplenlg.syntax.french.PhraseHelper();
 				break;
-			case PORTUGUESE:
-				phraseHelper =
-					new simplenlg.syntax.portuguese.PhraseHelper();
+			case PORTUGUESE :
+				phraseHelper = new simplenlg.syntax.portuguese.PhraseHelper();
 				break;
 			}
 			phraseHelpers.put(language, phraseHelper);
@@ -205,11 +190,10 @@ public class PhraseElement extends NLGElement {
 	 * @return the verb phrase helper to be used to do the syntax of this word
 	 * @author vaudrypl
 	 */
-	public AbstractVerbPhraseHelper getVerbPhraseHelper()
-	{
-		return getVerbPhraseHelper( getLanguage() );
+	public AbstractVerbPhraseHelper getVerbPhraseHelper() {
+		return getVerbPhraseHelper(getLanguage());
 	}
-	
+
 	/**
 	 * This static method returns the verb phrase helper corresponding to
 	 * a particular language and instantiates it if necessary.
@@ -219,27 +203,21 @@ public class PhraseElement extends NLGElement {
 	 * @author vaudrypl
 	 * @author edited by R. de Oliveira
 	 */
-	public static AbstractVerbPhraseHelper getVerbPhraseHelper(Language language)
-	{
-		if (verbPhraseHelpers == null) {
-			verbPhraseHelpers =
-				new EnumMap<Language,AbstractVerbPhraseHelper>(Language.class); 
+	public static AbstractVerbPhraseHelper getVerbPhraseHelper(Language language) {
+		if(verbPhraseHelpers == null) {
+			verbPhraseHelpers = new EnumMap<Language, AbstractVerbPhraseHelper>(Language.class);
 		}
-		AbstractVerbPhraseHelper verbPhraseHelper =
-			verbPhraseHelpers.get(language);
-		if (verbPhraseHelper == null) {
-			switch (language) {
-			case ENGLISH:
-				verbPhraseHelper =
-					new simplenlg.syntax.english.nonstatic.VerbPhraseHelper();
+		AbstractVerbPhraseHelper verbPhraseHelper = verbPhraseHelpers.get(language);
+		if(verbPhraseHelper == null) {
+			switch(language){
+			case ENGLISH :
+				verbPhraseHelper = new simplenlg.syntax.english.nonstatic.VerbPhraseHelper();
 				break;
-			case FRENCH:
-				verbPhraseHelper =
-					new simplenlg.syntax.french.VerbPhraseHelper();
+			case FRENCH :
+				verbPhraseHelper = new simplenlg.syntax.french.VerbPhraseHelper();
 				break;
-			case PORTUGUESE:
-				verbPhraseHelper =
-					new simplenlg.syntax.portuguese.VerbPhraseHelper();
+			case PORTUGUESE :
+				verbPhraseHelper = new simplenlg.syntax.portuguese.VerbPhraseHelper();
 				break;
 			}
 			verbPhraseHelpers.put(language, verbPhraseHelper);
@@ -274,70 +252,56 @@ public class PhraseElement extends NLGElement {
 		ElementCategory category = getCategory();
 		NLGElement currentElement = null;
 
-		if (category instanceof PhraseCategory) {
-			switch ((PhraseCategory) category) {
-			case CLAUSE:
+		if(category instanceof PhraseCategory) {
+			switch((PhraseCategory) category){
+			case CLAUSE :
 				currentElement = getFeatureAsElement(Feature.CUE_PHRASE);
-				if (currentElement != null) {
+				if(currentElement != null) {
 					children.add(currentElement);
 				}
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.FRONT_MODIFIERS));
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.PREMODIFIERS));
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.SUBJECTS));
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.VERB_PHRASE));
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.COMPLEMENTS));
+				children.addAll(getFeatureAsElementList(InternalFeature.FRONT_MODIFIERS));
+				children.addAll(getFeatureAsElementList(InternalFeature.PREMODIFIERS));
+				children.addAll(getFeatureAsElementList(InternalFeature.SUBJECTS));
+				children.addAll(getFeatureAsElementList(InternalFeature.VERB_PHRASE));
+				children.addAll(getFeatureAsElementList(InternalFeature.COMPLEMENTS));
 				break;
 
-			case NOUN_PHRASE:
+			case NOUN_PHRASE :
 				currentElement = getFeatureAsElement(InternalFeature.SPECIFIER);
-				if (currentElement != null) {
+				if(currentElement != null) {
 					children.add(currentElement);
 				}
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.PREMODIFIERS));
+				children.addAll(getFeatureAsElementList(InternalFeature.PREMODIFIERS));
 				currentElement = getHead();
-				if (currentElement != null) {
+				if(currentElement != null) {
 					children.add(currentElement);
 				}
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.COMPLEMENTS));
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.POSTMODIFIERS));
+				children.addAll(getFeatureAsElementList(InternalFeature.COMPLEMENTS));
+				children.addAll(getFeatureAsElementList(InternalFeature.POSTMODIFIERS));
 				break;
 
-			case VERB_PHRASE:
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.PREMODIFIERS));
+			case VERB_PHRASE :
+				children.addAll(getFeatureAsElementList(InternalFeature.PREMODIFIERS));
 				currentElement = getHead();
-				if (currentElement != null) {
+				if(currentElement != null) {
 					children.add(currentElement);
 				}
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.COMPLEMENTS));
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.POSTMODIFIERS));
+				children.addAll(getFeatureAsElementList(InternalFeature.COMPLEMENTS));
+				children.addAll(getFeatureAsElementList(InternalFeature.POSTMODIFIERS));
 				break;
 
-			case CANNED_TEXT:
+			case CANNED_TEXT :
 				// Do nothing
 				break;
 
-			default:
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.PREMODIFIERS));
+			default :
+				children.addAll(getFeatureAsElementList(InternalFeature.PREMODIFIERS));
 				currentElement = getHead();
-				if (currentElement != null) {
+				if(currentElement != null) {
 					children.add(currentElement);
 				}
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.COMPLEMENTS));
-				children
-						.addAll(getFeatureAsElementList(InternalFeature.POSTMODIFIERS));
+				children.addAll(getFeatureAsElementList(InternalFeature.COMPLEMENTS));
+				children.addAll(getFeatureAsElementList(InternalFeature.POSTMODIFIERS));
 				break;
 			}
 		}
@@ -355,12 +319,12 @@ public class PhraseElement extends NLGElement {
 	 *            the new value for the head of this phrase.
 	 */
 	public void setHead(Object newHead) {
-		if (newHead == null) {
+		if(newHead == null) {
 			removeFeature(InternalFeature.HEAD);
 			return;
 		}
 		NLGElement headElement;
-		if (newHead instanceof NLGElement)
+		if(newHead instanceof NLGElement)
 			headElement = (NLGElement) newHead;
 		else
 			headElement = new StringElement(newHead.toString());
@@ -400,19 +364,16 @@ public class PhraseElement extends NLGElement {
 	 */
 	public void addComplement(NLGElement newComplement) {
 		List<NLGElement> complements = getFeatureAsElementList(InternalFeature.COMPLEMENTS);
-		if (complements == null) {
+		if(complements == null) {
 			complements = new ArrayList<NLGElement>();
 		}
 		complements.add(newComplement);
 		setFeature(InternalFeature.COMPLEMENTS, complements);
-		if (newComplement.isA(PhraseCategory.CLAUSE)
-				|| newComplement instanceof CoordinatedPhraseElement) {
-			newComplement.setFeature(InternalFeature.CLAUSE_STATUS,
-					ClauseStatus.SUBORDINATE);
+		if(newComplement.isA(PhraseCategory.CLAUSE) || newComplement instanceof CoordinatedPhraseElement) {
+			newComplement.setFeature(InternalFeature.CLAUSE_STATUS, ClauseStatus.SUBORDINATE);
 
-			if (!newComplement.hasFeature(InternalFeature.DISCOURSE_FUNCTION)) {
-				newComplement.setFeature(InternalFeature.DISCOURSE_FUNCTION,
-						DiscourseFunction.OBJECT);
+			if(!newComplement.hasFeature(InternalFeature.DISCOURSE_FUNCTION)) {
+				newComplement.setFeature(InternalFeature.DISCOURSE_FUNCTION, DiscourseFunction.OBJECT);
 			}
 		}
 		// added by vaudrypl
@@ -441,21 +402,21 @@ public class PhraseElement extends NLGElement {
 	 */
 	public void removeComplements(DiscourseFunction function) {
 		List<NLGElement> complements = getFeatureAsElementList(InternalFeature.COMPLEMENTS);
-		if (function == null || complements == null)
+		if(function == null || complements == null)
 			return;
 		List<NLGElement> complementsToRemove = new ArrayList<NLGElement>();
-		for (NLGElement complement: complements)
-			if (function == complement.getFeature(InternalFeature.DISCOURSE_FUNCTION))
+		for(NLGElement complement : complements)
+			if(function == complement.getFeature(InternalFeature.DISCOURSE_FUNCTION))
 				complementsToRemove.add(complement);
 
-		if (!complementsToRemove.isEmpty()) {
+		if(!complementsToRemove.isEmpty()) {
 			complements.removeAll(complementsToRemove);
 			setFeature(InternalFeature.COMPLEMENTS, complements);
 		}
-		
+
 		return;
 	}
-	
+
 	/**
 	 * <p>
 	 * Adds a new complement to the phrase element. Complements will be realised
@@ -471,9 +432,9 @@ public class PhraseElement extends NLGElement {
 	public void addComplement(String newComplement) {
 		// changed by vaudrypl
 		NLGElement newElement = getFactory().createNLGElement(newComplement);
-//		StringElement newElement = new StringElement(newComplement);
+		//		StringElement newElement = new StringElement(newComplement);
 		List<NLGElement> complements = getFeatureAsElementList(InternalFeature.COMPLEMENTS);
-		if (complements == null) {
+		if(complements == null) {
 			complements = new ArrayList<NLGElement>();
 		}
 		complements.add(newElement);
@@ -506,7 +467,7 @@ public class PhraseElement extends NLGElement {
 	 */
 	public void addPostModifier(NLGElement newPostModifier) {
 		List<NLGElement> postModifiers = getFeatureAsElementList(InternalFeature.POSTMODIFIERS);
-		if (postModifiers == null) {
+		if(postModifiers == null) {
 			postModifiers = new ArrayList<NLGElement>();
 		}
 		postModifiers.add(newPostModifier);
@@ -524,12 +485,12 @@ public class PhraseElement extends NLGElement {
 	 *            create a <code>StringElement</code>.
 	 */
 	public void addPostModifier(String newPostModifier) {
-//		List<NLGElement> postModifiers = getFeatureAsElementList(InternalFeature.POSTMODIFIERS);
-//		if (postModifiers == null) {
-//			postModifiers = new ArrayList<NLGElement>();
-//		}
-//		postModifiers.add(new StringElement(newPostModifier));
-//		setFeature(InternalFeature.POSTMODIFIERS, postModifiers);
+		//		List<NLGElement> postModifiers = getFeatureAsElementList(InternalFeature.POSTMODIFIERS);
+		//		if (postModifiers == null) {
+		//			postModifiers = new ArrayList<NLGElement>();
+		//		}
+		//		postModifiers.add(new StringElement(newPostModifier));
+		//		setFeature(InternalFeature.POSTMODIFIERS, postModifiers);
 		// changed by vaudrypl
 		NLGElement newElement = getFactory().createNLGElement(newPostModifier);
 		addPostModifier(newElement);
@@ -543,21 +504,18 @@ public class PhraseElement extends NLGElement {
 	 */
 	public void addFrontModifier(NLGElement newFrontModifier) {
 		List<NLGElement> frontModifiers = getFeatureAsElementList(InternalFeature.FRONT_MODIFIERS);
-		if (frontModifiers == null) {
+		if(frontModifiers == null) {
 			frontModifiers = new ArrayList<NLGElement>();
 		}
 		frontModifiers.add(newFrontModifier);
 		setFeature(InternalFeature.FRONT_MODIFIERS, frontModifiers);
-		
-		// added by vaudrypl
-		if (newFrontModifier.isA(PhraseCategory.CLAUSE)
-				|| newFrontModifier instanceof CoordinatedPhraseElement) {
-			newFrontModifier.setFeature(InternalFeature.CLAUSE_STATUS,
-					ClauseStatus.SUBORDINATE);
 
-			if (!newFrontModifier.hasFeature(InternalFeature.DISCOURSE_FUNCTION)) {
-				newFrontModifier.setFeature(InternalFeature.DISCOURSE_FUNCTION,
-						DiscourseFunction.OBJECT);
+		// added by vaudrypl
+		if(newFrontModifier.isA(PhraseCategory.CLAUSE) || newFrontModifier instanceof CoordinatedPhraseElement) {
+			newFrontModifier.setFeature(InternalFeature.CLAUSE_STATUS, ClauseStatus.SUBORDINATE);
+
+			if(!newFrontModifier.hasFeature(InternalFeature.DISCOURSE_FUNCTION)) {
+				newFrontModifier.setFeature(InternalFeature.DISCOURSE_FUNCTION, DiscourseFunction.OBJECT);
 			}
 		}
 		newFrontModifier.setParent(this);
@@ -573,7 +531,7 @@ public class PhraseElement extends NLGElement {
 	public void addFrontModifier(String newFrontModifier) {
 		List<NLGElement> frontModifiers = getFeatureAsElementList(InternalFeature.FRONT_MODIFIERS);
 
-		if (frontModifiers == null) {
+		if(frontModifiers == null) {
 			frontModifiers = new ArrayList<NLGElement>();
 		}
 		StringElement newStringElem = new StringElement(newFrontModifier);
@@ -591,7 +549,7 @@ public class PhraseElement extends NLGElement {
 	 */
 	public void addPreModifier(NLGElement newPreModifier) {
 		List<NLGElement> preModifiers = getFeatureAsElementList(InternalFeature.PREMODIFIERS);
-		if (preModifiers == null) {
+		if(preModifiers == null) {
 			preModifiers = new ArrayList<NLGElement>();
 		}
 		preModifiers.add(newPreModifier);
@@ -621,11 +579,11 @@ public class PhraseElement extends NLGElement {
 	 */
 	public void addModifier(Object modifier) {
 		// default addModifier - always make modifier a preModifier
-		if (modifier == null)
+		if(modifier == null)
 			return;
 
 		// assume is preModifier, add in appropriate form
-		if (modifier instanceof NLGElement)
+		if(modifier instanceof NLGElement)
 			addPreModifier((NLGElement) modifier);
 		else
 			addPreModifier((String) modifier);
@@ -667,25 +625,22 @@ public class PhraseElement extends NLGElement {
 		String lastChildIndent = indent == null ? "   " : indent + "   "; //$NON-NLS-1$ //$NON-NLS-2$
 		StringBuffer print = new StringBuffer();
 		print.append("PhraseElement: category=") //$NON-NLS-1$
-				.append(getCategory().toString()).append(", features={"); //$NON-NLS-1$
+		.append(getCategory().toString()).append(", features={"); //$NON-NLS-1$
 
 		Map<String, Object> features = getAllFeatures();
-		for (String eachFeature : features.keySet()) {
-			print.append(eachFeature).append('=').append(
-					features.get(eachFeature).toString()).append(' ');
+		for(String eachFeature : features.keySet()) {
+			print.append(eachFeature).append('=').append(features.get(eachFeature).toString()).append(' ');
 		}
 		print.append("}\n"); //$NON-NLS-1$
 		List<NLGElement> children = getChildren();
 		int length = children.size() - 1;
 		int index = 0;
 
-		for (index = 0; index < length; index++) {
-			print.append(thisIndent).append(
-					children.get(index).printTree(childIndent));
+		for(index = 0; index < length; index++ ) {
+			print.append(thisIndent).append(children.get(index).printTree(childIndent));
 		}
-		if (length >= 0) {
-			print.append(lastIndent).append(
-					children.get(length).printTree(lastChildIndent));
+		if(length >= 0) {
+			print.append(lastIndent).append(children.get(length).printTree(lastChildIndent));
 		}
 		return print.toString();
 	}
@@ -720,12 +675,10 @@ public class PhraseElement extends NLGElement {
 	@Deprecated
 	public void setDeterminer(Object newDeterminer) {
 		NLGFactory factory = getFactory(); //changed from new NLGFactory() by vaudrypl
-		NLGElement determinerElement = factory.createWord(newDeterminer,
-				LexicalCategory.DETERMINER);
+		NLGElement determinerElement = factory.createWord(newDeterminer, LexicalCategory.DETERMINER);
 
-		if (determinerElement != null) {
-			determinerElement.setFeature(InternalFeature.DISCOURSE_FUNCTION,
-					DiscourseFunction.SPECIFIER);
+		if(determinerElement != null) {
+			determinerElement.setFeature(InternalFeature.DISCOURSE_FUNCTION, DiscourseFunction.SPECIFIER);
 			setFeature(InternalFeature.SPECIFIER, determinerElement);
 			determinerElement.setParent(this);
 		}
@@ -739,41 +692,41 @@ public class PhraseElement extends NLGElement {
 	 * @author vaudrypl
 	 */
 	public NLGElement realiseSyntax() {
-		
-		if (getFeatureAsBoolean(Feature.ELIDED).booleanValue()) {
+
+		if(getFeatureAsBoolean(Feature.ELIDED).booleanValue()) {
 			return null;
 		}
-		
+
 		NLGElement realisedElement = null;
 
 		ElementCategory category = getCategory();
 
-		if (category instanceof PhraseCategory) {
-			switch ((PhraseCategory) category) {
+		if(category instanceof PhraseCategory) {
+			switch((PhraseCategory) category){
 
-			case CLAUSE:
+			case CLAUSE :
 				realisedElement = getClauseHelper().realise(this);
 				break;
 
-			case NOUN_PHRASE:
+			case NOUN_PHRASE :
 				realisedElement = getNounPhraseHelper().realise(this);
 				break;
 
-			case VERB_PHRASE:
+			case VERB_PHRASE :
 				realisedElement = getVerbPhraseHelper().realise(this);
 				break;
-				// TODO roman suggested swapping the above code with one below
-//				AbstractVerbPhraseHelper tmp = getVerbPhraseHelper();
-//				realisedElement = tmp.realise(this);
-//				break;
+			// TODO roman suggested swapping the above code with one below
+			//				AbstractVerbPhraseHelper tmp = getVerbPhraseHelper();
+			//				realisedElement = tmp.realise(this);
+			//				break;
 
-			case PREPOSITIONAL_PHRASE:
-			case ADJECTIVE_PHRASE:
-			case ADVERB_PHRASE:
+			case PREPOSITIONAL_PHRASE :
+			case ADJECTIVE_PHRASE :
+			case ADVERB_PHRASE :
 				realisedElement = getPhraseHelper().realise(this);
 				break;
 
-			default:
+			default :
 				realisedElement = this;
 				break;
 			}

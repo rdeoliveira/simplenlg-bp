@@ -32,9 +32,9 @@ import simplenlg.features.LexicalFeature;
 import simplenlg.features.NumberAgreement;
 import simplenlg.features.Person;
 import simplenlg.features.portuguese.PortugueseFeature;
+import simplenlg.features.portuguese.PortugueseInternalFeature;
 import simplenlg.features.portuguese.PortugueseLexicalFeature;
 import simplenlg.features.portuguese.PronounType;
-import simplenlg.features.portuguese.PortugueseInternalFeature;
 import simplenlg.framework.CoordinatedPhraseElement;
 import simplenlg.framework.InflectedWordElement;
 import simplenlg.framework.LexicalCategory;
@@ -45,7 +45,6 @@ import simplenlg.framework.PhraseElement;
 import simplenlg.framework.StringElement;
 import simplenlg.framework.WordElement;
 import simplenlg.lexicon.Lexicon;
-import simplenlg.lexicon.portuguese.XMLLexicon;
 import simplenlg.phrasespec.NPPhraseSpec;
 import simplenlg.phrasespec.PPPhraseSpec;
 import simplenlg.phrasespec.VPPhraseSpec;
@@ -57,13 +56,12 @@ import simplenlg.phrasespec.VPPhraseSpec;
  * @author R. de Oliveira, University of Aberdeen.
  */
 public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhraseHelper {
-	
+
 	// the following lists are NOT exhaustive; they shall grow as required
-	List<String> aModals = Arrays.asList("começar","continuar","voltar");
-	List<String> deModals = Arrays.asList("acabar","chegar","deixar","gostar",
-			"gostar","parar","ter");
+	List<String> aModals    = Arrays.asList("começar", "continuar", "voltar");
+	List<String> deModals   = Arrays.asList("acabar", "chegar", "deixar", "gostar", "gostar", "parar", "ter");
 	List<String> paraModals = Arrays.asList("dar");
-	
+
 	/**
 	 * The main method for realising verb phrases.
 	 * 
@@ -78,50 +76,48 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		Stack<NLGElement> mainVerbRealisation = new Stack<NLGElement>();
 		Stack<NLGElement> auxiliaryRealisation = new Stack<NLGElement>();
 
-		if (phrase != null) {
+		if(phrase != null) {
 			vgComponents = createVerbGroup(phrase);
-			splitVerbGroup(vgComponents, mainVerbRealisation,
-					auxiliaryRealisation);
+			splitVerbGroup(vgComponents, mainVerbRealisation, auxiliaryRealisation);
 
 			// vaudrypl added phrase argument to ListElement constructor
 			// to copy all features from the PhraseElement
-//			realisedElement = new ListElement(phrase);
+			//			realisedElement = new ListElement(phrase);
 			realisedElement = new ListElement();
 			// TODO: double check that setFactory does not do anything else
 			realisedElement.setFactory(phrase.getFactory());
 
-			if ((!phrase.hasFeature(InternalFeature.REALISE_AUXILIARY)
-					|| phrase.getFeatureAsBoolean(InternalFeature.REALISE_AUXILIARY))
-							&& !auxiliaryRealisation.isEmpty()) {
+			if((!phrase.hasFeature(InternalFeature.REALISE_AUXILIARY) || phrase.getFeatureAsBoolean(InternalFeature.REALISE_AUXILIARY))
+			   && !auxiliaryRealisation.isEmpty()) {
 
-				realiseAuxiliaries(realisedElement,
-						auxiliaryRealisation);
+				realiseAuxiliaries(realisedElement, auxiliaryRealisation);
 
 				NLGElement verb = mainVerbRealisation.peek();
 				Object verbForm = verb.getFeature(Feature.FORM);
-				if (verbForm == Form.INFINITIVE) {
-					realiseMainVerb(phrase, mainVerbRealisation,
-							realisedElement);
-					phrase.getPhraseHelper().realiseList(realisedElement, phrase
-							.getPreModifiers(), DiscourseFunction.PRE_MODIFIER);
+				if(verbForm == Form.INFINITIVE) {
+					realiseMainVerb(phrase, mainVerbRealisation, realisedElement);
+					phrase.getPhraseHelper().realiseList(realisedElement,
+					                                     phrase.getPreModifiers(),
+					                                     DiscourseFunction.PRE_MODIFIER);
 				} else {
-					phrase.getPhraseHelper().realiseList(realisedElement, phrase
-							.getPreModifiers(), DiscourseFunction.PRE_MODIFIER);
-					realiseMainVerb(phrase, mainVerbRealisation,
-							realisedElement);
+					phrase.getPhraseHelper().realiseList(realisedElement,
+					                                     phrase.getPreModifiers(),
+					                                     DiscourseFunction.PRE_MODIFIER);
+					realiseMainVerb(phrase, mainVerbRealisation, realisedElement);
 				}
 			} else {
-				realiseMainVerb(phrase, mainVerbRealisation,
-						realisedElement);
-				phrase.getPhraseHelper().realiseList(realisedElement, phrase
-						.getPreModifiers(), DiscourseFunction.PRE_MODIFIER);
-			
+				realiseMainVerb(phrase, mainVerbRealisation, realisedElement);
+				phrase.getPhraseHelper().realiseList(realisedElement,
+				                                     phrase.getPreModifiers(),
+				                                     DiscourseFunction.PRE_MODIFIER);
+
 			}
 			realiseComplements(phrase, realisedElement);
-			phrase.getPhraseHelper().realiseList(realisedElement, phrase
-					.getPostModifiers(), DiscourseFunction.POST_MODIFIER);
+			phrase.getPhraseHelper().realiseList(realisedElement,
+			                                     phrase.getPostModifiers(),
+			                                     DiscourseFunction.POST_MODIFIER);
 		}
-		
+
 		return realisedElement;
 	}
 
@@ -134,9 +130,10 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 */
 	@Override
 	public boolean isCopular(NLGElement element) {
-		if (element != null) {
+		if(element != null) {
 			return element.getFeatureAsBoolean(PortugueseLexicalFeature.COPULAR);
-		} else return true;
+		} else
+			return true;
 	}
 
 	/**
@@ -153,24 +150,23 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 */
 	@Override
 	protected void splitVerbGroup(Stack<NLGElement> vgComponents,
-			Stack<NLGElement> mainVerbRealisation,
-			Stack<NLGElement> auxiliaryRealisation) {
+	                              Stack<NLGElement> mainVerbRealisation,
+	                              Stack<NLGElement> auxiliaryRealisation) {
 
 		boolean mainVerbSeen = false;
 		boolean cliticsSeen = false;
 
-		for (NLGElement word : vgComponents) {
-			if (!mainVerbSeen) {
+		for(NLGElement word : vgComponents) {
+			if(!mainVerbSeen) {
 				mainVerbRealisation.push(word);
-//				if (!word.equals("pas") &&
-				if (!word.isA(LexicalCategory.ADVERB) &&
-						!word.getFeatureAsBoolean(PortugueseInternalFeature.CLITIC)) {
+				//				if (!word.equals("pas") &&
+				if(!word.isA(LexicalCategory.ADVERB) && !word.getFeatureAsBoolean(PortugueseInternalFeature.CLITIC)) {
 					mainVerbSeen = true;
 				}
-			} else if (!cliticsSeen) {
-//				if (!word.equals("ne") &&
-				if (!"ne".equals(word.getFeatureAsString(LexicalFeature.BASE_FORM)) &&
-						!word.getFeatureAsBoolean(PortugueseInternalFeature.CLITIC)) {
+			} else if(!cliticsSeen) {
+				//				if (!word.equals("ne") &&
+				if(!"ne".equals(word.getFeatureAsString(LexicalFeature.BASE_FORM))
+				   && !word.getFeatureAsBoolean(PortugueseInternalFeature.CLITIC)) {
 					cliticsSeen = true;
 					auxiliaryRealisation.push(word);
 				} else {
@@ -202,11 +198,11 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 */
 	@Override
 	protected Stack<NLGElement> createVerbGroup(PhraseElement phrase) {
-		
+
 		// constructs the verb group as a stack
 		Stack<NLGElement> vgComponents = new Stack<NLGElement>();
 		ArrayList<NLGElement> vgComponentsArray = new ArrayList<NLGElement>();
-		
+
 		// constructs lexicon, so morphological rules are set for Portuguese
 		Lexicon ptLexicon = phrase.getLexicon();
 		// get all verb phrase features
@@ -223,188 +219,169 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 
 		// gets head verb and adds it as first element in the array
 		NLGElement headVerb = phrase.getHead();
-		if (headVerb != null) {
+		if(headVerb != null) {
 			vgComponentsArray.add(headVerb);
 		} else {
 			return vgComponents;
 		}
-		
+
 		// if the entire verb phrase has passive feature...
-		if (passive) {
+		if(passive) {
 			// creates auxiliary "ser"...
-			WordElement auxWord = new WordElement("ser", LexicalCategory.VERB, 
-					ptLexicon);
+			WordElement auxWord = new WordElement("ser", LexicalCategory.VERB, ptLexicon);
 			InflectedWordElement aux = new InflectedWordElement(auxWord);
 			// adds it to the end of the array...
 			vgComponentsArray.add(aux);
 			// and sets previous verb as past participle with according number
 			// and gender.
-			vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
-				setFeature(Feature.FORM, Form.PAST_PARTICIPLE);
-			vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
-			setFeature(Feature.NUMBER, numberValue);
+			vgComponentsArray.get(vgComponentsArray.indexOf(aux) - 1).setFeature(Feature.FORM, Form.PAST_PARTICIPLE);
+			vgComponentsArray.get(vgComponentsArray.indexOf(aux) - 1).setFeature(Feature.NUMBER, numberValue);
 		}
-		
+
 		// if the entire verb phrase has progressive feature...
-		if (!progressiveString.equals("false")) {
+		if(!progressiveString.equals("false")) {
 			// grabs the string associated with the progressive feature, if any...
 			String auxString = phrase.getFeatureAsString(Feature.PROGRESSIVE);
 			WordElement auxWord;
 			// if there was no string...
-			if (progressiveString.equals("true")){
+			if(progressiveString.equals("true")) {
 				// creates auxiliary "estar" as deafult...
-				auxWord = new WordElement("estar", LexicalCategory.VERB, 
-					ptLexicon);
-			// but if there was an specific string -- even if "estar"...
+				auxWord = new WordElement("estar", LexicalCategory.VERB, ptLexicon);
+				// but if there was an specific string -- even if "estar"...
 			} else {
 				// creates auxiliary using that string 
-				auxWord = new WordElement(auxString, LexicalCategory.VERB, 
-					ptLexicon);
+				auxWord = new WordElement(auxString, LexicalCategory.VERB, ptLexicon);
 			}
 			// finishes creation of auxiliary TODO really necessary?
 			InflectedWordElement aux = new InflectedWordElement(auxWord);
 			// adds it to the end of the array...
 			vgComponentsArray.add(aux);
 			// and sets previous verb as present participle (-ndo).
-			vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
-				setFeature(Feature.FORM, Form.PRESENT_PARTICIPLE);
+			vgComponentsArray.get(vgComponentsArray.indexOf(aux) - 1).setFeature(Feature.FORM, Form.PRESENT_PARTICIPLE);
 		}
-		
+
 		// if the entire verb phrase has perfect(ive) feature...
-		if (perfect) {
+		if(perfect) {
 			// creates auxiliary "ter"...
-			WordElement auxWord = new WordElement("ter", LexicalCategory.VERB, 
-					ptLexicon);
+			WordElement auxWord = new WordElement("ter", LexicalCategory.VERB, ptLexicon);
 			InflectedWordElement aux = new InflectedWordElement(auxWord);
 			// adds it to the end of the array...
 			vgComponentsArray.add(aux);
 			// and sets previous verb as past participle (-do).
-			vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
-				setFeature(Feature.FORM, Form.PAST_PARTICIPLE);
+			vgComponentsArray.get(vgComponentsArray.indexOf(aux) - 1).setFeature(Feature.FORM, Form.PAST_PARTICIPLE);
 		}
-		
+
 		// if the entire verb phrase has a modal (which should be a string)...
-		if (modal!=null) {
+		if(modal != null) {
 			// creates modal with grabbed modal string...
-			WordElement auxWord = new WordElement(modal, LexicalCategory.VERB, 
-					ptLexicon);
+			WordElement auxWord = new WordElement(modal, LexicalCategory.VERB, ptLexicon);
 			InflectedWordElement aux = new InflectedWordElement(auxWord);
 			// checks if the modal requires preposition "a"
-			if (aModals.contains(modal)){
+			if(aModals.contains(modal)) {
 				// creates preposition "a"
-				WordElement aPrepWord = new WordElement("a", LexicalCategory.PREPOSITION, 
-						ptLexicon);
+				WordElement aPrepWord = new WordElement("a", LexicalCategory.PREPOSITION, ptLexicon);
 				InflectedWordElement aPrep = new InflectedWordElement(aPrepWord);
 				// adds preposition to array
 				vgComponentsArray.add(aPrep);
 				// adds modal to the end of the array...
 				vgComponentsArray.add(aux);
 				// and sets previous verb as infinitive.
-				vgComponentsArray.get(vgComponentsArray.indexOf(aux)-2).
-					setFeature(Feature.FORM, Form.BARE_INFINITIVE);
-			// checks if the modal requires preposition "de"
-			} else if (deModals.contains(modal)){
-					// creates preposition "de"
-					WordElement dePrepWord = new WordElement("de", LexicalCategory.PREPOSITION, 
-							ptLexicon);
-					InflectedWordElement dePrep = new InflectedWordElement(dePrepWord);
-					// adds preposition to array
-					vgComponentsArray.add(dePrep);
-					// adds modal to the end of the array...
-					vgComponentsArray.add(aux);
-					// and sets previous verb as infinitive.
-					vgComponentsArray.get(vgComponentsArray.indexOf(aux)-2).
-						setFeature(Feature.FORM, Form.BARE_INFINITIVE);
-					// checks if the modal requires preposition "para"
-			} else if (paraModals.contains(modal)){
+				vgComponentsArray.get(vgComponentsArray.indexOf(aux) - 2).setFeature(Feature.FORM, Form.BARE_INFINITIVE);
+				// checks if the modal requires preposition "de"
+			} else if(deModals.contains(modal)) {
+				// creates preposition "de"
+				WordElement dePrepWord = new WordElement("de", LexicalCategory.PREPOSITION, ptLexicon);
+				InflectedWordElement dePrep = new InflectedWordElement(dePrepWord);
+				// adds preposition to array
+				vgComponentsArray.add(dePrep);
+				// adds modal to the end of the array...
+				vgComponentsArray.add(aux);
+				// and sets previous verb as infinitive.
+				vgComponentsArray.get(vgComponentsArray.indexOf(aux) - 2).setFeature(Feature.FORM, Form.BARE_INFINITIVE);
+				// checks if the modal requires preposition "para"
+			} else if(paraModals.contains(modal)) {
 				// creates preposition "para"
-				WordElement paraPrepWord = new WordElement("para", LexicalCategory.PREPOSITION, 
-						ptLexicon);
+				WordElement paraPrepWord = new WordElement("para", LexicalCategory.PREPOSITION, ptLexicon);
 				InflectedWordElement paraPrep = new InflectedWordElement(paraPrepWord);
 				// adds preposition to array
 				vgComponentsArray.add(paraPrep);
 				// adds modal to the end of the array...
 				vgComponentsArray.add(aux);
 				// and sets previous verb as infinitive.
-				vgComponentsArray.get(vgComponentsArray.indexOf(aux)-2).
-					setFeature(Feature.FORM, Form.BARE_INFINITIVE);
-		// in case the modal doesn't require a preposition
+				vgComponentsArray.get(vgComponentsArray.indexOf(aux) - 2).setFeature(Feature.FORM, Form.BARE_INFINITIVE);
+				// in case the modal doesn't require a preposition
 			} else {
 				// adds the modal to the end of the array...
 				vgComponentsArray.add(aux);
 				// and sets previous verb as infinitive.
-				vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
-					setFeature(Feature.FORM, Form.BARE_INFINITIVE);
+				vgComponentsArray.get(vgComponentsArray.indexOf(aux) - 1).setFeature(Feature.FORM, Form.BARE_INFINITIVE);
 			}
 		}
-	
-		if (prospective) {
+
+		if(prospective) {
 			// creates auxiliary "ir"...
-			WordElement auxWord = new WordElement("ir", LexicalCategory.VERB, 
-					ptLexicon);
+			WordElement auxWord = new WordElement("ir", LexicalCategory.VERB, ptLexicon);
 			InflectedWordElement aux = new InflectedWordElement(auxWord);
 			// adds it to the end of the array...
 			vgComponentsArray.add(aux);
 			// and sets previous verb as infinitive.
-			vgComponentsArray.get(vgComponentsArray.indexOf(aux)-1).
-				setFeature(Feature.FORM, Form.BARE_INFINITIVE);
+			vgComponentsArray.get(vgComponentsArray.indexOf(aux) - 1).setFeature(Feature.FORM, Form.BARE_INFINITIVE);
 		}
-		
-		if (negated) {
+
+		if(negated) {
 			// creates particle "não"...
-			WordElement notWord = new WordElement("não", LexicalCategory.ANY, 
-					ptLexicon);
+			WordElement notWord = new WordElement("não", LexicalCategory.ANY, ptLexicon);
 			InflectedWordElement not = new InflectedWordElement(notWord);
 			// adds it to the end of the array...
 			vgComponentsArray.add(not);
 		}
-		
+
 		// passing features to agreement verb (last verb in array, topmost in stack)
 		NLGElement lastVerb;
 		// if there is "não" in the VP, the second last element is last verb 
-		if (negated) {
-			lastVerb = vgComponentsArray.get(vgComponentsArray.size()-2);
-		// if there isn't a "não" the last element is the last verb
+		if(negated) {
+			lastVerb = vgComponentsArray.get(vgComponentsArray.size() - 2);
+			// if there isn't a "não" the last element is the last verb
 		} else {
-			lastVerb = vgComponentsArray.get(vgComponentsArray.size()-1);
+			lastVerb = vgComponentsArray.get(vgComponentsArray.size() - 1);
 		}
 		// now passing features
 		lastVerb.setFeature(Feature.TENSE, tenseValue);
 		lastVerb.setFeature(Feature.PERSON, personValue);
 		lastVerb.setFeature(Feature.NUMBER, numberValue);
 		lastVerb.setFeature(Feature.FORM, Form.NORMAL);
-		
-		if (passive) {
+
+		if(passive) {
 			NLGElement firstVerb = vgComponentsArray.get(0);
 			firstVerb.setFeature(LexicalFeature.GENDER, gender);
 		}
-		
-//		// printing verb phrase...
-//		System.out.println("Verb Phrase: "+
-//				"head: "+phrase.getHead()+
-//				"; progressive: "+phrase.getFeatureAsString(Feature.PROGRESSIVE)+
-//				"; perfect: "+phrase.getFeatureAsString(Feature.PERFECT));		
-		
+
+		//		// printing verb phrase...
+		//		System.out.println("Verb Phrase: "+
+		//				"head: "+phrase.getHead()+
+		//				"; progressive: "+phrase.getFeatureAsString(Feature.PROGRESSIVE)+
+		//				"; perfect: "+phrase.getFeatureAsString(Feature.PERFECT));		
+
 		// stack population = last in array becomes top of stack
-		for (NLGElement verb : vgComponentsArray){
-			
-//			// printing out each verb in array; remember: first is last!
-//			int position = vgComponentsArray.indexOf(verb);
-//			String baseWord = verb.getFeatureAsString(InternalFeature.BASE_WORD);
-//			String person = verb.getFeatureAsString(Feature.PERSON);
-//			String number = verb.getFeatureAsString(Feature.NUMBER);
-//			String tense = verb.getFeatureAsString(Feature.TENSE);
-//			String form = verb.getFeatureAsString(Feature.FORM);
-//			System.out.println(
-//				"verb "+(position+1)+": "+baseWord+"; "+
-//				person+"; "+number+"; "+tense+"; "+form);
-			
+		for(NLGElement verb : vgComponentsArray) {
+
+			//			// printing out each verb in array; remember: first is last!
+			//			int position = vgComponentsArray.indexOf(verb);
+			//			String baseWord = verb.getFeatureAsString(InternalFeature.BASE_WORD);
+			//			String person = verb.getFeatureAsString(Feature.PERSON);
+			//			String number = verb.getFeatureAsString(Feature.NUMBER);
+			//			String tense = verb.getFeatureAsString(Feature.TENSE);
+			//			String form = verb.getFeatureAsString(Feature.FORM);
+			//			System.out.println(
+			//				"verb "+(position+1)+": "+baseWord+"; "+
+			//				person+"; "+number+"; "+tense+"; "+form);
+
 			// placing array item (from left to right) on top of the stack 
 			vgComponents.push(verb);
 		}
-		
-//		System.out.println("  * * * * *  ");
-		
+
+		//		System.out.println("  * * * * *  ");
+
 		// return stack
 		return vgComponents;
 	}
@@ -417,63 +394,55 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 * @param phrase
 	 * @param vgComponents
 	 */
-	protected NLGElement insertCliticComplementPronouns(PhraseElement phrase,
-			Stack<NLGElement> vgComponents) {
-		List<NLGElement> complements =
-			phrase.getFeatureAsElementList(InternalFeature.COMPLEMENTS);
+	protected NLGElement insertCliticComplementPronouns(PhraseElement phrase, Stack<NLGElement> vgComponents) {
+		List<NLGElement> complements = phrase.getFeatureAsElementList(InternalFeature.COMPLEMENTS);
 		boolean passive = phrase.getFeatureAsBoolean(Feature.PASSIVE);
-		NLGElement pronounEn = null, pronounY = null,
-					directObject = null, indirectObject = null;
+		NLGElement pronounEn = null, pronounY = null, directObject = null, indirectObject = null;
 
 		// identify clitic candidates
-		for (NLGElement complement : complements) {
-			if (complement != null && !complement.getFeatureAsBoolean(Feature.ELIDED)) {
+		for(NLGElement complement : complements) {
+			if(complement != null && !complement.getFeatureAsBoolean(Feature.ELIDED)) {
 				Object discourseValue = complement.getFeature(InternalFeature.DISCOURSE_FUNCTION);
-				if (!(discourseValue instanceof DiscourseFunction)) {
+				if(!(discourseValue instanceof DiscourseFunction)) {
 					discourseValue = DiscourseFunction.COMPLEMENT;
 				}
 				// Realise complement only if it is not the relative phrase of
 				// the parent clause and not a phrase with the same function in case
 				// of a direct or indirect object.
 				NLGElement parent = phrase.getParent();
-				if ( parent == null ||
-						(complement != parent.getFeatureAsElement(PortugueseFeature.RELATIVE_PHRASE) &&
-							(discourseValue == DiscourseFunction.COMPLEMENT ||
-								!parent.hasRelativePhrase((DiscourseFunction) discourseValue)))) {
+				if(parent == null
+				   || (complement != parent.getFeatureAsElement(PortugueseFeature.RELATIVE_PHRASE) && (discourseValue == DiscourseFunction.COMPLEMENT || !parent.hasRelativePhrase((DiscourseFunction) discourseValue)))) {
 					NLGElement head = null;
 					Object type = null;
-					
+
 					// if a complement is or contains a pronoun, or will be pronominalised
-					if (complement.isA(LexicalCategory.PRONOUN)) {
+					if(complement.isA(LexicalCategory.PRONOUN)) {
 						head = complement;
-					} else if (complement instanceof NPPhraseSpec
-							&& ((NPPhraseSpec)complement).getHead() != null
-							&& ((NPPhraseSpec)complement).getHead().isA(LexicalCategory.PRONOUN)) {
-						head = ((NPPhraseSpec)complement).getHead();
-					}
-					else if (complement.getFeatureAsBoolean(Feature.PRONOMINAL)) {
+					} else if(complement instanceof NPPhraseSpec && ((NPPhraseSpec) complement).getHead() != null
+					          && ((NPPhraseSpec) complement).getHead().isA(LexicalCategory.PRONOUN)) {
+						head = ((NPPhraseSpec) complement).getHead();
+					} else if(complement.getFeatureAsBoolean(Feature.PRONOMINAL)) {
 						type = PronounType.PERSONAL;
 					}
-					
-					if (head != null) {
+
+					if(head != null) {
 						type = head.getFeature(PortugueseLexicalFeature.PRONOUN_TYPE);
 					}
-					
-					if (type != null) {
+
+					if(type != null) {
 						complement.setFeature(PortugueseInternalFeature.CLITIC, false);
-						if (type == PronounType.SPECIAL_PERSONAL) {
-							String baseForm = ((WordElement)head).getBaseForm();
-							if (baseForm.equals("en")) {
+						if(type == PronounType.SPECIAL_PERSONAL) {
+							String baseForm = ((WordElement) head).getBaseForm();
+							if(baseForm.equals("en")) {
 								pronounEn = complement;
-							}
-							else if (baseForm.equals("y")) {
+							} else if(baseForm.equals("y")) {
 								pronounY = complement;
 							}
-						} else if (type == PronounType.PERSONAL) {
+						} else if(type == PronounType.PERSONAL) {
 							Object discourseFunction = complement.getFeature(InternalFeature.DISCOURSE_FUNCTION);
-							if (discourseFunction == DiscourseFunction.OBJECT && !passive) {
+							if(discourseFunction == DiscourseFunction.OBJECT && !passive) {
 								directObject = complement;
-							} else if (discourseFunction == DiscourseFunction.INDIRECT_OBJECT) {
+							} else if(discourseFunction == DiscourseFunction.INDIRECT_OBJECT) {
 								indirectObject = complement;
 							}
 						}
@@ -481,44 +450,43 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 				}
 			}
 		}
-		
+
 		// place clitics in order :
 		// (indirect object) (direct object) y en
-		
-		if (pronounEn != null) {
+
+		if(pronounEn != null) {
 			pronounEn.setFeature(PortugueseInternalFeature.CLITIC, true);
 			vgComponents.push(pronounEn);
 		}
-		
-		if (pronounY != null) {
+
+		if(pronounY != null) {
 			pronounY.setFeature(PortugueseInternalFeature.CLITIC, true);
 			vgComponents.push(pronounY);
 		}
-		
-		if (directObject != null) {
+
+		if(directObject != null) {
 			directObject.setFeature(PortugueseInternalFeature.CLITIC, true);
 			vgComponents.push(directObject);
 		}
-		
+
 		// the indirect object is clitic if there's no direct object
 		// or if it is third person and not reflexive
-		if ( indirectObject != null && (directObject == null || 
-				((directObject.getFeature(Feature.PERSON) == Person.THIRD
-						|| directObject.getFeature(Feature.PERSON) == null)
-					&& !directObject.getFeatureAsBoolean(LexicalFeature.REFLEXIVE) )) ) {
-			
+		if(indirectObject != null
+		   && (directObject == null || ((directObject.getFeature(Feature.PERSON) == Person.THIRD || directObject.getFeature(Feature.PERSON) == null) && !directObject.getFeatureAsBoolean(LexicalFeature.REFLEXIVE)))) {
+
 			indirectObject.setFeature(PortugueseInternalFeature.CLITIC, true);
 
 			Object person = indirectObject.getFeature(Feature.PERSON);
 			boolean luiLeurPronoun = (person == null || person == Person.THIRD);
 			// place indirect object after direct object if indirect object is "lui" or "leur"
-			if (directObject != null && luiLeurPronoun) vgComponents.pop();
+			if(directObject != null && luiLeurPronoun)
+				vgComponents.pop();
 			vgComponents.push(indirectObject);
-			if (directObject != null && luiLeurPronoun) {
+			if(directObject != null && luiLeurPronoun) {
 				vgComponents.push(directObject);
 			}
 		}
-		
+
 		// return the direct object for use with past participle agreement with auxiliary "avoir"
 		return directObject;
 	}
@@ -534,11 +502,9 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 * @param frontVG
 	 *            the first verb in the verb group.
 	 */
-	protected void checkInfinitive(Object formValue,
-			NLGElement frontVG) {
+	protected void checkInfinitive(Object formValue, NLGElement frontVG) {
 
-		if ((Form.INFINITIVE.equals(formValue) || Form.BARE_INFINITIVE.equals(formValue))
-				&& frontVG != null) {
+		if((Form.INFINITIVE.equals(formValue) || Form.BARE_INFINITIVE.equals(formValue)) && frontVG != null) {
 			frontVG.setFeature(InternalFeature.NON_MORPH, true);
 		}
 	}
@@ -554,12 +520,11 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 *            the stack of verb components in the verb group.
 	 * @return the new element for the front of the group.
 	 */
-	protected NLGElement addPassiveAuxiliary(NLGElement frontVG,
-			Stack<NLGElement> vgComponents, PhraseElement phrase) {
+	protected NLGElement addPassiveAuxiliary(NLGElement frontVG, Stack<NLGElement> vgComponents, PhraseElement phrase) {
 
 		// adds the current front verb in pas participle form
 		// with aggreement with the subject (auxiliary "être")
-		if (frontVG != null) {
+		if(frontVG != null) {
 			frontVG.setFeature(Feature.FORM, Form.PAST_PARTICIPLE);
 			Object number = phrase.getFeature(Feature.NUMBER);
 			frontVG.setFeature(Feature.NUMBER, number);
@@ -568,11 +533,10 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 			vgComponents.push(frontVG);
 		}
 		// adds auxiliary "être"
-		WordElement passiveAuxiliary = (WordElement)
-			frontVG.getLexicon().lookupWord("être", LexicalCategory.VERB); //$NON-NLS-1$
+		WordElement passiveAuxiliary = (WordElement) frontVG.getLexicon().lookupWord("être", LexicalCategory.VERB); //$NON-NLS-1$
 		return new InflectedWordElement(passiveAuxiliary);
 	}
-	
+
 	/**
 	 * Says if the verb phrase has a reflexive object (direct or indirect)
 	 * 
@@ -581,39 +545,35 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 */
 	protected boolean hasReflexiveObject(PhraseElement phrase) {
 		boolean reflexiveObjectFound = false;
-		List<NLGElement> complements =
-			phrase.getFeatureAsElementList(InternalFeature.COMPLEMENTS);
+		List<NLGElement> complements = phrase.getFeatureAsElementList(InternalFeature.COMPLEMENTS);
 		boolean passive = phrase.getFeatureAsBoolean(Feature.PASSIVE);
 		Object subjectPerson = phrase.getFeature(Feature.PERSON);
 		Object subjectNumber = phrase.getFeature(Feature.NUMBER);
-		if (subjectNumber != NumberAgreement.PLURAL) {
+		if(subjectNumber != NumberAgreement.PLURAL) {
 			subjectNumber = NumberAgreement.SINGULAR;
 		}
-		
-		for (NLGElement complement : complements) {
-			if (complement != null && !complement.getFeatureAsBoolean(Feature.ELIDED)) {
-				
+
+		for(NLGElement complement : complements) {
+			if(complement != null && !complement.getFeatureAsBoolean(Feature.ELIDED)) {
+
 				Object function = complement.getFeature(InternalFeature.DISCOURSE_FUNCTION);
 				boolean reflexive = complement.getFeatureAsBoolean(LexicalFeature.REFLEXIVE);
 				Object person = complement.getFeature(Feature.PERSON);
 				Object number = complement.getFeature(Feature.NUMBER);
-				if (number != NumberAgreement.PLURAL) {
+				if(number != NumberAgreement.PLURAL) {
 					number = NumberAgreement.SINGULAR;
 				}
-				
+
 				// if the complement is a direct or indirect object
-				if ( (function == DiscourseFunction.INDIRECT_OBJECT
-						|| (!passive && function == DiscourseFunction.OBJECT))
-					// and if it is reflexive, or the same as the subject if not third person
-					&& ( reflexive ||
-						((person == Person.FIRST || person == Person.SECOND)
-								&& person == subjectPerson && number == subjectNumber) )) {
+				if((function == DiscourseFunction.INDIRECT_OBJECT || (!passive && function == DiscourseFunction.OBJECT))
+				   // and if it is reflexive, or the same as the subject if not third person
+				   && (reflexive || ((person == Person.FIRST || person == Person.SECOND) && person == subjectPerson && number == subjectNumber))) {
 					reflexiveObjectFound = true;
 					break;
 				}
 			}
 		}
-		
+
 		return reflexiveObjectFound;
 	}
 
@@ -630,35 +590,34 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 *            the phrase has a modal
 	 * @return the new element for the front of the group.
 	 */
-	protected void createPas(PhraseElement phrase,
-			Stack<NLGElement> vgComponents, NLGElement frontVG, boolean hasModal) {
+	protected void createPas(PhraseElement phrase, Stack<NLGElement> vgComponents, NLGElement frontVG, boolean hasModal) {
 		boolean pasForbiddenByArgument = phrase.checkIfNeOnlyNegation();
-		if (phrase.getFeatureAsBoolean(Feature.NEGATED)) {
+		if(phrase.getFeatureAsBoolean(Feature.NEGATED)) {
 			// first get negation auxiliary; if not specified, it is "pas" by default
 			WordElement negation = null;
 			Lexicon lexicon = phrase.getLexicon();
-			
+
 			Object negationObject = phrase.getFeature(PortugueseFeature.NEGATION_AUXILIARY);
-			if (negationObject instanceof WordElement) {
+			if(negationObject instanceof WordElement) {
 				negation = (WordElement) negationObject;
-			} else if (negationObject != null) {
+			} else if(negationObject != null) {
 				String negationString;
-				if (negationObject instanceof StringElement) {
-					negationString = ((StringElement)negationObject).getRealisation();
+				if(negationObject instanceof StringElement) {
+					negationString = ((StringElement) negationObject).getRealisation();
 				} else {
 					negationString = negationObject.toString();
 				}
 				negation = lexicon.lookupWord(negationString);
 			}
-			
-			if (negation == null) {
+
+			if(negation == null) {
 				negation = lexicon.lookupWord("pas", LexicalCategory.ADVERB);
 			}
 			// push negation auxiliary if it's not forbidden by arguments that provoke
 			// "ne" only negation or if the auxiliary is "plus"
 			WordElement plus = lexicon.lookupWord("plus", LexicalCategory.ADVERB);
-			if (!pasForbiddenByArgument || plus.equals(negation)) {
-				InflectedWordElement inflNegation = new InflectedWordElement( negation ); //$NON-NLS-1$
+			if(!pasForbiddenByArgument || plus.equals(negation)) {
+				InflectedWordElement inflNegation = new InflectedWordElement(negation); //$NON-NLS-1$
 				vgComponents.push(inflNegation);
 			}
 		}
@@ -674,17 +633,16 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 *            the stack of verb components in the verb group.
 	 */
 	protected void createNe(PhraseElement phrase, Stack<NLGElement> vgComponents) {
-		
+
 		boolean neRequiredByArgument = phrase.checkIfNeOnlyNegation();
 
-		if (phrase.getFeatureAsBoolean(Feature.NEGATED) || neRequiredByArgument) {
-			InflectedWordElement ne = new InflectedWordElement( (WordElement)
-				phrase.getFactory().createWord("ne", LexicalCategory.ADVERB) ); //$NON-NLS-1$
-	
-			 vgComponents.push(ne);
+		if(phrase.getFeatureAsBoolean(Feature.NEGATED) || neRequiredByArgument) {
+			InflectedWordElement ne = new InflectedWordElement((WordElement) phrase.getFactory().createWord("ne", LexicalCategory.ADVERB)); //$NON-NLS-1$
+
+			vgComponents.push(ne);
 		}
 	}
-	
+
 	/**
 	 * Determines the number agreement for the phrase.
 	 * 
@@ -695,17 +653,16 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 * @return the <code>NumberAgreement</code> to be used for the phrase.
 	 */
 	@Override
-	protected NumberAgreement determineNumber(NLGElement parent,
-			PhraseElement phrase) {
+	protected NumberAgreement determineNumber(NLGElement parent, PhraseElement phrase) {
 		Object numberValue = phrase.getFeature(Feature.NUMBER);
 		NumberAgreement number = null;
-		
-		if (numberValue instanceof NumberAgreement) {
+
+		if(numberValue instanceof NumberAgreement) {
 			number = (NumberAgreement) numberValue;
 		} else {
 			number = NumberAgreement.SINGULAR;
 		}
-		
+
 		return number;
 	}
 
@@ -723,21 +680,20 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	public void addModifier(VPPhraseSpec verbPhrase, Object modifier) {
 		// Everything is postModifier
 
-		if (modifier != null) {
-		
+		if(modifier != null) {
+
 			// get modifier as NLGElement if possible
 			NLGElement modifierElement = null;
-			if (modifier instanceof NLGElement)
+			if(modifier instanceof NLGElement)
 				modifierElement = (NLGElement) modifier;
-			else if (modifier instanceof String) {
+			else if(modifier instanceof String) {
 				String modifierString = (String) modifier;
-				if (modifierString.length() > 0 && !modifierString.contains(" "))
-					modifierElement = verbPhrase.getFactory().createWord(modifier,
-							LexicalCategory.ADVERB);
+				if(modifierString.length() > 0 && !modifierString.contains(" "))
+					modifierElement = verbPhrase.getFactory().createWord(modifier, LexicalCategory.ADVERB);
 			}
-		
+
 			// if no modifier element, must be a complex string
-			if (modifierElement == null) {
+			if(modifierElement == null) {
 				verbPhrase.addPostModifier((String) modifier);
 			} else {
 				// default case
@@ -745,7 +701,7 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 			}
 		}
 	}
-		
+
 	/**
 	 * Realises the complements of this phrase.
 	 * Based on English method of the same name.
@@ -756,8 +712,7 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 *            the current realisation of the noun phrase.
 	 */
 	@Override
-	protected void realiseComplements(PhraseElement phrase,
-			ListElement realisedElement) {
+	protected void realiseComplements(PhraseElement phrase, ListElement realisedElement) {
 
 		ListElement indirects = new ListElement();
 		ListElement directs = new ListElement();
@@ -765,13 +720,12 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		Object discourseValue = null;
 		NLGElement currentElement = null;
 
-		for (NLGElement complement : phrase
-				.getFeatureAsElementList(InternalFeature.COMPLEMENTS)) {
-			if (!complement.getFeatureAsBoolean(PortugueseInternalFeature.CLITIC)) {
-				
+		for(NLGElement complement : phrase.getFeatureAsElementList(InternalFeature.COMPLEMENTS)) {
+			if(!complement.getFeatureAsBoolean(PortugueseInternalFeature.CLITIC)) {
+
 				discourseValue = complement.getFeature(InternalFeature.DISCOURSE_FUNCTION);
 
-				if (!(discourseValue instanceof DiscourseFunction)) {
+				if(!(discourseValue instanceof DiscourseFunction)) {
 					discourseValue = DiscourseFunction.COMPLEMENT;
 				}
 
@@ -779,40 +733,36 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 				// the parent clause and not a phrase with the same function in case
 				// of a direct or indirect object.
 				NLGElement parent = phrase.getParent();
-				if ( parent == null ||
-						(!complement.getFeatureAsBoolean(PortugueseInternalFeature.RELATIVISED) &&
-							complement != parent.getFeatureAsElement(PortugueseFeature.RELATIVE_PHRASE) &&
-							(discourseValue == DiscourseFunction.COMPLEMENT ||
-								!parent.hasRelativePhrase((DiscourseFunction) discourseValue)))) {
-					
-					if (DiscourseFunction.INDIRECT_OBJECT.equals(discourseValue)) {
+				if(parent == null
+				   || (!complement.getFeatureAsBoolean(PortugueseInternalFeature.RELATIVISED)
+				       && complement != parent.getFeatureAsElement(PortugueseFeature.RELATIVE_PHRASE) && (discourseValue == DiscourseFunction.COMPLEMENT || !parent.hasRelativePhrase((DiscourseFunction) discourseValue)))) {
+
+					if(DiscourseFunction.INDIRECT_OBJECT.equals(discourseValue)) {
 						complement = checkIndirectObject(complement);
 					}
-					
+
 					currentElement = complement.realiseSyntax();
-	
-					if (currentElement != null) {
-						currentElement.setFeature(InternalFeature.DISCOURSE_FUNCTION,
-								discourseValue);
-	
-						if (DiscourseFunction.INDIRECT_OBJECT.equals(discourseValue)) {
+
+					if(currentElement != null) {
+						currentElement.setFeature(InternalFeature.DISCOURSE_FUNCTION, discourseValue);
+
+						if(DiscourseFunction.INDIRECT_OBJECT.equals(discourseValue)) {
 							indirects.addComponent(currentElement);
-						} else if (DiscourseFunction.OBJECT.equals(discourseValue)) {
+						} else if(DiscourseFunction.OBJECT.equals(discourseValue)) {
 							directs.addComponent(currentElement);
 						} else {
 							unknowns.addComponent(currentElement);
 						}
 					}
 				} else {
-				// Reset relativised feature if the complement was a relative phrase.
+					// Reset relativised feature if the complement was a relative phrase.
 					complement.removeFeature(PortugueseInternalFeature.RELATIVISED);
 				}
 			}
 			// Reset the clitic selection feature after use.
 			complement.removeFeature(PortugueseInternalFeature.CLITIC);
 		}
-		
-		
+
 		// Reference : section 657 of Grevisse (1993)
 		// normal order, when complements are all of the same length :
 		// direct objects + indirect objects + other complements
@@ -821,13 +771,13 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		int numberOfWordIndirects = NLGElement.countWords(indirects.getChildren());
 		int numberOfWordUnknowns = NLGElement.countWords(unknowns.getChildren());
 		// there are 3*2*1 = 6 orders possible
-		if (numberOfWordDirects <= numberOfWordIndirects) {
-			if (numberOfWordIndirects <= numberOfWordUnknowns) {
+		if(numberOfWordDirects <= numberOfWordIndirects) {
+			if(numberOfWordIndirects <= numberOfWordUnknowns) {
 				// normal order
 				addDirectObjects(directs, phrase, realisedElement);
 				addIndirectObjects(indirects, phrase, realisedElement);
 				addUnknownComplements(unknowns, phrase, realisedElement);
-			} else if (numberOfWordDirects <= numberOfWordUnknowns) {
+			} else if(numberOfWordDirects <= numberOfWordUnknowns) {
 				addDirectObjects(directs, phrase, realisedElement);
 				addUnknownComplements(unknowns, phrase, realisedElement);
 				addIndirectObjects(indirects, phrase, realisedElement);
@@ -837,11 +787,11 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 				addIndirectObjects(indirects, phrase, realisedElement);
 			}
 		} else {
-			if (numberOfWordDirects <= numberOfWordUnknowns) {
+			if(numberOfWordDirects <= numberOfWordUnknowns) {
 				addIndirectObjects(indirects, phrase, realisedElement);
 				addDirectObjects(directs, phrase, realisedElement);
 				addUnknownComplements(unknowns, phrase, realisedElement);
-			} else if (numberOfWordIndirects <= numberOfWordUnknowns) {
+			} else if(numberOfWordIndirects <= numberOfWordUnknowns) {
 				addIndirectObjects(indirects, phrase, realisedElement);
 				addUnknownComplements(unknowns, phrase, realisedElement);
 				addDirectObjects(directs, phrase, realisedElement);
@@ -859,11 +809,9 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 * @param phrase			the verb phrase to wich belongs those complements
 	 * @param realisedElement	complements realisation
 	 */
-	protected void addDirectObjects(ListElement directs, PhraseElement phrase,
-			ListElement realisedElement) {
+	protected void addDirectObjects(ListElement directs, PhraseElement phrase, ListElement realisedElement) {
 		boolean passive = phrase.getFeatureAsBoolean(Feature.PASSIVE);
-		if (!passive && !InterrogativeType.isObject(phrase
-					.getFeature(Feature.INTERROGATIVE_TYPE))) {
+		if(!passive && !InterrogativeType.isObject(phrase.getFeature(Feature.INTERROGATIVE_TYPE))) {
 			realisedElement.addComponents(directs.getChildren());
 		}
 	}
@@ -874,10 +822,8 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 * @param phrase			the verb phrase to wich belongs those complements
 	 * @param realisedElement	complements realisation
 	 */
-	protected void addIndirectObjects(ListElement indirects, PhraseElement phrase,
-			ListElement realisedElement) {
-		if (!InterrogativeType.isIndirectObject(phrase
-				.getFeature(Feature.INTERROGATIVE_TYPE))) {
+	protected void addIndirectObjects(ListElement indirects, PhraseElement phrase, ListElement realisedElement) {
+		if(!InterrogativeType.isIndirectObject(phrase.getFeature(Feature.INTERROGATIVE_TYPE))) {
 			realisedElement.addComponents(indirects.getChildren());
 		}
 	}
@@ -888,9 +834,8 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 * @param phrase			the verb phrase to wich belongs those complements
 	 * @param realisedElement	complements realisation
 	 */
-	protected void addUnknownComplements(ListElement unknowns, PhraseElement phrase,
-			ListElement realisedElement) {
-		if (!phrase.getFeatureAsBoolean(Feature.PASSIVE)) {
+	protected void addUnknownComplements(ListElement unknowns, PhraseElement phrase, ListElement realisedElement) {
+		if(!phrase.getFeatureAsBoolean(Feature.PASSIVE)) {
 			realisedElement.addComponents(unknowns.getChildren());
 		}
 	}
@@ -906,23 +851,23 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 	 */
 	@SuppressWarnings("unchecked")
 	protected NLGElement checkIndirectObject(NLGElement element) {
-		if (element instanceof NPPhraseSpec) {
+		if(element instanceof NPPhraseSpec) {
 			NLGFactory factory = element.getFactory();
 			NPPhraseSpec elementCopy = new NPPhraseSpec((NPPhraseSpec) element);
 			PPPhraseSpec newElement = factory.createPrepositionPhrase("à", elementCopy);
 			element.setFeature(InternalFeature.DISCOURSE_FUNCTION, DiscourseFunction.INDIRECT_OBJECT);
 			element = newElement;
-		} else if (element instanceof CoordinatedPhraseElement) {
-			element = new CoordinatedPhraseElement( (CoordinatedPhraseElement) element );
+		} else if(element instanceof CoordinatedPhraseElement) {
+			element = new CoordinatedPhraseElement((CoordinatedPhraseElement) element);
 			Object coordinates = element.getFeature(InternalFeature.COORDINATES);
-			if (coordinates instanceof List) {
+			if(coordinates instanceof List) {
 				List<NLGElement> list = (List<NLGElement>) coordinates;
-				for (int index = 0; index < list.size(); ++index) {
+				for(int index = 0; index < list.size(); ++index) {
 					list.set(index, checkIndirectObject(list.get(index)));
 				}
 			}
 		}
-		
+
 		return element;
 	}
 

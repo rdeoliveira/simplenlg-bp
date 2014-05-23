@@ -38,20 +38,20 @@ import simplenlg.realiser.Realiser;
 public abstract class Setup extends TestCase {
 
 	/** The realiser. */
-	Realiser realiser;
+	Realiser   realiser;
 
 	NLGFactory phraseFactory;
-	
-	Lexicon lexicon;
-	
-	// General PPs with preposition that undergo elision. These are "a", "de"
-	// and "por" or prepositional complexes formed with those such as "próximo
+
+	Lexicon    lexicon;
+
+	// General PPs with preposition that undergo contraction. These are "a", "de"
+	// "em", and "por" or prepositional complexes formed with those such as "próximo
 	// a" or "longe de". Note that "contra" and "para", both prepositions, end 
 	// in -a but should not undergo elision. The same applies for "desde", 
 	// which ends in -de.
-	PPPhraseSpec aPP,dePP,porPP,proximoAPP,longeDePP,contraPP,paraPP,desdePP;
-	
-	NPPhraseSpec homen,mulher;
+	PPPhraseSpec aPP, dePP, emPP, porPP, proximoAPP, longeDePP, contraPP, paraPP, desdePP;
+
+	NPPhraseSpec homen, mulher, esteHomen, istoAqui, umaMulher;
 
 	/**
 	 * Instantiates a new SimpleNLG test.
@@ -73,17 +73,21 @@ public abstract class Setup extends TestCase {
 		lexicon = new XMLLexicon();
 		this.phraseFactory = new NLGFactory(this.lexicon);
 		this.realiser = new Realiser();
-		
+
 		this.aPP = this.phraseFactory.createPrepositionPhrase("a");
 		this.dePP = this.phraseFactory.createPrepositionPhrase("de");
+		this.emPP = this.phraseFactory.createPrepositionPhrase("em");
 		this.porPP = this.phraseFactory.createPrepositionPhrase("por");
 		this.proximoAPP = this.phraseFactory.createPrepositionPhrase("próximo a");
 		this.longeDePP = this.phraseFactory.createPrepositionPhrase("longe de");
 		this.contraPP = this.phraseFactory.createPrepositionPhrase("contra");
 		this.paraPP = this.phraseFactory.createPrepositionPhrase("para");
 		this.desdePP = this.phraseFactory.createPrepositionPhrase("desde");
-		
-		this.homen = this.phraseFactory.createNounPhrase("o","homen");
-		this.mulher = this.phraseFactory.createNounPhrase("a","mulher");
+
+		this.homen = this.phraseFactory.createNounPhrase("o", "homen");
+		this.mulher = this.phraseFactory.createNounPhrase("a", "mulher");
+		this.esteHomen = this.phraseFactory.createNounPhrase("este", "homen");
+		this.istoAqui = this.phraseFactory.createNounPhrase("isto", "aqui");
+		this.umaMulher = this.phraseFactory.createNounPhrase("uma", "mulher");
 	}
 }
