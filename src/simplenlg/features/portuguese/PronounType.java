@@ -21,8 +21,9 @@ package simplenlg.features.portuguese;
 
 /**
  * <p>
- * An enumeration representing the types of pronoun. The pronoun type is recorded
- * in the {@code FrenchLexicalFeature.PRONOUN_TYPE} feature and applies to pronouns.
+ * An enumeration representing the types of pronoun. The pronoun type is
+ * recorded in the {@code FrenchLexicalFeature.PRONOUN_TYPE} feature and applies
+ * to pronouns.
  * </p>
  * 
  * @author vaudrypl
@@ -37,8 +38,8 @@ public enum PronounType {
 	PERSONAL,
 
 	/**
-	 * Special personal pronoun. For example, <em>y</em>.
-	 * These personal pronouns have special behaviors.
+	 * Special personal pronoun. For example, <em>y</em>. These personal
+	 * pronouns have special behaviors.
 	 */
 	SPECIAL_PERSONAL,
 
@@ -51,25 +52,25 @@ public enum PronounType {
 	 * Possessive pronoun. For example, <em>mien</em>.
 	 */
 	POSSESSIVE,
-	
+
 	/**
 	 * Demonstrative pronoun. For example, <em>ceci</em>.
 	 */
 	DEMONSTRATIVE,
-	
+
 	/**
 	 * Relative pronoun. For example, <em>qui</em>.
 	 */
 	RELATIVE,
-	
+
 	/**
 	 * Interrogative pronoun. For example, <em>qui</em>.
 	 */
 	INTERROGATIVE,
-	
+
 	/**
 	 * Indefinite pronoun. For example, <em>tout</em>.
 	 */
 	INDEFINITE;
-	
+
 }

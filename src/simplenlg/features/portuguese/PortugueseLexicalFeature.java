@@ -29,8 +29,8 @@ public abstract class PortugueseLexicalFeature {
 
 	/**
 	 * <p>
-	 * This feature gives the noun of the opposite gender corresponding to a noun.
-	 * For example, the feminine of <em>chien</em> is <em>chienne</em>.
+	 * This feature gives the noun of the opposite gender corresponding to a
+	 * noun. For example, the feminine of <em>chien</em> is <em>chienne</em>.
 	 * </p>
 	 * <table border="1">
 	 * <tr>
@@ -48,10 +48,9 @@ public abstract class PortugueseLexicalFeature {
 	 * </tr>
 	 * <tr>
 	 * <td><b>Used by</b></td>
-	 * <td>The morphology processor uses this feature to correctly form the
-	 * noun of the opposite gender corresponding to a noun. This feature
-	 * will be looked at first before any reference to lexicons or morphology
-	 * rules.</td>
+	 * <td>The morphology processor uses this feature to correctly form the noun
+	 * of the opposite gender corresponding to a noun. This feature will be
+	 * looked at first before any reference to lexicons or morphology rules.</td>
 	 * </tr>
 	 * <tr>
 	 * <td><b>Applies to</b></td>
@@ -67,10 +66,9 @@ public abstract class PortugueseLexicalFeature {
 
 	/**
 	 * <p>
-	 * This feature gives the feminine singular form of a determiner or adjective.
-	 * For example, the feminine singular of
-	 * <em>le</em> is <em>la</em> and the feminin of <em>beau</em> is
-	 * <em>belle</em>.
+	 * This feature gives the feminine singular form of a determiner or
+	 * adjective. For example, the feminine singular of <em>le</em> is
+	 * <em>la</em> and the feminin of <em>beau</em> is <em>belle</em>.
 	 * </p>
 	 * <table border="1">
 	 * <tr>
@@ -106,9 +104,8 @@ public abstract class PortugueseLexicalFeature {
 
 	/**
 	 * <p>
-	 * This feature gives the feminin plural form of an adjective.
-	 * For example, the feminine plural of
-	 *  <em>beau</em> is <em>belles</em>.
+	 * This feature gives the feminin plural form of an adjective. For example,
+	 * the feminine plural of <em>beau</em> is <em>belles</em>.
 	 * </p>
 	 * <table border="1">
 	 * <tr>
@@ -144,10 +141,10 @@ public abstract class PortugueseLexicalFeature {
 
 	/**
 	 * <p>
-	 * This feature gives the form a masculine singular adjective takes
-	 * when placed in front of a word beginning with a vowel or a so-called mute 'h'
-	 * (not a so-called aspired 'h') For example the form of <em>beau</em> in front
-	 * of a vowel is <em>bel</em>.
+	 * This feature gives the form a masculine singular adjective takes when
+	 * placed in front of a word beginning with a vowel or a so-called mute 'h'
+	 * (not a so-called aspired 'h') For example the form of <em>beau</em> in
+	 * front of a vowel is <em>bel</em>.
 	 * </p>
 	 * <table border="1">
 	 * <tr>
@@ -166,8 +163,8 @@ public abstract class PortugueseLexicalFeature {
 	 * <tr>
 	 * <td><b>Used by</b></td>
 	 * <td>The morphology processor uses this feature to correctly inflect
-	 * adjectives. This feature will be looked at first before
-	 * any reference to lexicons or morphology rules.</td>
+	 * adjectives. This feature will be looked at first before any reference to
+	 * lexicons or morphology rules.</td>
 	 * </tr>
 	 * <tr>
 	 * <td><b>Applies to</b></td>
@@ -214,7 +211,7 @@ public abstract class PortugueseLexicalFeature {
 	 * </table>
 	 */
 	public static final String VOWEL_ELISION = "vowel_elision";
-	
+
 	/**
 	 * <p>
 	 * This flag determines if a pronoun is a detached (from the verb) form
@@ -248,7 +245,7 @@ public abstract class PortugueseLexicalFeature {
 	 * </table>
 	 */
 	public static final String DETACHED = "detached";
-	
+
 	/**
 	 * <p>
 	 * This flag determines if a word begins with a so-called aspired 'h'.
@@ -281,11 +278,12 @@ public abstract class PortugueseLexicalFeature {
 	 * </table>
 	 */
 	public static final String ASPIRED_H = "aspired_h";
-	
+
 	/**
 	 * <p>
-	 * This flag determines if a word provokes a negation with only the "ne" negation
-	 * adverb (no "pas" or "plus") when it is the subject or complement of a clause.
+	 * This flag determines if a word provokes a negation with only the "ne"
+	 * negation adverb (no "pas" or "plus") when it is the subject or complement
+	 * of a clause.
 	 * </p>
 	 * <table border="1">
 	 * <tr>
@@ -315,13 +313,14 @@ public abstract class PortugueseLexicalFeature {
 	 * </table>
 	 */
 	public static final String NE_ONLY_NEGATION = "ne_only_negation";
-	
+
 	/**
 	 * <p>
 	 * This flag determines if a verb provokes verbal complement clitic rising
 	 * when used as a modal.
-	 * </p><p>
-	 * For example : "faire" has clitic rising ("je <bold>le</bold> fait voir") 
+	 * </p>
+	 * <p>
+	 * For example : "faire" has clitic rising ("je <bold>le</bold> fait voir")
 	 * but "vouloir" doesn't have clitic rising ("je veux <bold>le</bold> voir")
 	 * </p>
 	 * <table border="1">
@@ -353,11 +352,11 @@ public abstract class PortugueseLexicalFeature {
 	 * </table>
 	 */
 	public static final String CLITIC_RISING = "clitic_rising";
-	
+
 	/**
 	 * <p>
-	 * This flag determines if the comma must be ommited before a coordination conjunction
-	 * or after a front modifier.
+	 * This flag determines if the comma must be ommited before a coordination
+	 * conjunction or after a front modifier.
 	 * </p>
 	 * <table border="1">
 	 * <tr>
@@ -370,8 +369,8 @@ public abstract class PortugueseLexicalFeature {
 	 * </tr>
 	 * <tr>
 	 * <td><b>Created by</b></td>
-	 * <td>The information is read from Lexicons that support this feature
-	 * and can be set by the user.</td>
+	 * <td>The information is read from Lexicons that support this feature and
+	 * can be set by the user.</td>
 	 * </tr>
 	 * <tr>
 	 * <td><b>Used by</b></td>
@@ -388,11 +387,11 @@ public abstract class PortugueseLexicalFeature {
 	 * </table>
 	 */
 	public static final String NO_COMMA = "no_comma";
-	
+
 	/**
 	 * <p>
-	 * This flag determines if the coordination conjunction must be repeated before each
-	 * coordinate.
+	 * This flag determines if the coordination conjunction must be repeated
+	 * before each coordinate.
 	 * </p>
 	 * <table border="1">
 	 * <tr>
@@ -405,8 +404,8 @@ public abstract class PortugueseLexicalFeature {
 	 * </tr>
 	 * <tr>
 	 * <td><b>Created by</b></td>
-	 * <td>The information is read from Lexicons that support this feature
-	 * and can be set by the user.</td>
+	 * <td>The information is read from Lexicons that support this feature and
+	 * can be set by the user.</td>
 	 * </tr>
 	 * <tr>
 	 * <td><b>Used by</b></td>
@@ -423,13 +422,14 @@ public abstract class PortugueseLexicalFeature {
 	 * </table>
 	 */
 	public static final String REPEATED_CONJUNCTION = "repeated_conjunction";
-	
+
 	/**
 	 * <p>
-	 * This flag determines if an adjective is placed before the noun by default,
-	 * when added to a noun phrase with addModifier(...). ("antéposé")
-	 * Example : "un beau chien" (preposed) vs "un chien élancé" (postposed)
-	 * Most adjectives in French are postposed, but preposed adjectives are used frequently.
+	 * This flag determines if an adjective is placed before the noun by
+	 * default, when added to a noun phrase with addModifier(...).
+	 * ("antéposé") Example : "un beau chien" (preposed) vs
+	 * "un chien élancé" (postposed) Most adjectives in French are postposed,
+	 * but preposed adjectives are used frequently.
 	 * </p>
 	 * <table border="1">
 	 * <tr>
@@ -442,7 +442,8 @@ public abstract class PortugueseLexicalFeature {
 	 * </tr>
 	 * <tr>
 	 * <td><b>Created by</b></td>
-	 * <td>The information is read from the lexicon and can be changed by the user.</td>
+	 * <td>The information is read from the lexicon and can be changed by the
+	 * user.</td>
 	 * </tr>
 	 * <tr>
 	 * <td><b>Used by</b></td>
@@ -459,10 +460,11 @@ public abstract class PortugueseLexicalFeature {
 	 * </table>
 	 */
 	public static final String PREPOSED = "preposed";
-	
+
 	/**
 	 * <p>
-	 * This flag determines if a verb takes "être" as auxiliary instead of "avoir".
+	 * This flag determines if a verb takes "être" as auxiliary instead of
+	 * "avoir".
 	 * </p>
 	 * <table border="1">
 	 * <tr>
@@ -492,7 +494,7 @@ public abstract class PortugueseLexicalFeature {
 	 * </table>
 	 */
 	public static final String AUXILIARY_ETRE = "auxiliary_etre";
-	
+
 	/**
 	 * <p>
 	 * This flag determines if a verb can be used as a copula.
@@ -525,7 +527,7 @@ public abstract class PortugueseLexicalFeature {
 	 * </table>
 	 */
 	public static final String COPULAR = "copular";
-	
+
 	/**
 	 * <p>
 	 * These features give the indicative present form of a verb.
@@ -712,7 +714,7 @@ public abstract class PortugueseLexicalFeature {
 	 * </table>
 	 */
 	public static final String FEMININE_PAST_PARTICIPLE = "feminine_past_participle";
-	
+
 	/**
 	 * <p>
 	 * This feature determines of what type is a pronoun.
@@ -732,8 +734,8 @@ public abstract class PortugueseLexicalFeature {
 	 * </tr>
 	 * <tr>
 	 * <td><b>Used by</b></td>
-	 * <td>The morphology processing methods uses pronoun type to determine the appropriate
-	 * form for pronouns.</td>
+	 * <td>The morphology processing methods uses pronoun type to determine the
+	 * appropriate form for pronouns.</td>
 	 * </tr>
 	 * <tr>
 	 * <td><b>Applies to</b></td>

@@ -29,9 +29,8 @@ public abstract class PortugueseFeature {
 
 	/**
 	 * <p>
-	 * This feature represents the word used as a negation auxiliary.
-	 * If this feature is not specified, the adverb "pas" will be used
-	 * by default.
+	 * This feature represents the word used as a negation auxiliary. If this
+	 * feature is not specified, the adverb "pas" will be used by default.
 	 * </p>
 	 * <table border="1">
 	 * <tr>
@@ -65,10 +64,10 @@ public abstract class PortugueseFeature {
 
 	/**
 	 * <p>
-	 * This feature indicates the phrase that should be replaced by
-	 * a relative pronoun, if any. If the discourse function of the phrase is
-	 * subject, direct object or indirect object, the other phrases of the same
-	 * function won't be realised.
+	 * This feature indicates the phrase that should be replaced by a relative
+	 * pronoun, if any. If the discourse function of the phrase is subject,
+	 * direct object or indirect object, the other phrases of the same function
+	 * won't be realised.
 	 * </p>
 	 * <table border="1">
 	 * <tr>
@@ -99,7 +98,7 @@ public abstract class PortugueseFeature {
 	 * </table>
 	 */
 	public static final String RELATIVE_PHRASE = "relative_phrase";
-	
+
 	public static final String TENSE = "tense";
 
 }

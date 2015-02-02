@@ -29,9 +29,9 @@ public abstract class PortugueseInternalFeature {
 
 	/**
 	 * <p>
-	 * This features determines if a pronominal verb complement phrase is a clitic. Clitic
-	 * phrases are realised before the verb instead of behind it. The verb phrase syntax
-	 * helper methods determine the exact position.
+	 * This features determines if a pronominal verb complement phrase is a
+	 * clitic. Clitic phrases are realised before the verb instead of behind it.
+	 * The verb phrase syntax helper methods determine the exact position.
 	 * </p>
 	 * <table border="1">
 	 * <tr>
@@ -44,13 +44,13 @@ public abstract class PortugueseInternalFeature {
 	 * </tr>
 	 * <tr>
 	 * <td><b>Created by</b></td>
-	 * <td>The verb phrase syntax helper methods set this flag on pronominal verb complement
-	 * phrases.</td>
+	 * <td>The verb phrase syntax helper methods set this flag on pronominal
+	 * verb complement phrases.</td>
 	 * </tr>
 	 * <tr>
 	 * <td><b>Used by</b></td>
-	 * <td>The verb phrase syntax helper methods to correctly place pronominal verb
-	 * complements.</td>
+	 * <td>The verb phrase syntax helper methods to correctly place pronominal
+	 * verb complements.</td>
 	 * </tr>
 	 * <tr>
 	 * <td><b>Applies to</b></td>
@@ -67,8 +67,8 @@ public abstract class PortugueseInternalFeature {
 	/**
 	 * <p>
 	 * This features indicates that the phrase is replaced by a relative pronoun
-	 * somewhere and that therefore it must not be realised. It is only used with
-	 * preposition phrases, as the relative clause may not be their parent.
+	 * somewhere and that therefore it must not be realised. It is only used
+	 * with preposition phrases, as the relative clause may not be their parent.
 	 * </p>
 	 * <table border="1">
 	 * <tr>
@@ -81,13 +81,13 @@ public abstract class PortugueseInternalFeature {
 	 * </tr>
 	 * <tr>
 	 * <td><b>Created by</b></td>
-	 * <td>The clause syntax helper methods set this flag on relative phrases that are
-	 * preposition phrases.</td>
+	 * <td>The clause syntax helper methods set this flag on relative phrases
+	 * that are preposition phrases.</td>
 	 * </tr>
 	 * <tr>
 	 * <td><b>Used by</b></td>
-	 * <td>The generic phrase syntax helper methods to determine if a phrase must
-	 * be realised.</td>
+	 * <td>The generic phrase syntax helper methods to determine if a phrase
+	 * must be realised.</td>
 	 * </tr>
 	 * <tr>
 	 * <td><b>Applies to</b></td>

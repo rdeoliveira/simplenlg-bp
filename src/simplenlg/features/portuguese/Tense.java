@@ -1,3 +1,5 @@
+package simplenlg.features.portuguese;
+
 //package simplenlg.features.portuguese;
 //
 ///**
@@ -81,4 +83,4 @@
 //	 */
 //	PERSONAL_INFINITIVE;
 //	
-//}
+// }
