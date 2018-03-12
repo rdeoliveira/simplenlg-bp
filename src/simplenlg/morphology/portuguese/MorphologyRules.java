@@ -486,15 +486,8 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 		
 		// base form from baseWord if it exists, otherwise from element
 		String baseForm = getBaseForm(element, baseWord);
-		
-		// if inflected form based on tense, person and number exists in lexicon file,
-		// get that form and finish method here; otherwise apply rules below
+
 		String realisedFromLexicon = baseWord.getFeatureAsString(t+p+n);
-		if (realisedFromLexicon != null) {
-			realised = realisedFromLexicon;
-			StringElement realisedElement = new StringElement(realised, element);
-			return realisedElement;
-		}
 		
 		if (Form.BARE_INFINITIVE.equals(formValue)) {
 			realised = baseForm;
@@ -556,7 +549,14 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 		//TODO once debugged auxiliary creation in VerbPhraseHelper, delete these (and
 		// called methods
 		// here begins a list of irregular verbs, that is far from complete
-		} else if(baseForm.equals("estar")){
+		}
+		// if inflected form based on tense, person and number exists in lexicon file,
+		// get that form and finish method here; otherwise apply rules below
+		else if (realisedFromLexicon != null) {
+			realised = realisedFromLexicon;
+			StringElement realisedElement = new StringElement(realised, element);
+			return realisedElement;
+		}else if(baseForm.equals("estar")){
 			realised = VerbRules.conjugateEstar(number, person, tense);
 		} else if(baseForm.equals("ser")){
 			realised = VerbRules.conjugateSer(number, person, tense);
