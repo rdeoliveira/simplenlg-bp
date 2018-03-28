@@ -1,4 +1,4 @@
-package thiago;
+package verb.form;
 
 /**
  * Created by thiagocastroferreira on 27/03/18.

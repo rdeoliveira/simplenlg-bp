@@ -1,8 +1,5 @@
-package thiago;
+package verb.form;
 
-import inlg2014.*;
-import junit.framework.Assert;
-import org.junit.Test;
 import simplenlg.features.Feature;
 import simplenlg.features.Form;
 import simplenlg.features.NumberAgreement;
@@ -32,9 +29,8 @@ public class Testbed extends Setup {
      * Sentence: O Índice de Preços ao Consumidor (IPCA) encerrou o ano de 2017 com 2,94% de variação,
      * 3.34% menor dos 6.28% registrados em 2016
      */
-    @Test
     public void testEx01() {
-        NPPhraseSpec subject = this.phraseFactory.createNounPhrase("Índice de Preços ao Consumidor (IPCA)");
+        NPPhraseSpec subject = this.phraseFactory.createNounPhrase("Índice Nacional de Preços ao Consumidor Amplo (IPCA)");
         subject.setSpecifier("o");
 //        subject.setFeature(Feature.NUMBER, NumberAgreement.PLURAL);
 
@@ -73,7 +69,48 @@ public class Testbed extends Setup {
 
         s.setFeature(Feature.TENSE, Tense.PAST);
 
-        String real = "O Índice de Preços ao Consumidor (IPCA) encerrou o ano de 2017 com 2.94% de variação, 3.34% menor dos 6.28% registrados em 2016.";
-        Assert.assertEquals(real, getResult(s, "01"));
+        String real = "O Índice Nacional de Preços ao Consumidor Amplo (IPCA) encerrou o ano de 2017 com 2.94% de variação, 3.34% menor dos 6.28% registrados em 2016.";
+        assertEquals(real, getResult(s, "01"));
+    }
+
+    /**
+     * This example shows:
+     * gerund: ser + form = sendo
+     * Sentence: O Índice Nacional de Preços ao Consumidor (INPC) atingiu -0.30% em Junho, sendo a menor variação mensal de 2017.
+     */
+    public void testEx02() {
+        NPPhraseSpec subject = this.phraseFactory.createNounPhrase("Índice Nacional de Preços ao Consumidor (INPC)");
+        subject.setSpecifier("o");
+
+        VPPhraseSpec verb = this.phraseFactory.createVerbPhrase("atingir");
+
+        NPPhraseSpec object = this.phraseFactory.createNounPhrase("-0.30%");
+
+        object.addPostModifier(this.phraseFactory.createPrepositionPhrase("em", "Junho"));
+
+        NLGElement comma = this.phraseFactory.createNLGElement(",");
+
+        VPPhraseSpec vpmod = this.phraseFactory.createVerbPhrase("ser");
+        vpmod.setFeature(Feature.FORM, Form.GERUND);
+
+        NPPhraseSpec complement = this.phraseFactory.createNounPhrase("a", "variação");
+        complement.addPreModifier("menor");
+        complement.addPostModifier("mensal");
+        PPPhraseSpec ppmod = this.phraseFactory.createPrepositionPhrase("de", "2017");
+        complement.addPostModifier(ppmod);
+
+        vpmod.addComplement(complement);
+
+        SPhraseSpec s = this.phraseFactory.createClause();
+        s.setSubject(subject);
+        s.setVerb(verb);
+        s.setObject(object);
+        s.addComplement(comma);
+        s.addComplement(vpmod);
+
+        s.setFeature(Feature.TENSE, Tense.PAST);
+
+        String real = "O Índice Nacional de Preços ao Consumidor (INPC) atingiu -0.30% em Junho, sendo a menor variação mensal de 2017.";
+        assertEquals(real, getResult(s, "02"));
     }
 }
