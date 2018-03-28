@@ -492,7 +492,7 @@ public class MorphologyRules extends simplenlg.morphology.english.NonStaticMorph
 		if (Form.BARE_INFINITIVE.equals(formValue)) {
 			realised = baseForm;
 		// TODO make this method neater and move it to verb rules
-		} else if (Form.PRESENT_PARTICIPLE.equals(formValue)){
+		} else if (Form.PRESENT_PARTICIPLE.equals(formValue) || Form.GERUND.equals(formValue)){
 			String radical = VerbRules.getVerbRadical(baseForm, tense);
 			String thematicVowel = "";
 			int conjugationType = VerbRules.getConjugationType(baseForm);
