@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="simplenlg-bp:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/simplenlg_bp_jar</output-path>
+    <root id="archive" name="simplenlg-bp.jar">
+      <element id="module-output" name="simplenlg-bp" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/lexAccess2009dist.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/lexAccess2011dist.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/lvg2011api.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/lexCheck2006api.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/junit-4.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

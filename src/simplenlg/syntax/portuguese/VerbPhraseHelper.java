@@ -209,6 +209,7 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		Object tenseValue = phrase.getFeature(Feature.TENSE);
 		Object personValue = phrase.getFeature(Feature.PERSON);
 		Object numberValue = phrase.getFeature(Feature.NUMBER);
+		Object formValue = phrase.getFeature(Feature.FORM);
 		String progressiveString = phrase.getFeatureAsString(Feature.PROGRESSIVE);
 		boolean perfect = phrase.getFeatureAsBoolean(Feature.PERFECT);
 		boolean prospective = phrase.getFeatureAsBoolean(Feature.PROSPECTIVE);
@@ -349,7 +350,7 @@ public class VerbPhraseHelper extends simplenlg.syntax.english.nonstatic.VerbPhr
 		lastVerb.setFeature(Feature.TENSE, tenseValue);
 		lastVerb.setFeature(Feature.PERSON, personValue);
 		lastVerb.setFeature(Feature.NUMBER, numberValue);
-		lastVerb.setFeature(Feature.FORM, Form.NORMAL);
+		lastVerb.setFeature(Feature.FORM, formValue);
 
 		if(passive) {
 			NLGElement firstVerb = vgComponentsArray.get(0);
